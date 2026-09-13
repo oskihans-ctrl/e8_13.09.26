@@ -1,0 +1,8 @@
+{
+  "name": "Jasne.",
+  "description": "Jasne. – Interaktywna platforma i symulator przygotowujący do Egzaminu Ósmoklasisty z matematyki: arkusze CKE, zadania Prawda/Fałsz, tutor AI, brudnopis i niezbędnik ósmoklasisty.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

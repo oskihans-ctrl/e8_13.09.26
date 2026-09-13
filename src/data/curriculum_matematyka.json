@@ -1,0 +1,392 @@
+{
+  "version": "2026.1-e8-complete",
+  "updated_at": "2026-09-11T11:14:19.390Z",
+  "system_name": "Egzamin Ósmoklasisty - Pełny Tok Uczenia Matematyki (Działy 1-7 CKE)",
+  "topics": [
+    {
+      "id": 1,
+      "slug": "liczby-i-dzialania",
+      "title": "Dział 1: Liczby i Działania",
+      "short_title": "Liczby i Działania",
+      "icon": "Binary",
+      "color": "#00E5FF",
+      "matura_points_range": "3–5 pkt",
+      "importance": "Kluczowy (fundament całego egzaminu E8)",
+      "description": "Działania na ułamkach zwykłych i dziesiętnych, kolejność działań, cechy podzielności, NWD, NWW oraz liczby ujemne na osi liczbowej.",
+      "lessons": [
+        {
+          "id": "1.1",
+          "slug": "ulamki-i-kolejnosc-dzialan",
+          "title": "Ułamki zwykłe, dziesiętne i kolejność działań",
+          "order": 1,
+          "theory_pill": {
+            "title": "Kolejność działań i ułamki",
+            "core_formula": "$$\\text{Nawiasy} \\longrightarrow \\text{Potęgowanie/Pierwiastkowanie} \\longrightarrow \\text{Mnożenie i Dzielenie} \\longrightarrow \\text{Dodawanie i Odejmowanie}$$",
+            "key_takeaway": "Przy dodawaniu i odejmowaniu ułamków zwykłych ZAWSZE sprowadzaj do wspólnego mianownika (NWW). Dzielenie przez ułamek to mnożenie przez jego odwrotność: $\\frac{a}{b} : \\frac{c}{d} = \\frac{a}{b} \\cdot \\frac{d}{c}$.",
+            "trap_alert": "Uwaga na kolejność: w wyrażeniu $12 - 4 : 2$ najpierw dzielimy ($4 : 2 = 2$), a potem odejmujemy ($12 - 2 = 10$). Nigdy nie odejmuj przed dzieleniem!",
+            "cke_trap": "Nigdy nie dodawaj liczników i mianowników bezpośrednio! $\\frac{1}{2} + \\frac{1}{3} \\neq \\frac{2}{5}$, lecz $\\frac{3}{6} + \\frac{2}{6} = \\frac{5}{6}$."
+          },
+          "tasks": []
+        },
+        {
+          "id": "1.2",
+          "slug": "cechy-podzielnosci-nwd-nww",
+          "title": "Cechy podzielności, NWD, NWW i dzielenie z resztą",
+          "order": 2,
+          "theory_pill": {
+            "title": "Cechy podzielności i reszta z dzielenia",
+            "core_formula": "$$a = b \\cdot q + r, \\quad 0 \\le r < b$$",
+            "key_takeaway": "Liczba dzieli się przez 3 (lub 9), gdy SUMA jej cyfr dzieli się przez 3 (lub 9). Liczba dzieli się przez 4, gdy jej 2 ostatnie cyfry tworzą liczbę podzielną przez 4. $\\text{NWW}(a, b) \\cdot \\text{NWD}(a, b) = a \\cdot b$.",
+            "trap_alert": "Cechy podzielności przez 3 i 9 zależą od SUMY cyfr, a nie od ostatniej cyfry! Na przykład liczba 124 nie dzieli się przez 3, mimo że ma cyfrę parzystą, bo $1+2+4=7$.",
+            "cke_trap": "Przy dzieleniu z resztą reszta $r$ MUSI być mniejsza od dzielnika $b$. Jeśli $404 = 21 \\cdot 19 + 5$, to reszta z dzielenia 404 przez 19 wynosi 5, a iloraz to 21."
+          },
+          "tasks": []
+        },
+        {
+          "id": "1.3",
+          "slug": "liczby-ujemne-i-os-liczbowa",
+          "title": "Liczby ujemne, zaokrąglanie i oś liczbowa",
+          "order": 3,
+          "theory_pill": {
+            "title": "Liczby ujemne i odległości na osi",
+            "core_formula": "$$|a - b| = \\text{odległość punktów } a \\text{ i } b \\text{ na osi}$$",
+            "key_takeaway": "Mnożenie i dzielenie dwóch liczb o jednakowych znakach daje wynik dodatni, o różnych znakach – ujemny. Długość odcinka na osi to ZAWSZE współrzędna większa minus mniejsza: $d = x_{\\text{prawe}} - x_{\\text{lewe}}$.",
+            "trap_alert": "Przy odejmowaniu liczby ujemnej minus i minus dają plus: $5 - (-3) = 5 + 3 = 8$. Z kolei $-5 - 3 = -8$!",
+            "cke_trap": "Na osi liczbowej odległość między kreskami musi być stała. Aby znaleźć krok osi, podziel różnicę znanych współrzędnych przez liczbę równych odcinków między nimi."
+          },
+          "tasks": []
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "potegi-i-pierwiastki",
+      "title": "Dział 2: Potęgi i Pierwiastki",
+      "short_title": "Potęgi i Pierwiastki",
+      "icon": "Sparkles",
+      "color": "#F59E0B",
+      "matura_points_range": "3–5 pkt",
+      "importance": "Kluczowy (pewniak na każdym arkuszu E8)",
+      "description": "Działania na potęgach o tej samej podstawie, pierwiastki kwadratowe i sześcienne, szacowanie wartości oraz notacja wykładnicza.",
+      "lessons": [
+        {
+          "id": "2.1",
+          "slug": "dzialania-na-potegach",
+          "title": "Działania na potęgach o wykładnikach całkowitych",
+          "order": 1,
+          "theory_pill": {
+            "title": "Prawa działań na potęgach",
+            "core_formula": "$$a^m \\cdot a^n = a^{m+n}, \\quad \\frac{a^m}{a^n} = a^{m-n}, \\quad (a^m)^n = a^{m \\cdot n}, \\quad (a \\cdot b)^n = a^n \\cdot b^n$$",
+            "key_takeaway": "Gdy podstawy potęg są takie same, przy MNOŻENIU wykładniki DODAJEMY, a przy DZIELENIU – ODEJMUJEMY. Kluczem w zadaniach CKE jest sprowadzenie liczb do wspólnej podstawy (najczęściej 2, 3 lub 10), np. $4 = 2^2, 8 = 2^3, 9 = 3^2, 27 = 3^3$.",
+            "trap_alert": "Podstawa potęgi się NIE ZMIENIA! $2^3 \\cdot 2^4 = 2^7$, a NIE $4^7$ ani $4^{12}$. Połowa liczby $2^{100}$ to $2^{99}$, a NIE $1^{100}$ ani $2^{50}$!",
+            "cke_trap": "Nie ma wzoru na dodawanie potęg! $2^{10} + 2^{10} = 2 \\cdot 2^{10} = 2^{11}$. Sumę potęg zamieniaj na iloczyn poprzez wyłączanie przed nawias."
+          },
+          "tasks": []
+        },
+        {
+          "id": "2.2",
+          "slug": "pierwiastki-kwadratowe-i-szescienne",
+          "title": "Pierwiastki kwadratowe, sześcienne i szacowanie wartości",
+          "order": 2,
+          "theory_pill": {
+            "title": "Pierwiastki kwadratowe i sześcienne",
+            "core_formula": "$$\\sqrt{a \\cdot b} = \\sqrt{a} \\cdot \\sqrt{b}, \\quad \\sqrt{\\frac{a}{b}} = \\frac{\\sqrt{a}}{\\sqrt{b}}, \\quad \\sqrt{a^2} = a \\text{ dla } a \\ge 0$$",
+            "key_takeaway": "Wyłączanie czynnika przed znak pierwiastka polega na rozbiciu liczby podpierwiastkowej na iloczyn, w którym jeden czynnik jest kwadratem liczby naturalnej, np. $\\sqrt{48} = \\sqrt{16 \\cdot 3} = 4\\sqrt{3}$. Szacowanie: sprawdzaj sąsiednie kwadraty liczb naturalnych, np. $7^2 = 49 < 60 < 64 = 8^2 \\implies 7 < \\sqrt{60} < 8$.",
+            "trap_alert": "NIGDY nie rozbijaj sumy ani różnicy pod pierwiastkiem! $\\sqrt{a + b} \\neq \\sqrt{a} + \\sqrt{b}$! Na przykład $\\sqrt{9 + 16} = \\sqrt{25} = 5$, a nie $3 + 4 = 7$!",
+            "cke_trap": "Uważaj na znak przy pierwiastkach sześciennych z liczb ujemnych: $\\sqrt[3]{-8} = -2$, ponieważ $(-2)^3 = -8$."
+          },
+          "tasks": []
+        },
+        {
+          "id": "2.3",
+          "slug": "notacja-wykladnicza",
+          "title": "Notacja wykładnicza i operacje na dużych/małych liczbach",
+          "order": 3,
+          "theory_pill": {
+            "title": "Zapis w notacji wykładniczej",
+            "core_formula": "$$a \\cdot 10^k, \\quad \\text{gdzie } 1 \\le a < 10 \\text{ oraz } k \\in \\mathbb{C}$$",
+            "key_takeaway": "Liczba $a$ (mantysa) MUSI być większa lub równa 1 i mniejsza od 10. Gdy liczba jest bardzo duża, wykładnik $k$ jest dodatni (np. $350\\,000 = 3,5 \\cdot 10^5$). Gdy liczba jest bardzo mała (ułamek dziesiętny), wykładnik $k$ jest ujemny (np. $0,0042 = 4,2 \\cdot 10^{-3}$).",
+            "trap_alert": "Zapis $35 \\cdot 10^4$ NIE JEST notacją wykładniczą, ponieważ 35 jest większe od 10! Poprawnie: $3,5 \\cdot 10^5$.",
+            "cke_trap": "Przy porównywaniu liczb w notacji wykładniczej najpierw patrz na wykładnik potęgi 10. Większy wykładnik oznacza większą liczbę. Przy tych samych wykładnikach decyduje mantysa."
+          },
+          "tasks": []
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "slug": "procenty-i-obliczenia-praktyczne",
+      "title": "Dział 3: Procenty i Obliczenia Praktyczne",
+      "short_title": "Procenty i Praktyka",
+      "icon": "Percent",
+      "color": "#10B981",
+      "matura_points_range": "3–6 pkt",
+      "importance": "Bardzo wysoki (zadania otwarte za 2–3 pkt)",
+      "description": "Obliczenia procentowe, podwyżki, obniżki, kalkulacje cenowe, prędkość-droga-czas oraz skala i zamiana jednostek.",
+      "lessons": [
+        {
+          "id": "3.1",
+          "slug": "obliczenia-procentowe",
+          "title": "Obliczenia procentowe, podwyżki, obniżki i promocje CKE",
+          "order": 1,
+          "theory_pill": {
+            "title": "Procenty i zmiana wartości",
+            "core_formula": "$$p\\% \\cdot x = \\frac{p}{100} \\cdot x, \\quad x \\xrightarrow{+p\\%} (1 + 0,01p)x, \\quad x \\xrightarrow{-p\\%} (1 - 0,01p)x$$",
+            "key_takeaway": "Podwyżka o 20% to pomnożenie przez 1,20. Obniżka o 20% to pomnożenie przez 0,80. Jeśli nowa cena po obniżce o 20% wynosi 160 zł, to $0,8x = 160 \\implies x = 200\\text{ zł}$.",
+            "trap_alert": "Podwyżka o 20%, a potem obniżka o 20% NIE daje ceny początkowej! $100 \\xrightarrow{+20\\%} 120 \\xrightarrow{-20\\%} 120 \\cdot 0,8 = 96\\text{ zł}$!",
+            "cke_trap": "Punkt procentowy to różnica zwykła między procentami ($30\\% - 20\\% = 10\\text{ p.p.}$). Wzrost procentowy to $\\frac{30 - 20}{20} \\cdot 100\\% = 50\\%$."
+          },
+          "tasks": []
+        },
+        {
+          "id": "3.2",
+          "slug": "droga-predkosc-czas",
+          "title": "Droga, prędkość i czas (s = v · t) w zadaniach CKE",
+          "order": 2,
+          "theory_pill": {
+            "title": "Ruch jednostajny: prędkość, droga i czas",
+            "core_formula": "$$s = v \\cdot t, \\quad v = \\frac{s}{t}, \\quad t = \\frac{s}{v}$$",
+            "key_takeaway": "Jednostki MUSZĄ być spójne! Jeśli prędkość jest w $\\text{km/h}$, to czas MUSI być wyrażony w godzinach, a droga w kilometrach. Minuty na godziny: $15\\text{ min} = \\frac{1}{4}\\text{ h}$, $20\\text{ min} = \\frac{1}{3}\\text{ h}$, $40\\text{ min} = \\frac{2}{3}\\text{ h}$, $45\\text{ min} = \\frac{3}{4}\\text{ h}$.",
+            "trap_alert": "Średnia prędkość to CAŁA droga podzielona przez CAŁY czas ($v_{śr} = \\frac{s_1 + s_2}{t_1 + t_2}$). To NIGDY nie jest średnia arytmetyczna prędkości!",
+            "cke_trap": "Zamiana $\\text{m/s}$ na $\\text{km/h}$: pomnóż przez $3,6$. Przykład: $10\\text{ m/s} = 36\\text{ km/h}$. Z $\\text{km/h}$ na $\\text{m/s}$: podziel przez $3,6$."
+          },
+          "tasks": []
+        },
+        {
+          "id": "3.3",
+          "slug": "skala-i-zamiana-jednostek",
+          "title": "Skala na mapie i zamiana jednostek",
+          "order": 3,
+          "theory_pill": {
+            "title": "Skala, pole i jednostki",
+            "core_formula": "$$1 : k \\implies 1\\text{ cm na mapie} = k\\text{ cm w terenie}, \\quad P_{\\text{w terenie}} = k^2 \\cdot P_{\\text{na mapie}}$$",
+            "key_takeaway": "Skala $1 : 50\\,000$ oznacza: $1\\text{ cm}$ na mapie to $50\\,000\\text{ cm} = 500\\text{ m} = 0,5\\text{ km}$ w terenie. Zapamiętaj: $1\\text{ m} = 100\\text{ cm}$, $1\\text{ km} = 1000\\text{ m} = 100\\,000\\text{ cm}$.",
+            "trap_alert": "Pole powierzchni zmienia się z KWADRATEM skali! Przy powiększeniu figury w skali $2:1$ jej pole rośnie $2^2 = 4$ razy, a NIE 2 razy!",
+            "cke_trap": "Objętości: $1\\text{ l} = 1\\text{ dm}^3 = 1000\\text{ cm}^3 = 1000\\text{ ml}$. $1\\text{ m}^3 = 1000\\text{ dm}^3 = 1000\\text{ litrów}$."
+          },
+          "tasks": []
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "slug": "wyrazenia-algebraiczne-i-rownania",
+      "title": "Dział 4: Wyrażenia Algebraiczne i Równania",
+      "short_title": "Algebra i Równania",
+      "icon": "Code",
+      "color": "#EC4899",
+      "matura_points_range": "4–6 pkt",
+      "importance": "Bardzo wysoki (podstawa modelowania matematycznego)",
+      "description": "Redukcja wyrazów podobnych, mnożenie sum algebraicznych, rozwiązywanie równań liniowych oraz klasyczne zadania tekstowe CKE.",
+      "lessons": [
+        {
+          "id": "4.1",
+          "slug": "sumy-algebraiczne",
+          "title": "Jednomiany, sumy algebraiczne i redukcja",
+          "order": 1,
+          "theory_pill": {
+            "title": "Działania na sumach algebraicznych",
+            "core_formula": "$$-(a - b) = -a + b, \\quad (a + b)(c + d) = ac + ad + bc + bd$$",
+            "key_takeaway": "Minus przed nawiasem zmienia znak KAŻDEGO wyrazu wewnątrz nawiasu! Redukować (dodawać/odejmować) można wyłącznie wyrazy podobne, czyli posiadające dokładnie te same litery w tych samych potęgach.",
+            "trap_alert": "$-(2x - 5) = -2x + 5$, a NIE $-2x - 5$! Znak minusa tyczy się całej zawartości nawiasu.",
+            "cke_trap": "$2a \\cdot 3a = 6a^2$, a NIE $6a$! Natomiast $2a + 3a = 5a$."
+          },
+          "tasks": []
+        },
+        {
+          "id": "4.2",
+          "slug": "rozwiazywanie-rownan",
+          "title": "Rozwiązywanie równań z jedną niewiadomą",
+          "order": 2,
+          "theory_pill": {
+            "title": "Rozwiązywanie równań i przekształcanie wzorów",
+            "core_formula": "$$ax + b = c \\implies ax = c - b \\implies x = \\frac{c - b}{a}$$",
+            "key_takeaway": "Przenoszenie wyrazu na drugą stronę znaku równości ZAWSZE zmienia jego znak na przeciwny. Jeśli w równaniu występują ułamki, pomnóż obie strony przez wspólny mianownik (NWW).",
+            "trap_alert": "Mnożąc równanie przez liczbę, musisz pomnożyć KAŻDY składnik po lewej i prawej stronie, nie tylko ułamek!",
+            "cke_trap": "Przekształcanie wzorów: traktuj szukaną literę jak niewiadomą $x$, a pozostałe litery jak zwykłe liczby."
+          },
+          "tasks": []
+        },
+        {
+          "id": "4.3",
+          "slug": "zadania-tekstowe-rownania",
+          "title": "Zadania tekstowe prowadzące do równań",
+          "order": 3,
+          "theory_pill": {
+            "title": "Modelowanie zadań tekstowych",
+            "core_formula": "$$\\text{Analiza tekstu} \\longrightarrow \\text{Oznaczenie niewiadomej } x \\longrightarrow \\text{Zbudowanie równania} \\longrightarrow \\text{Rozwiązanie i sprawdzenie}$$",
+            "key_takeaway": "Zawsze jasno określ, co oznacza $x$. Jeśli jedna wielkość jest 'o 5 większa', to $x + 5$. Jeśli '3 razy większa', to $3x$. Jeśli 'o 20% mniejsza', to $0,8x$.",
+            "trap_alert": "Pamiętaj o sprawdzeniu warunków zadania! Wynik musi być logiczny (np. liczba osób nie może być ułamkiem ani liczbą ujemną).",
+            "cke_trap": "Zadania z wiekiem: za 5 lat KAŻDA z osób będzie o 5 lat starsza! Jeśli dziś mama ma $4x$ a córka $x$, to za 5 lat mają odpowiednio $4x + 5$ i $x + 5$."
+          },
+          "tasks": []
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "slug": "geometria-plaska-planimetria",
+      "title": "Dział 5: Geometria Płaska (Planimetria)",
+      "short_title": "Geometria Płaska",
+      "icon": "Maximize2",
+      "color": "#8B5CF6",
+      "matura_points_range": "5–8 pkt",
+      "importance": "Najwyższy (najwięcej punktów na egzaminie E8)",
+      "description": "Kąty wierzchołkowe i przyległe, trójkąty, twierdzenie Pitagorasa, czworokąty (romb, trapez) oraz układ współrzędnych.",
+      "lessons": [
+        {
+          "id": "5.1",
+          "slug": "katy-i-trojkaty",
+          "title": "Kąty, cechy przystawania i własności trójkątów",
+          "order": 1,
+          "theory_pill": {
+            "title": "Kąty i trójkąty w planimetrii",
+            "core_formula": "$$\\alpha + \\beta + \\gamma = 180^\\circ, \\quad h = \\frac{a\\sqrt{3}}{2}, \\quad P = \\frac{a^2\\sqrt{3}}{4}$$",
+            "key_takeaway": "Suma kątów w każdym trójkącie to zawsze $180^\\circ$, a w każdym czworokącie – $360^\\circ$. Przy dwóch prostych równoległych przeciętych trzecią prostą kąty naprzemianległe i odpowiadające są RÓWNE. W trójkącie równoramiennym kąty przy podstawie są równe.",
+            "trap_alert": "Trójkąt prostokątny o kątach $30^\\circ, 60^\\circ, 90^\\circ$: naprzeciwko kąta $30^\\circ$ leży najkrótsza przyprostokątna $a$, przeciwprostokątna to $2a$, a druga przyprostokątna to $a\\sqrt{3}$. Nie pomyl $a\\sqrt{3}$ z $2a$!",
+            "cke_trap": "Nierówność trójkąta: z trzech odcinków da się zbudować trójkąt wtedy i tylko wtedy, gdy suma dwóch krótszych jest ŚCIŚLE WIĘKSZA od najdłuższego ($a + b > c$)."
+          },
+          "tasks": []
+        },
+        {
+          "id": "5.2",
+          "slug": "twierdzenie-pitagorasa",
+          "title": "Twierdzenie Pitagorasa w praktyce CKE",
+          "order": 2,
+          "theory_pill": {
+            "title": "Twierdzenie Pitagorasa i trójkąty prostokątne",
+            "core_formula": "$$a^2 + b^2 = c^2$$",
+            "key_takeaway": "W trójkącie prostokątnym suma kwadratów przyprostokątnych jest równa kwadratowi przeciwprostokątnej. Najczęstsze trójki pitagorejskie na egzaminie E8 to: $(3, 4, 5)$, $(5, 12, 13)$, $(6, 8, 10)$, $(8, 15, 17)$.",
+            "trap_alert": "Wzór $a^2 + b^2 = c^2$ działa WYŁĄCZNIE wtedy, gdy $c$ jest PRZECIWPROSTOKĄTNĄ (najdłuższym bokiem leżącym naprzeciwko kąta prostego)! Szukając przyprostokątnej odejmujemy: $a^2 = c^2 - b^2$.",
+            "cke_trap": "Romb i deltoid: ich przekątne przecinają się pod kątem prostym i dzielą na połowy, tworząc 4 trójkąty prostokątne! Zawsze stosuj tam Pitagorasa: $(\\frac{e}{2})^2 + (\\frac{f}{2})^2 = a^2$."
+          },
+          "tasks": []
+        },
+        {
+          "id": "5.3",
+          "slug": "czworokaty-i-pola",
+          "title": "Czworokąty: kwadrat, prostokąt, romb, trapez i ich pola",
+          "order": 3,
+          "theory_pill": {
+            "title": "Pola czworokątów i podziały figur",
+            "core_formula": "$$P_{\\text{prostokąta}} = a \\cdot b, \\quad P_{\\text{rombu}} = \\frac{e \\cdot f}{2} = a \\cdot h, \\quad P_{\\text{trapezu}} = \\frac{(a + b) \\cdot h}{2}$$",
+            "key_takeaway": "Trapez prostokątny zawsze warto rozciąć wysokością na prostokąt i trójkąt prostokątny. Pole każdej figury można obliczyć sumując pola jej mniejszych części lub odejmując niepotrzebne naroża od otaczającego prostokąta.",
+            "trap_alert": "Wysokość w trapezie musi być PROSTOPADŁA do obu podstaw! Długość ramienia to NIE wysokość (z wyjątkiem trapezu prostokątnego).",
+            "cke_trap": "Romb o boku $a$ i kącie ostrym $30^\\circ$: jego wysokość to $h = \\frac{1}{2}a$ (własność trójkąta 30-60-90). Wtedy pole to $P = a \\cdot \\frac{1}{2}a = \\frac{1}{2}a^2$."
+          },
+          "tasks": []
+        },
+        {
+          "id": "5.4",
+          "slug": "uklad-wspolrzednych",
+          "title": "Układ współrzędnych na płaszczyźnie, punkty kratowe i odcinki",
+          "order": 4,
+          "theory_pill": {
+            "title": "Układ współrzędnych i środek odcinka",
+            "core_formula": "$$S = \\left(\\frac{x_1 + x_2}{2}, \\frac{y_1 + y_2}{2}\\right), \\quad d = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$$",
+            "key_takeaway": "Współrzędne punktu to $(x, y)$ – pierwsza to oś pozioma (odcięta), druga to oś pionowa (rzędna). Środek odcinka to po prostu średnia arytmetyczna współrzędnych jego końców. Odległość punktów o jednakowej współrzędnej $y$ to $|x_2 - x_1|$.",
+            "trap_alert": "Nie pomyl kolejności! Punkt $(-3, 2)$ to 3 jednostki w lewo i 2 w górę, a $(2, -3)$ to 2 w prawo i 3 w dół.",
+            "cke_trap": "Długość odcinka ukośnego na siatce kratkowej: zawsze dorysuj poziomy i pionowy odcinek, tworząc trójkąt prostokątny, i oblicz długość z twierdzenia Pitagorasa."
+          },
+          "tasks": []
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "slug": "geometria-przestrzenna-stereometria",
+      "title": "Dział 6: Geometria Przestrzenna (Stereometria)",
+      "short_title": "Geometria Przestrzenna",
+      "icon": "Box",
+      "color": "#3B82F6",
+      "matura_points_range": "3–6 pkt",
+      "importance": "Bardzo wysoki (zadania otwarte za 3 pkt na każdym arkuszu E8)",
+      "description": "Sześcian, prostopadłościan, graniastosłupy proste i ostrosłupy prawidłowe: siatki, przekroje, pola powierzchni całkowitej i objętości.",
+      "lessons": [
+        {
+          "id": "6.1",
+          "slug": "szescian-i-prostopadloscian",
+          "title": "Sześcian i prostopadłościan: krawędzie, siatki, pola i objętości",
+          "order": 1,
+          "theory_pill": {
+            "title": "Prostopadłościan i sześcian",
+            "core_formula": "$$V_{\\text{sześcianu}} = a^3, \\quad P_c = 6a^2, \\quad V_{\\text{prostopadłościanu}} = a \\cdot b \\cdot c, \\quad P_c = 2(ab + bc + ac)$$",
+            "key_takeaway": "Każdy prostopadłościan i sześcian ma 8 wierzchołków, 12 krawędzi (po 4 krawędzie o każdej z 3 długości: $4a + 4b + 4c$) oraz 6 ścian. Przekątna ściany sześcianu to $d = a\\sqrt{2}$, a przekątna całego sześcianu to $D = a\\sqrt{3}$.",
+            "trap_alert": "Sklejanie brył: gdy sklejasz ze sobą dwa sześciany ścianami, łączna powierzchnia ZMNIEJSZA SIĘ o dwie zakryte ściany (po jednej z każdego sześcianu)! Nowe pole to $2 \\cdot 6a^2 - 2a^2 = 10a^2$.",
+            "cke_trap": "Siatka sześcianu: obwód siatki to długość jej brzegu zewnętrznego (zazwyczaj 14 krawędzi o długości $a$). Sprawdź uważnie, ile odcinków krawędzi tworzy kontur siatki."
+          },
+          "tasks": []
+        },
+        {
+          "id": "6.2",
+          "slug": "graniastoslupy-proste-i-prawidlowe",
+          "title": "Graniastosłupy proste i prawidłowe w zadaniach CKE",
+          "order": 2,
+          "theory_pill": {
+            "title": "Graniastosłupy: objętość i pola",
+            "core_formula": "$$V = P_p \\cdot H, \\quad P_c = 2P_p + P_b, \\quad P_b = Obw_p \\cdot H$$",
+            "key_takeaway": "Graniastosłup PRAWIDŁOWY ma w podstawie wielokąt foremny (prawidłowy czworokątny = kwadrat w podstawie; prawidłowy trójkątny = trójkąt równoboczny). Wszystkie krawędzie boczne są prostopadłe do podstaw i równe wysokości $H$.",
+            "trap_alert": "Pole całkowite to DWIE podstawy plus pole boczne ($2P_p + P_b$). Częsty błąd uczniów to zapomnienie o podwojeniu pola podstawy!",
+            "cke_trap": "Liczba elementów graniastosłupa o podstawie $n$-kąta: wierzchołki $2n$, ściany $n + 2$, krawędzie $3n$."
+          },
+          "tasks": []
+        },
+        {
+          "id": "6.3",
+          "slug": "ostroslupy-prawidlowe",
+          "title": "Ostrosłupy prawidłowe: krawędzie, siatki, pole i objętość",
+          "order": 3,
+          "theory_pill": {
+            "title": "Ostrosłupy prawidłowe",
+            "core_formula": "$$V = \\frac{1}{3} P_p \\cdot H, \\quad P_c = P_p + P_b, \\quad H^2 + r^2 = h_s^2$$",
+            "key_takeaway": "Pamiętaj o ułamku $\\frac{1}{3}$ we wzorze na objętość ostrosłupa! W ostrosłupie prawidłowym czworokątnym spodek wysokości $H$ znajduje się dokładnie w punkcie przecięcia przekątnych kwadratu w podstawie ($r = \\frac{1}{2}a$).",
+            "trap_alert": "Wysokość ostrosłupa $H$ to NIE wysokość ściany bocznej $h_s$! Tworzą one trójkąt prostokątny z odcinkiem od środka podstawy do boku: $H^2 + (\\frac{a}{2})^2 = h_s^2$.",
+            "cke_trap": "Liczba elementów ostrosłupa o podstawie $n$-kąta: wierzchołki $n + 1$, ściany $n + 1$, krawędzie $2n$."
+          },
+          "tasks": []
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "slug": "statystyka-i-prawdopodobienstwo",
+      "title": "Dział 7: Statystyka i Prawdopodobieństwo",
+      "short_title": "Statystyka i Szansa",
+      "icon": "BarChart3",
+      "color": "#F97316",
+      "matura_points_range": "2–4 pkt",
+      "importance": "Kluczowy (pewne 2–4 pkt za czytanie diagramów i szansę)",
+      "description": "Średnia arytmetyczna, mediana, analiza diagramów słupkowych i kołowych oraz klasyczny model prawdopodobieństwa.",
+      "lessons": [
+        {
+          "id": "7.1",
+          "slug": "diagramy-i-srednia-arytmetyczna",
+          "title": "Odczytywanie diagramów, tabel i średnia arytmetyczna",
+          "order": 1,
+          "theory_pill": {
+            "title": "Średnia arytmetyczna i diagramy",
+            "core_formula": "$$\\bar{x} = \\frac{x_1 + x_2 + \\dots + x_n}{n}, \\quad \\sum x_i = n \\cdot \\bar{x}$$",
+            "key_takeaway": "Suma wszystkich wartości to liczba elementów pomnożona przez ich średnią: $\\text{Suma} = n \\cdot \\bar{x}$. Diagram kołowy: cały okrąg to $360^\\circ = 100\\%$. Zatem $1\\% = 3,6^\\circ$, a $25\\% = 90^\\circ$.",
+            "trap_alert": "Gdy do grupy dodajesz nowy element o wartości WIĘKSZEJ niż dotychczasowa średnia, średnia całej grupy ZAWSZE ROŚNIE. Gdy element jest mniejszy – maleje.",
+            "cke_trap": "Średnia ważona z ocen: mnóż każdą ocenę przez liczbę uczniów, którzy ją otrzymali, a potem dziel przez ŁĄCZNĄ LICZBĘ UCZNIÓW (a nie przez liczbę ocen od 1 do 6)!"
+          },
+          "tasks": []
+        },
+        {
+          "id": "7.2",
+          "slug": "prawdopodobienstwo-klasyczne",
+          "title": "Prawdopodobieństwo klasyczne i doświadczenia losowe",
+          "order": 2,
+          "theory_pill": {
+            "title": "Prawdopodobieństwo klasyczne",
+            "core_formula": "$$P(A) = \\frac{|A|}{|Omega|}, \\quad 0 \\le P(A) \\le 1$$",
+            "key_takeaway": "$|A|$ to liczba zdarzeń sprzyjających, a $|\\Omega|$ to liczba WSZYSTKICH możliwych jednakowo prawdopodobnych zdarzeń. Zdarzenie pewne ma prawdopodobieństwo 1, a niemożliwe 0.",
+            "trap_alert": "Gdy wyjmujesz kulę bez zwracania, mianownik zmniejsza się o 1! Na przykład z 10 kul zostaje 9. Jeśli kula spełniała warunek, licznik też maleje o 1.",
+            "cke_trap": "Rzut dwiema kostkami: wszystkich możliwych wyników jest $|Omega| = 6 \\cdot 6 = 36$ (a NIE 12!)."
+          },
+          "tasks": []
+        }
+      ]
+    }
+  ]
+}

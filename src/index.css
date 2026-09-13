@@ -1,0 +1,262 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'DM Sans', sans-serif;
+  --font-display: 'Plus Jakarta Sans', sans-serif;
+}
+
+html, body {
+  background-color: #070A0F;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  max-width: 100vw;
+  overscroll-behavior-x: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+}
+
+button, a, input, [role="button"] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#root {
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
+  min-height: 100dvh;
+}
+
+/* Bezwzględne ukrycie pasków przewijania we wszystkich przeglądarkach (Chrome, Safari, Firefox, Edge) */
+* {
+  -ms-overflow-style: none !important; /* IE i Edge */
+  scrollbar-width: none !important;    /* Firefox */
+}
+
+*::-webkit-scrollbar {
+  display: none !important;            /* Chrome, Safari, Opera, Edge Chromium */
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+
+/* Bezwzględne ukrycie suwaków we wszystkich wzorach KaTeX */
+.katex,
+.katex-display,
+.katex-html,
+.katex *,
+.math-text-wrapper * {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+/* Swobodne przewijanie i ochrona przed ucinaniem wzorów KaTeX */
+.katex-display {
+  display: block !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  text-align: left !important;
+  padding: 0.35rem 0.25rem !important;
+  margin: 0.5rem 0 !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+.katex-display > .katex {
+  display: inline-block !important;
+  min-width: min-content !important;
+  text-align: left !important;
+  white-space: nowrap !important;
+}
+
+@media (min-width: 640px) {
+  .katex-display {
+    text-align: center !important;
+  }
+}
+
+.katex::-webkit-scrollbar,
+.katex-display::-webkit-scrollbar,
+.katex-html::-webkit-scrollbar,
+.katex *::-webkit-scrollbar,
+.math-text-wrapper *::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* KaTeX clarity, line clearance & contrast */
+.katex {
+  color: #F8FAFC !important;
+  font-size: 1.05em;
+  text-rendering: geometricPrecision;
+}
+
+.katex .mfrac {
+  margin: 0.2em 0.1em !important;
+}
+
+.katex .sqrt {
+  margin: 0.15em 0.1em !important;
+}
+
+.katex .mord.accent {
+  margin-top: 0.15em !important;
+}
+
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Stylizacja list numerowanych z eleganckimi wskaźnikami kroków */
+.math-text-wrapper ol {
+  counter-reset: math-step-counter;
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.math-text-wrapper ol > li {
+  counter-increment: math-step-counter;
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 0.625rem;
+  line-height: 1.6;
+}
+
+.math-text-wrapper ol > li::before {
+  content: counter(math-step-counter);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.625rem;
+  height: 1.625rem;
+  border-radius: 9999px;
+  background-color: #1E293B;
+  border: 1px solid #334155;
+  color: #F8FAFC;
+  font-weight: 700;
+  font-size: 0.75rem;
+  margin-right: 0.75rem;
+  margin-top: 0.125rem;
+  flex-shrink: 0;
+}
+
+/* Wyróżnione ramki wzorów i definicji - pełne eleganckie obramowanie bez pseudo-zakładek */
+.math-text-wrapper .formula-callout,
+.math-text-wrapper blockquote {
+  border: 1px solid #334155;
+  background: #0F172A;
+  border-radius: 0.75rem;
+  padding: 0.875rem 1.125rem;
+  margin: 0.875rem 0;
+}
+
+/* Animacja shake dla błędnej odpowiedzi */
+@keyframes quiz-shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+.animate-quiz-shake {
+  animation: quiz-shake 0.3s ease-in-out;
+}
+
+/* Stylizacja dla Display Math w KaTeX – czytelne, wycentrowane wzory bez rozmyć i poświaty */
+.math-text-wrapper .katex-display,
+.katex-display {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  margin: 0.85rem auto !important;
+  padding: 0.85rem 1rem !important;
+  background: #0F172A !important;
+  border: 1px solid #1E293B !important;
+  border-radius: 0.75rem !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+.math-text-wrapper .katex-display > .katex,
+.katex-display > .katex {
+  display: inline-block !important;
+  margin: 0 auto !important;
+  text-align: center !important;
+  padding: 0 !important;
+  font-size: 1.15em !important;
+  color: #F8FAFC !important;
+  white-space: nowrap !important;
+}
+
+.math-text-wrapper .katex-display .mtable,
+.katex-display .mtable {
+  margin: 0 auto !important;
+}
+
+.math-text-wrapper .katex-display > .katex > .katex-html,
+.katex-display > .katex > .katex-html {
+  margin: 0 auto !important;
+  text-align: center !important;
+}
+
+/* Responsywne skalowanie typografii i wzorów KaTeX na desktopie (+10-15%) */
+@media (min-width: 1024px) {
+  .katex {
+    font-size: 1.12em !important;
+  }
+  .math-text-wrapper .katex-display > .katex,
+  .katex-display > .katex {
+    font-size: 1.28em !important;
+  }
+  .task-reading-line {
+    max-width: 72ch;
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+}
+
+/* Safe area padding utilities for mobile/PWA */
+.pb-safe-bottom {
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
+}
+.pt-safe-top {
+  padding-top: max(12px, env(safe-area-inset-top));
+}
+

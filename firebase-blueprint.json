@@ -1,0 +1,92 @@
+{
+  "entities": {
+    "MathTask": {
+      "title": "MathTask",
+      "description": "CKE math tasks and lessons",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "topic": { "type": "string" }
+      }
+    },
+    "SystemMeta": {
+      "title": "SystemMeta",
+      "description": "System metadata including curriculum version for zero unnecessary reads",
+      "type": "object",
+      "properties": {
+        "curriculumVersion": { "type": "string" },
+        "systemName": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      }
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile, XP, streak, and arena rating",
+      "type": "object",
+      "properties": {
+        "xp": { "type": "number" },
+        "level": { "type": "number" },
+        "arenaRating": { "type": "number" },
+        "lastActive": { "type": "number" }
+      }
+    },
+    "UserProgress": {
+      "title": "UserProgress",
+      "description": "User progress on subjects and tasks",
+      "type": "object",
+      "properties": {
+        "completedTasks": { "type": "array" },
+        "taskStars": { "type": "object" }
+      }
+    },
+    "ArenaMatch": {
+      "title": "ArenaMatch",
+      "description": "Multiplayer arena duel match",
+      "type": "object",
+      "properties": {
+        "status": { "type": "string" },
+        "player1Id": { "type": "string" },
+        "player2Id": { "type": "string" }
+      }
+    },
+    "TestConnection": {
+      "title": "TestConnection",
+      "description": "Connectivity test document",
+      "type": "object",
+      "properties": {
+        "status": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "/test/{testId}": {
+      "schema": "TestConnection",
+      "description": "Firestore connectivity verification probe"
+    },
+    "/system/{metaId}": {
+      "schema": "SystemMeta",
+      "description": "System metadata and curriculum version"
+    },
+    "/mathTasks/{taskId}": {
+      "schema": "MathTask",
+      "description": "CKE lesson topics and math tasks"
+    },
+    "/zadania_matura/{taskId}": {
+      "schema": "MathTask",
+      "description": "Matura exam tasks database"
+    },
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profiles and arena ratings"
+    },
+    "/users/{userId}/progress/{progressId}": {
+      "schema": "UserProgress",
+      "description": "User lesson progress"
+    },
+    "/matches/{matchId}": {
+      "schema": "ArenaMatch",
+      "description": "Live arena multiplayer matches"
+    }
+  }
+}

@@ -1,0 +1,965 @@
+{
+  "version": "4.0.0",
+  "updated_at": "2026-09-11",
+  "system_name": "Egzamin Ósmoklasisty - Matematyka CKE",
+  "topics": [
+    {
+      "id": 1,
+      "slug": "liczby-i-dzialania",
+      "title": "Dział 1: Liczby i Działania",
+      "short_title": "Liczby i Działania",
+      "icon": "Binary",
+      "color": "#00E5FF",
+      "matura_points_range": "3–5 pkt",
+      "importance": "Kluczowy (fundament całego egzaminu E8)",
+      "description": "Działania na ułamkach zwykłych i dziesiętnych, kolejność działań, cechy podzielności, NWD, NWW oraz liczby ujemne na osi liczbowej.",
+      "lessons": [
+        {
+          "id": "1.1",
+          "slug": "ulamki-i-kolejnosc-dzialan",
+          "title": "Ułamki zwykłe, dziesiętne i kolejność działań",
+          "order": 1,
+          "theory_pill": {
+            "title": "Kolejność działań i ułamki",
+            "core_formula": "$$\\text{Działania w nawiasach} \\longrightarrow \\text{Potęgowanie/Pierwiastkowanie} \\longrightarrow \\text{Mnożenie i Dzielenie} \\longrightarrow \\text{Dodawanie i Odejmowanie}$$",
+            "key_takeaway": "Przy dodawaniu ułamków zwykłych ZAWSZE sprowadzaj do wspólnego mianownika (NWW). Dzielenie przez ułamek to mnożenie przez jego odwrotność!",
+            "trap_alert": "Uwaga na kolejność działań: w wyrażeniu 12 - 4 : 2 najpierw dzielimy (4 : 2 = 2), a potem odejmujemy: 12 - 2 = 10, a NIE (12-4):2 = 4!",
+            "cke_trap": "Nigdy nie dodawaj liczników i mianowników bezpośrednio! 1/2 + 1/3 to NIE 2/5, lecz 3/6 + 2/6 = 5/6."
+          },
+          "tasks": [
+            {
+              "id": "e8-1.1-1",
+              "type": "SINGLE_CHOICE",
+              "points": 1,
+              "source": "CKE Egzamin Ósmoklasisty • Zadanie 1",
+              "difficulty": "EASY",
+              "question": "Wartość wyrażenia $1\\frac{1}{2} - \\frac{1}{2} \\cdot \\frac{2}{3}$ jest równa",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "$1\\frac{1}{6}$"
+                },
+                {
+                  "id": "B",
+                  "text": "$1\\frac{1}{3}$"
+                },
+                {
+                  "id": "C",
+                  "text": "$\\frac{2}{3}$"
+                },
+                {
+                  "id": "D",
+                  "text": "$\\frac{5}{6}$"
+                }
+              ],
+              "correct_answer": "A",
+              "explanation": "Zgodnie z kolejnością działań najpierw wykonujemy mnożenie: $\\frac{1}{2} \\cdot \\frac{2}{3} = \\frac{1}{3}$. Następnie odejmowanie: $1\\frac{1}{2} - \\frac{1}{3} = \\frac{3}{2} - \\frac{1}{3} = \\frac{9}{6} - \\frac{2}{6} = \\frac{7}{6} = 1\\frac{1}{6}$. Prawidłowa odpowiedź to A.",
+              "hint_1": "Pamiętaj o kolejności działań: najpierw mnożenie, dopiero potem odejmowanie!",
+              "hint_2": "Sprowadź ułamki do wspólnego mianownika 6."
+            },
+            {
+              "id": "e8-1.1-2",
+              "type": "TRUE_FALSE",
+              "points": 1,
+              "source": "CKE Egzamin Ósmoklasisty • Zadanie 2",
+              "difficulty": "MEDIUM",
+              "question": "Oceń prawdziwość podanych zdań. Wybierz P, jeśli zdanie jest prawdziwe, albo F – jeśli jest fałszywe.\n\n1. Liczba $0{,}375$ jest równa ułamkowi $\\frac{3}{8}$.\n2. Iloczyn $2{,}5 \\cdot 0{,}04$ jest równy $1$.",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "1 – P, 2 – P"
+                },
+                {
+                  "id": "B",
+                  "text": "1 – P, 2 – F"
+                },
+                {
+                  "id": "C",
+                  "text": "1 – F, 2 – P"
+                },
+                {
+                  "id": "D",
+                  "text": "1 – F, 2 – F"
+                }
+              ],
+              "correct_answer": "B",
+              "explanation": "Zdanie 1: $\\frac{3}{8} = \\frac{375}{1000} = 0{,}375$ – PRAWDA.\nZdanie 2: $2{,}5 \\cdot 0{,}04 = 0{,}100 = 0{,}1 \\neq 1$ – FAŁSZ.",
+              "hint_1": "Rozszerz ułamek 3/8 mnożąc licznik i mianownik przez 125.",
+              "hint_2": "Mnożąc 2,5 przez 0,04 pamiętaj o łącznej liczbie miejsc po przecinku (1 + 2 = 3 miejsca)."
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "slug": "cechy-podzielnosci-i-nwd",
+          "title": "Cechy podzielności, NWD i NWW",
+          "order": 2,
+          "theory_pill": {
+            "title": "Cechy podzielności liczb",
+            "core_formula": "$$\\text{Przez 3 i 9: suma cyfr podzielna przez 3 lub 9} \\\\[4pt] \\text{Przez 4: 2 ostatnie cyfry tworzą liczbę podzielną przez 4} \\\\[4pt] \\text{Przez 5: ostatnia cyfra to 0 lub 5}$$",
+            "key_takeaway": "Rozkład na czynniki pierwsze pozwala błyskawicznie wyznaczyć NWD (wspólne czynniki) i NWW (iloczyn wszystkich czynników z najwyższymi potęgami).",
+            "trap_alert": "Nie myl podzielności przez 3 z podzielnością przez 9. Każda liczba podzielna przez 9 dzieli się przez 3, ale nie odwrotnie (np. 12 dzieli się przez 3, ale nie przez 9)!",
+            "cke_trap": "Liczba 0 jest wielokrotnością każdej liczby naturalnej, ale nie dzielimy przez zero!"
+          },
+          "tasks": [
+            {
+              "id": "e8-1.2-1",
+              "type": "SINGLE_CHOICE",
+              "points": 1,
+              "source": "CKE Egzamin Ósmoklasisty • Podzielność",
+              "difficulty": "MEDIUM",
+              "question": "Dana jest czterocyfrowa liczba $45\\!x\\!2$. Jaka cyfra musi stać na miejscu $x$, aby liczba ta była podzielna przez $9$?",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "$7$"
+                },
+                {
+                  "id": "B",
+                  "text": "$0$"
+                },
+                {
+                  "id": "C",
+                  "text": "$9$"
+                },
+                {
+                  "id": "D",
+                  "text": "$2$"
+                }
+              ],
+              "correct_answer": "A",
+              "explanation": "Liczba jest podzielna przez 9, gdy suma jej cyfr jest podzielna przez 9. Suma znanych cyfr to $4 + 5 + 2 = 11$. Najbliższa wielokrotność liczby 9 większa od 11 to 18. Zatem $11 + x = 18 \\implies x = 7$.",
+              "hint_1": "Dodaj wszystkie cyfry liczby: 4 + 5 + x + 2 = 11 + x.",
+              "hint_2": "Szukaj takiej cyfry x od 0 do 9, aby suma była równa 18."
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "slug": "liczby-ujemne-i-os-liczbowa",
+          "title": "Liczby ujemne i oś liczbowa",
+          "order": 3,
+          "theory_pill": {
+            "title": "Liczby ujemne i odległości na osi",
+            "core_formula": "$$(-a) \\cdot (-b) = a \\cdot b, \\quad (-a) \\cdot b = - (a \\cdot b) \\\\[4pt] \\text{Odległość na osi między } a \\text{ i } b: \\quad |a - b|$$",
+            "key_takeaway": "Odejmowanie liczby ujemnej to dodawanie liczby przeciwnej: $a - (-b) = a + b$.",
+            "trap_alert": "Pamiętaj: $-5^2 = -(5^2) = -25$, natomiast $(-5)^2 = (-5) \\cdot (-5) = +25$!",
+            "cke_trap": "Liczba ujemna podniesiona do potęgi parzystej daje wynik DODATNI, a do nieparzystej UJEMNY."
+          },
+          "tasks": [
+            {
+              "id": "e8-1.3-1",
+              "type": "SINGLE_CHOICE",
+              "points": 1,
+              "source": "CKE Egzamin Ósmoklasisty • Zadanie z osią",
+              "difficulty": "EASY",
+              "question": "Temperatura rano wynosiła $-4^\\circ\\text{C}$, a w południe wzrosła o $7^\\circ\\text{C}$. Jaka temperatura była w południe?",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "$-11^\\circ\\text{C}$"
+                },
+                {
+                  "id": "B",
+                  "text": "$3^\\circ\\text{C}$"
+                },
+                {
+                  "id": "C",
+                  "text": "$11^\\circ\\text{C}$"
+                },
+                {
+                  "id": "D",
+                  "text": "$-3^\\circ\\text{C}$"
+                }
+              ],
+              "correct_answer": "B",
+              "explanation": "Temperatura wzrosła o $7^\\circ\\text{C}$, czyli wykonujemy dodawanie: $-4 + 7 = 3^\\circ\\text{C}$. Odpowiedź B.",
+              "hint_1": "Wzrost temperatury oznacza dodanie liczby stopni.",
+              "hint_2": "-4 + 7 = 7 - 4 = 3."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "potegi-i-pierwiastki",
+      "title": "Dział 2: Potęgi i Pierwiastki",
+      "short_title": "Potęgi i Pierwiastki",
+      "icon": "Sparkles",
+      "color": "#F59E0B",
+      "matura_points_range": "3–5 pkt",
+      "importance": "Bardzo wysoka (pewniak każdego arkusza CKE)",
+      "description": "Działania na potęgach o tej samej podstawie, notacja wykładnicza, pierwiastki kwadratowe i sześcienne oraz szacowanie.",
+      "lessons": [
+        {
+          "id": "2.1",
+          "slug": "dzialania-na-potegach",
+          "title": "Działania na potęgach o tej samej podstawie",
+          "order": 1,
+          "theory_pill": {
+            "title": "Wzory na potęgi w pigułce",
+            "core_formula": "$$\\begin{aligned} a^m \\cdot a^n &= a^{m+n} \\\\[4pt] \\frac{a^m}{a^n} &= a^{m-n} \\\\[4pt] (a^m)^n &= a^{m \\cdot n} \\\\[4pt] a^0 &= 1 \\quad (a \\neq 0) \\end{aligned}$$",
+            "key_takeaway": "Sprowadzaj potęgi do wspólnej podstawy (np. 4 to 2^2, 8 to 2^3, 9 to 3^2, 27 to 3^3).",
+            "trap_alert": "Podstawa NIE zmienia się przy mnożeniu: $2^4 \\cdot 2^3 = 2^7$, a nie $4^7$!",
+            "cke_trap": "Połowa liczby $2^{20}$ to $2^{20} : 2^1 = 2^{19}$, a NIE $1^{20}$ ani $2^{10}$!"
+          },
+          "tasks": [
+            {
+              "id": "e8-2.1-1",
+              "type": "SINGLE_CHOICE",
+              "points": 1,
+              "source": "CKE Egzamin Ósmoklasisty • Potęgi",
+              "difficulty": "EASY",
+              "question": "Iloczyn $4^3 \\cdot 2^5$ jest równy",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "$2^{11}$"
+                },
+                {
+                  "id": "B",
+                  "text": "$8^8$"
+                },
+                {
+                  "id": "C",
+                  "text": "$2^{15}$"
+                },
+                {
+                  "id": "D",
+                  "text": "$8^{15}$"
+                }
+              ],
+              "correct_answer": "A",
+              "explanation": "Zapisujemy $4$ jako potęgę dwójki: $4 = 2^2$. Wtedy $4^3 = (2^2)^3 = 2^{2 \\cdot 3} = 2^6$. Następnie mnożymy: $2^6 \\cdot 2^5 = 2^{6+5} = 2^{11}$. Odpowiedź A.",
+              "hint_1": "Zamień liczbę 4 na potęgę liczby 2: 4 = 2^2.",
+              "hint_2": "Zastosuj wzór (a^m)^n = a^(m·n) i dodaj wykładniki."
+            }
+          ]
+        },
+        {
+          "id": "2.2",
+          "slug": "pierwiastki-i-szacowanie",
+          "title": "Pierwiastki kwadratowe, sześcienne i szacowanie",
+          "order": 2,
+          "theory_pill": {
+            "title": "Działania na pierwiastkach",
+            "core_formula": "$$\\sqrt{a \\cdot b} = \\sqrt{a} \\cdot \\sqrt{b}, \\quad \\sqrt{\\frac{a}{b}} = \\frac{\\sqrt{a}}{\\sqrt{b}} \\\\[4pt] \\sqrt[3]{a \\cdot b} = \\sqrt[3]{a} \\cdot \\sqrt[3]{b}$$",
+            "key_takeaway": "Wyłączanie czynnika przed znak pierwiastka polega na rozłożeniu liczby podpierwiastkowej na iloczyn, w którym jeden z czynników jest kwadratem liczby naturalnej: $\\sqrt{12} = \\sqrt{4 \\cdot 3} = 2\\sqrt{3}$.",
+            "trap_alert": "NIGDY nie rozdzielaj sumy pod pierwiastkiem: $\\sqrt{9 + 16} = \\sqrt{25} = 5$, a NIE $3 + 4 = 7$!",
+            "cke_trap": "Pierwiastek kwadratowy z liczby dodatniej jest ZAWSZE liczbą dodatnią: $\\sqrt{25} = 5$, nie -5."
+          },
+          "tasks": [
+            {
+              "id": "e8-2.2-1",
+              "type": "SINGLE_CHOICE",
+              "points": 1,
+              "source": "CKE Egzamin Ósmoklasisty • Pierwiastki",
+              "difficulty": "MEDIUM",
+              "question": "Liczba $\\sqrt{32} - \\sqrt{8}$ jest równa",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "$\\sqrt{24}$"
+                },
+                {
+                  "id": "B",
+                  "text": "$2$"
+                },
+                {
+                  "id": "C",
+                  "text": "$2\\sqrt{2}$"
+                },
+                {
+                  "id": "D",
+                  "text": "$4\\sqrt{2}$"
+                }
+              ],
+              "correct_answer": "C",
+              "explanation": "Wyłączamy czynniki przed pierwiastki: $\\sqrt{32} = \\sqrt{16 \\cdot 2} = 4\\sqrt{2}$, natomiast $\\sqrt{8} = \\sqrt{4 \\cdot 2} = 2\\sqrt{2}$. Zatem $4\\sqrt{2} - 2\\sqrt{2} = 2\\sqrt{2}$. Prawidłowa odpowiedź to C.",
+              "hint_1": "Rozłóż liczby 32 i 8 na czynniki zawierające kwadraty: 32 = 16 · 2, 8 = 4 · 2.",
+              "hint_2": "Odejmij od 4√2 wartość 2√2."
+            }
+          ]
+        },
+        {
+          "id": "2.3",
+          "slug": "notacja-wykladnicza",
+          "title": "Notacja wykładnicza i duże liczby",
+          "order": 3,
+          "theory_pill": {
+            "title": "Zasady notacji wykładniczej",
+            "core_formula": "$$a \\cdot 10^k, \\quad \\text{gdzie } 1 \\le a < 10 \\text{ oraz } k \\in \\mathbb{Z}$$",
+            "key_takeaway": "Liczba $a$ musi być równa co najmniej 1 i mniejsza od 10. Przesuń przecinek tak, by przed nim stała dokładnie jedna cyfra różna od zera.",
+            "trap_alert": "Liczba $25 \\cdot 10^4$ NIE jest w notacji wykładniczej, bo $25 \\ge 10$. Poprawnie: $2{,}5 \\cdot 10^5$!",
+            "cke_trap": "Dla małych liczb wykładnik jest ujemny: $0{,}003 = 3 \\cdot 10^{-3}$."
+          },
+          "tasks": [
+            {
+              "id": "e8-2.3-1",
+              "type": "SINGLE_CHOICE",
+              "points": 1,
+              "source": "CKE Egzamin Ósmoklasisty • Notacja wykładnicza",
+              "difficulty": "EASY",
+              "question": "Odległość z Ziemi do Księżyca wynosi około $384\\,000\\text{ km}$. Zapis tej liczby w notacji wykładniczej to",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "$38{,}4 \\cdot 10^4\\text{ km}$"
+                },
+                {
+                  "id": "B",
+                  "text": "$3{,}84 \\cdot 10^5\\text{ km}$"
+                },
+                {
+                  "id": "C",
+                  "text": "$0{,}384 \\cdot 10^6\\text{ km}$"
+                },
+                {
+                  "id": "D",
+                  "text": "$3{,}84 \\cdot 10^4\\text{ km}$"
+                }
+              ],
+              "correct_answer": "B",
+              "explanation": "Przesuwamy przecinek w lewo o 5 miejsc, aby uzyskać liczbę $3{,}84$ (mieszczącą się w przedziale $[1, 10)$). Otrzymujemy $3{,}84 \\cdot 10^5\\text{ km}$. Odpowiedź B.",
+              "hint_1": "Przed przecinkiem może stać tylko jedna cyfra różna od zera (czyli 3).",
+              "hint_2": "Policz, o ile miejsc w lewo przesunąłeś przecinek od końca liczby."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "slug": "procenty-i-obliczenia-praktyczne",
+      "title": "Dział 3: Procenty i Obliczenia Praktyczne",
+      "short_title": "Procenty i Praktyka",
+      "icon": "Percent",
+      "color": "#10B981",
+      "matura_points_range": "3–6 pkt",
+      "importance": "Kluczowa w zadaniach otwartych i zamkniętych",
+      "description": "Obliczenia procentowe, podwyżki i obniżki cen, prędkość, droga, czas ($s = v \\cdot t$), skala na mapie i zamiana jednostek.",
+      "lessons": [
+        {
+          "id": "3.1",
+          "slug": "procenty-podwyzki-obnizki",
+          "title": "Obliczenia procentowe, podwyżki i obniżki",
+          "order": 1,
+          "theory_pill": {
+            "title": "Procenty w pigułce",
+            "core_formula": "$$p\\% = \\frac{p}{100} \\\\[4pt] \\text{Cena po obniżce o } p\\%: \\quad C = C_0 \\cdot \\left(1 - \\frac{p}{100}\\right) \\\\[4pt] \\text{Cena po podwyżce o } p\\%: \\quad C = C_0 \\cdot \\left(1 + \\frac{p}{100}\\right)$$",
+            "key_takeaway": "Obniżka o 20% oznacza pomnożenie ceny przez 0,80. Podwyżka o 15% oznacza pomnożenie przez 1,15.",
+            "trap_alert": "Obniżka o 20%, a następnie podwyżka o 20% NIE daje ceny początkowej! Przykład: 100 zł -> 80 zł -> 96 zł (mniej o 4%)!",
+            "cke_trap": "Zawsze zwracaj uwagę, OD JAKIEJ KWOTY liczysz procent. Baza obliczeń zmienia się po każdej zmianie ceny!"
+          },
+          "tasks": [
+            {
+              "id": "e8-3.1-1",
+              "type": "SINGLE_CHOICE",
+              "points": 1,
+              "source": "CKE Egzamin Ósmoklasisty • Procenty",
+              "difficulty": "MEDIUM",
+              "question": "Bluza kosztowała $120\\text{ zł}$. Jej cenę obniżono o $20\\%$. Ile kosztuje ta bluza po obniżce?",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "$100\\text{ zł}$"
+                },
+                {
+                  "id": "B",
+                  "text": "$96\\text{ zł}$"
+                },
+                {
+                  "id": "C",
+                  "text": "$24\\text{ zł}$"
+                },
+                {
+                  "id": "D",
+                  "text": "$104\\text{ zł}$"
+                }
+              ],
+              "correct_answer": "B",
+              "explanation": "Obniżka wynosi $20\\%$ ze $120\\text{ zł}$, czyli $0{,}20 \\cdot 120 = 24\\text{ zł}$. Nowa cena to $120 - 24 = 96\\text{ zł}$ (lub od razu $120 \\cdot 0{,}80 = 96\\text{ zł}$). Odpowiedź B.",
+              "hint_1": "Oblicz 20% ze 120 zł i odejmij od ceny początkowej.",
+              "hint_2": "Możesz też pomnożyć cenę wyjściową przez 0,8."
+            }
+          ]
+        },
+        {
+          "id": "3.2",
+          "slug": "predkosc-droga-czas",
+          "title": "Droga, prędkość i czas (s = v · t)",
+          "order": 2,
+          "theory_pill": {
+            "title": "Droga, prędkość i czas",
+            "core_formula": "$$s = v \\cdot t, \\quad v = \\frac{s}{t}, \\quad t = \\frac{s}{v} \\\\[4pt] 1\\,\\frac{\\text{m}}{\\text{s}} = 3{,}6\\,\\frac{\\text{km}}{\\text{h}}, \\quad 1\\,\\text{h} = 60\\,\\text{min} = 3600\\,\\text{s}$$",
+            "key_takeaway": "Przed podstawieniem do wzoru sprawdź zgodność jednostek! Jeżeli prędkość jest w km/h, to czas musi być w godzinach, a droga w kilometrach.",
+            "trap_alert": "15 minut to 1/4 godziny (0,25 h), a NIE 0,15 godziny!",
+            "cke_trap": "Średnia prędkość na całej trasie to CAŁA droga podzielona przez CAŁY czas, a nie średnia arytmetyczna prędkości!"
+          },
+          "tasks": [
+            {
+              "id": "e8-3.2-1",
+              "type": "SINGLE_CHOICE",
+              "points": 1,
+              "source": "CKE Egzamin Ósmoklasisty • Prędkość",
+              "difficulty": "EASY",
+              "question": "Rowerzysta jechał ze stałą prędkością $18\\,\\frac{\\text{km}}{\\text{h}}$ przez $20\\text{ minut}$. Jaką drogę pokonał w tym czasie?",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "$6\\text{ km}$"
+                },
+                {
+                  "id": "B",
+                  "text": "$9\\text{ km}$"
+                },
+                {
+                  "id": "C",
+                  "text": "$360\\text{ km}$"
+                },
+                {
+                  "id": "D",
+                  "text": "$3{,}6\\text{ km}$"
+                }
+              ],
+              "correct_answer": "A",
+              "explanation": "Zamieniamy czas na godziny: $20\\text{ min} = \\frac{20}{60}\\text{ h} = \\frac{1}{3}\\text{ h}$. Droga: $s = v \\cdot t = 18\\,\\frac{\\text{km}}{\\text{h}} \\cdot \\frac{1}{3}\\text{ h} = 6\\text{ km}$. Odpowiedź A.",
+              "hint_1": "Zamień 20 minut na godziny: 20 minut to 1/3 godziny.",
+              "hint_2": "Pomnóż prędkość 18 km/h przez czas 1/3 h."
+            }
+          ]
+        },
+        {
+          "id": "3.3",
+          "slug": "skala-i-jednostki",
+          "title": "Skala na mapie i zamiana jednostek",
+          "order": 3,
+          "theory_pill": {
+            "title": "Skala na mapie i jednostki",
+            "core_formula": "$$\\text{Skala } 1 : k \\implies 1\\text{ cm na mapie odpowiada } k\\text{ cm w terenie} \\\\[4pt] 1\\text{ m} = 100\\text{ cm}, \\quad 1\\text{ km} = 1000\\text{ m} = 100\\,000\\text{ cm}$$",
+            "key_takeaway": "Aby przejść z centymetrów w terenie na kilometry, skreśl 5 zer (ponieważ 1 km = 100 000 cm).",
+            "trap_alert": "W skali pól figur stosunek pól wynosi $k^2$ (do kwadratu), a nie $k$!",
+            "cke_trap": "Pamiętaj o zamianie jednostek pola: 1 m² = 10 000 cm² (nie 100 cm²)!"
+          },
+          "tasks": [
+            {
+              "id": "e8-3.3-1",
+              "type": "SINGLE_CHOICE",
+              "points": 1,
+              "source": "CKE Egzamin Ósmoklasisty • Skala",
+              "difficulty": "EASY",
+              "question": "Odległość między dwoma miastami na mapie w skali $1 : 200\\,000$ wynosi $4\\text{ cm}$. Rzeczywista odległość między tymi miastami w terenie jest równa",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "$80\\text{ km}$"
+                },
+                {
+                  "id": "B",
+                  "text": "$8\\text{ km}$"
+                },
+                {
+                  "id": "C",
+                  "text": "$800\\text{ m}$"
+                },
+                {
+                  "id": "D",
+                  "text": "$50\\text{ km}$"
+                }
+              ],
+              "correct_answer": "B",
+              "explanation": "1 cm na mapie to $200\\,000\\text{ cm} = 2000\\text{ m} = 2\\text{ km}$ w terenie. Zatem $4\\text{ cm}$ odpowiada $4 \\cdot 2\\text{ km} = 8\\text{ km}$. Odpowiedź B.",
+              "hint_1": "Oblicz ile kilometrów w terenie odpowiada 1 cm na mapie.",
+              "hint_2": "200 000 cm = 2 km. Pomnóż 4 cm przez 2 km."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "slug": "wyrazenia-algebraiczne-i-rownania",
+      "title": "Dział 4: Wyrażenia Algebraiczne i Równania",
+      "short_title": "Algebra i Równania",
+      "icon": "Code",
+      "color": "#EC4899",
+      "matura_points_range": "4–6 pkt",
+      "importance": "Gwarantowane zadanie otwarte za 2–3 punkty",
+      "description": "Przekształcanie wyrażeń algebraicznych, redukcja wyrazów podobnych, rozwiązywanie równań pierwszego stopnia oraz zadania tekstowe.",
+      "lessons": [
+        {
+          "id": "4.1",
+          "slug": "upraszczanie-wyrazen",
+          "title": "Jednomiany, sumy algebraiczne i redukcja",
+          "order": 1,
+          "theory_pill": {
+            "title": "Redukcja wyrazów podobnych",
+            "core_formula": "$$-(a - b) = -a + b, \\quad c(a + b) = ca + cb \\\\[4pt] (a + b)(c + d) = ac + ad + bc + bd$$",
+            "key_takeaway": "Minus przed nawiasem ZMIENIA ZNAKI wszystkich składników wewnątrz nawiasu!",
+            "trap_alert": "Błąd: $3 - (x - 2) = 3 - x - 2$. Prawidłowo: $3 - (x - 2) = 3 - x + 2 = 5 - x$!",
+            "cke_trap": "Wyrazy podobne to te, które mają identyczne litery w tej samej potędze (np. $2x^2$ i $5x^2$, ale nie $2x$ i $5x^2$)."
+          },
+          "tasks": [
+            {
+              "id": "e8-4.1-1",
+              "type": "SINGLE_CHOICE",
+              "points": 1,
+              "source": "CKE Egzamin Ósmoklasisty • Algebra",
+              "difficulty": "EASY",
+              "question": "Po uproszczeniu wyrażenia $4(x - 2) - (2x - 5)$ otrzymujemy",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "$2x - 3$"
+                },
+                {
+                  "id": "B",
+                  "text": "$2x - 13$"
+                },
+                {
+                  "id": "C",
+                  "text": "$2x + 3$"
+                },
+                {
+                  "id": "D",
+                  "text": "$6x - 3$"
+                }
+              ],
+              "correct_answer": "A",
+              "explanation": "Wymnażamy nawias i zmieniamy znaki przy minusie: $4x - 8 - 2x + 5 = (4x - 2x) + (-8 + 5) = 2x - 3$. Odpowiedź A.",
+              "hint_1": "Wymnóż 4 · (x - 2) = 4x - 8.",
+              "hint_2": "Zwróć uwagę na minus przed drugim nawiasem: -(2x - 5) = -2x + 5."
+            }
+          ]
+        },
+        {
+          "id": "4.2",
+          "slug": "rozwiazywanie-rownan",
+          "title": "Rozwiązywanie równań z jedną niewiadomą",
+          "order": 2,
+          "theory_pill": {
+            "title": "Rozwiązywanie równań liniowych",
+            "core_formula": "$$ax + b = c \\iff ax = c - b \\iff x = \\frac{c - b}{a} \\quad (a \\neq 0)$$",
+            "key_takeaway": "Niewiadome na lewą stronę, liczby na prawą. Przenosząc wyraz na drugą stronę znaku równości, ZAWSZE zmień jego znak na przeciwny!",
+            "trap_alert": "Gdy w równaniu występują ułamki, pomnóż obie strony równania przez wspólny mianownik (każdy wyraz bez wyjątku)!",
+            "cke_trap": "Pamiętaj o sprawdzeniu: podstaw wyliczony x do pierwotnego równania, aby upewnić się, że nie popełniłeś błędu rachunkowego."
+          },
+          "tasks": [
+            {
+              "id": "e8-4.2-1",
+              "type": "SINGLE_CHOICE",
+              "points": 1,
+              "source": "CKE Egzamin Ósmoklasisty • Równania",
+              "difficulty": "EASY",
+              "question": "Rozwiązaniem równania $\\frac{x - 3}{2} = 5$ jest liczba",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "$7$"
+                },
+                {
+                  "id": "B",
+                  "text": "$13$"
+                },
+                {
+                  "id": "C",
+                  "text": "$10$"
+                },
+                {
+                  "id": "D",
+                  "text": "$4$"
+                }
+              ],
+              "correct_answer": "B",
+              "explanation": "Mnożymy obie strony równania przez 2: $x - 3 = 10$. Następnie dodajemy 3: $x = 10 + 3 = 13$. Odpowiedź B.",
+              "hint_1": "Pomnóż obie strony równania przez mianownik, czyli przez 2.",
+              "hint_2": "Otrzymasz x - 3 = 10. Przenieś -3 na prawą stronę ze znakiem plus."
+            }
+          ]
+        },
+        {
+          "id": "4.3",
+          "slug": "zadania-tekstowe-z-rownaniami",
+          "title": "Zadania tekstowe prowadzące do równań",
+          "order": 3,
+          "theory_pill": {
+            "title": "Strategia rozwiązywania zadań tekstowych",
+            "core_formula": "$$\\text{Krok 1: Oznacz niewiadomą } x \\\\[4pt] \\text{Krok 2: Ułóż równanie opisujące treść} \\\\[4pt] \\text{Krok 3: Rozwiąż i zapisz odpowiedź z jednostką}$$",
+            "key_takeaway": "Przed rozwiązaniem zadania zawsze precyzyjnie zdefiniuj, czym jest $x$ (np. $x$ – liczba monet Ani).",
+            "trap_alert": "Uważaj na sformułowania: „o 3 więcej” (to $+ 3$), a „3 razy więcej” (to $\\cdot 3$)!",
+            "cke_trap": "Zawsze sprawdź, czy otrzymana odpowiedź ma sens w świecie rzeczywistym (np. liczba osób nie może być ułamkiem ani liczbą ujemną)."
+          },
+          "tasks": [
+            {
+              "id": "e8-4.3-1",
+              "type": "OPEN",
+              "points": 2,
+              "source": "CKE Egzamin Ósmoklasisty • Zadanie otwarte",
+              "difficulty": "MEDIUM",
+              "question": "W skarbonce było łącznie 45 monet – wyłącznie dwuzłotówki i pięciozłotówki. Łączna wartość wszystkich monet wynosiła 150 zł. Ile dwuzłotówek było w tej skarbonce?",
+              "correct_answer": "25",
+              "explanation": "Niech $x$ oznacza liczbę dwuzłotówek. Wtedy liczba pięciozłotówek wynosi $45 - x$. Układamy równanie wartości monet: $2x + 5(45 - x) = 150$. Wymnażamy: $2x + 225 - 5x = 150 \\implies -3x = 150 - 225 \\implies -3x = -75 \\implies x = 25$. W skarbonce było 25 dwuzłotówek.",
+              "hint_1": "Oznacz przez x liczbę dwuzłotówek. Liczba pięciozłotówek to 45 - x.",
+              "hint_2": "Ułóż równanie wartości: 2 · x + 5 · (45 - x) = 150."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "slug": "geometria-plaska-planimetria",
+      "title": "Dział 5: Geometria Płaska (Planimetria)",
+      "short_title": "Geometria Płaska",
+      "icon": "Maximize2",
+      "color": "#8B5CF6",
+      "matura_points_range": "5–8 pkt",
+      "importance": "Największa liczba punktów w części geometrycznej",
+      "description": "Własności trójkątów i czworokątów, twierdzenie Pitagorasa, kąty przyległe i wierzchołkowe, trójkąty 30-60-90 i 45-45-90, pola i obwody.",
+      "lessons": [
+        {
+          "id": "5.1",
+          "slug": "katy-i-trojkaty",
+          "title": "Kąty, cechy przystawania i własności trójkątów",
+          "order": 1,
+          "theory_pill": {
+            "title": "Kąty i trójkąty w pigułce",
+            "core_formula": "$$\\alpha + \\beta + \\gamma = 180^\\circ \\quad (\\text{suma kątów w trójkącie}) \\\\[4pt] \\text{Kąty przyległe: } \\alpha + \\beta = 180^\\circ, \\quad \\text{Kąty wierzchołkowe są równe}$$",
+            "key_takeaway": "Warunek trójkąta: suma dwóch krótszych boków musi być WIĘKSZA od boku najdłuższego ($a + b > c$).",
+            "trap_alert": "Z odcinków o długościach 3 cm, 4 cm i 7 cm NIE można zbudować trójkąta, bo $3 + 4 = 7$ (musi być ostro większe)!",
+            "cke_trap": "W trójkącie równoramiennym kąty przy podstawie są RÓWNE."
+          },
+          "tasks": [
+            {
+              "id": "e8-5.1-1",
+              "type": "SINGLE_CHOICE",
+              "points": 1,
+              "source": "CKE Egzamin Ósmoklasisty • Kąty",
+              "difficulty": "EASY",
+              "question": "W trójkącie równoramiennym kąt między ramionami ma miarę $50^\\circ$. Jaką miarę ma kąt przy podstawie tego trójkąta?",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "$65^\\circ$"
+                },
+                {
+                  "id": "B",
+                  "text": "$50^\\circ$"
+                },
+                {
+                  "id": "C",
+                  "text": "$130^\\circ$"
+                },
+                {
+                  "id": "D",
+                  "text": "$75^\\circ$"
+                }
+              ],
+              "correct_answer": "A",
+              "explanation": "Suma kątów w trójkącie to $180^\\circ$. Na dwa równe kąty przy podstawie przypada $180^\\circ - 50^\\circ = 130^\\circ$. Każdy z nich ma miarę $130^\\circ : 2 = 65^\\circ$. Odpowiedź A.",
+              "hint_1": "Odejmij kąt między ramionami (50°) od 180°.",
+              "hint_2": "Podziel otrzymany wynik przez 2, bo kąty przy podstawie są równe."
+            }
+          ]
+        },
+        {
+          "id": "5.2",
+          "slug": "twierdzenie-pitagorasa",
+          "title": "Twierdzenie Pitagorasa w praktyce CKE",
+          "order": 2,
+          "theory_pill": {
+            "title": "Twierdzenie Pitagorasa",
+            "core_formula": "$$a^2 + b^2 = c^2 \\\\[4pt] \\text{gdzie } a, b \\text{ to przyprostokątne, a } c \\text{ to przeciwprostokątna}$$",
+            "key_takeaway": "Twierdzenie Pitagorasa stosujemy TYLKO w trójkątach prostokątnych! Pamiętaj o trójkach pitagorejskich: (3, 4, 5) oraz (5, 12, 13).",
+            "trap_alert": "Uważaj, co podnosisz do kwadratu: $c$ to zawsze NAJDŁUŻSZY bok leżący naprzeciwko kąta prostego!",
+            "cke_trap": "Trójkąty szczególne: w trójkącie $45^\\circ-45^\\circ-90^\\circ$ przyprostokątne to $a$, a przeciwprostokątna to $a\\sqrt{2}$. W trójkącie $30^\\circ-60^\\circ-90^\\circ$ boki to $a, a\\sqrt{3}, 2a$."
+          },
+          "tasks": [
+            {
+              "id": "e8-5.2-1",
+              "type": "SINGLE_CHOICE",
+              "points": 1,
+              "source": "CKE Egzamin Ósmoklasisty • Pitagoras",
+              "difficulty": "EASY",
+              "question": "W trójkącie prostokątnym przyprostokątne mają długości $6\\text{ cm}$ oraz $8\\text{ cm}$. Długość przeciwprostokątnej tego trójkąta jest równa",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "$14\\text{ cm}$"
+                },
+                {
+                  "id": "B",
+                  "text": "$10\\text{ cm}$"
+                },
+                {
+                  "id": "C",
+                  "text": "$2\\sqrt{7}\\text{ cm}$"
+                },
+                {
+                  "id": "D",
+                  "text": "$100\\text{ cm}$"
+                }
+              ],
+              "correct_answer": "B",
+              "explanation": "Z twierdzenia Pitagorasa: $c^2 = 6^2 + 8^2 = 36 + 64 = 100$. Stąd $c = \\sqrt{100} = 10\\text{ cm}$. Odpowiedź B.",
+              "hint_1": "Zastosuj twierdzenie Pitagorasa: a² + b² = c².",
+              "hint_2": "6² + 8² = 36 + 64 = 100. Pierwiastek ze 100 to 10."
+            }
+          ]
+        },
+        {
+          "id": "5.3",
+          "slug": "czworokaty-i-pola",
+          "title": "Czworokąty: kwadrat, prostokąt, romb, trapez i ich pola",
+          "order": 3,
+          "theory_pill": {
+            "title": "Pola czworokątów",
+            "core_formula": "$$\\text{Romb: } P = \\frac{e \\cdot f}{2}, \\quad \\text{Równoległobok: } P = a \\cdot h \\\\[4pt] \\text{Trapez: } P = \\frac{(a + b) \\cdot h}{2}, \\quad \\text{Trójkąt: } P = \\frac{a \\cdot h}{2}$$",
+            "key_takeaway": "Przekątna kwadratu o boku $a$ wynosi $d = a\\sqrt{2}$. W rombie przekątne przecinają się pod kątem prostym i dzielą na połowy.",
+            "trap_alert": "Wysokość trapezu musi być prostopadła do podstaw! Ramiona trapezu NIE są jego wysokościami (chyba że trapez jest prostokątny)!",
+            "cke_trap": "Pole rombu ze wzoru $\\frac{e \\cdot f}{2}$ dotyczy PRZEKĄTNYCH, a nie boków!"
+          },
+          "tasks": [
+            {
+              "id": "e8-5.3-1",
+              "type": "SINGLE_CHOICE",
+              "points": 1,
+              "source": "CKE Egzamin Ósmoklasisty • Pola",
+              "difficulty": "EASY",
+              "question": "Przekątne rombu mają długości $6\\text{ cm}$ i $10\\text{ cm}$. Pole tego rombu jest równe",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "$60\\text{ cm}^2$"
+                },
+                {
+                  "id": "B",
+                  "text": "$30\\text{ cm}^2$"
+                },
+                {
+                  "id": "C",
+                  "text": "$16\\text{ cm}^2$"
+                },
+                {
+                  "id": "D",
+                  "text": "$32\\text{ cm}^2$"
+                }
+              ],
+              "correct_answer": "B",
+              "explanation": "Pole rombu obliczamy ze wzoru $P = \\frac{e \\cdot f}{2} = \\frac{6 \\cdot 10}{2} = \\frac{60}{2} = 30\\text{ cm}^2$. Odpowiedź B.",
+              "hint_1": "Skorzystaj ze wzoru na pole rombu z użyciem przekątnych: P = (e · f) / 2.",
+              "hint_2": "Pomnóż długości przekątnych i podziel przez 2."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "slug": "geometria-przestrzenna-stereometria",
+      "title": "Dział 6: Geometria Przestrzenna (Stereometria)",
+      "short_title": "Geometria Przestrzenna",
+      "icon": "Box",
+      "color": "#3B82F6",
+      "matura_points_range": "3–6 pkt",
+      "importance": "Klasyczne zadanie otwarte na objętość lub siatkę",
+      "description": "Sześciany, prostopadłościany, graniastosłupy proste, ostrosłupy, siatki brył, pole powierzchni całkowitej oraz objętość.",
+      "lessons": [
+        {
+          "id": "6.1",
+          "slug": "szesciany-i-prostopadlosciany",
+          "title": "Sześcian i prostopadłościan: krawędzie, siatki, pola i objętości",
+          "order": 1,
+          "theory_pill": {
+            "title": "Prostopadłościan i sześcian",
+            "core_formula": "$$\\text{Sześcian: } V = a^3, \\quad P_c = 6a^2, \\quad \\text{Suma krawędzi: } 12a \\\\[4pt] \\text{Prostopadłościan: } V = a \\cdot b \\cdot c, \\quad P_c = 2(ab + bc + ac)$$",
+            "key_takeaway": "Pamiętaj o liczbie elementów: prostopadłościan ma 8 wierzchołków, 12 krawędzi i 6 ścian!",
+            "trap_alert": "1 litr to 1 dm³ (czyli 1000 cm³), a NIE 100 cm³!",
+            "cke_trap": "Suma długości wszystkich krawędzi prostopadłościanu to $4a + 4b + 4c = 4(a + b + c)$."
+          },
+          "tasks": [
+            {
+              "id": "e8-6.1-1",
+              "type": "SINGLE_CHOICE",
+              "points": 1,
+              "source": "CKE Egzamin Ósmoklasisty • Stereometria",
+              "difficulty": "EASY",
+              "question": "Suma długości wszystkich krawędzi sześcianu wynosi $72\\text{ cm}$. Objętość tego sześcianu jest równa",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "$216\\text{ cm}^3$"
+                },
+                {
+                  "id": "B",
+                  "text": "$36\\text{ cm}^3$"
+                },
+                {
+                  "id": "C",
+                  "text": "$512\\text{ cm}^3$"
+                },
+                {
+                  "id": "D",
+                  "text": "$72\\text{ cm}^3$"
+                }
+              ],
+              "correct_answer": "A",
+              "explanation": "Sześcian ma 12 krawędzi. Długość jednej krawędzi to $a = 72\\text{ cm} : 12 = 6\\text{ cm}$. Objętość sześcianu: $V = a^3 = 6^3 = 216\\text{ cm}^3$. Odpowiedź A.",
+              "hint_1": "Ile krawędzi ma sześcian? Podziel 72 przez 12, aby znaleźć długość krawędzi a.",
+              "hint_2": "Podnieś krawędź do potęgi trzeciej: V = a³."
+            }
+          ]
+        },
+        {
+          "id": "6.2",
+          "slug": "graniastoslupy-i-ostroslupy",
+          "title": "Graniastosłupy proste i ostrosłupy w zadaniach CKE",
+          "order": 2,
+          "theory_pill": {
+            "title": "Graniastosłupy i ostrosłupy",
+            "core_formula": "$$\\text{Graniastosłup: } V = P_p \\cdot H, \\quad P_c = 2P_p + P_b \\\\[4pt] \\text{Ostrosłup: } V = \\frac{1}{3} P_p \\cdot H, \\quad P_c = P_p + P_b$$",
+            "key_takeaway": "Wzór na objętość ostrosłupa ma ułamek 1/3! Zawsze identyfikuj figurę będącą podstawą ($P_p$).",
+            "trap_alert": "Graniastosłup $n$-kątny ma $2n$ wierzchołków i $3n$ krawędzi. Ostrosłup $n$-kątny ma $n+1$ wierzchołków i $2n$ krawędzi!",
+            "cke_trap": "Pole boczne ($P_b$) to suma pól WSZYSTKICH ścian bocznych, a nie jednej ściany."
+          },
+          "tasks": [
+            {
+              "id": "e8-6.2-1",
+              "type": "SINGLE_CHOICE",
+              "points": 1,
+              "source": "CKE Egzamin Ósmoklasisty • Graniastosłupy",
+              "difficulty": "MEDIUM",
+              "question": "Ile wierzchołków ma graniastosłup, który ma 18 krawędzi?",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "$12$"
+                },
+                {
+                  "id": "B",
+                  "text": "$9$"
+                },
+                {
+                  "id": "C",
+                  "text": "$6$"
+                },
+                {
+                  "id": "D",
+                  "text": "$18$"
+                }
+              ],
+              "correct_answer": "A",
+              "explanation": "Graniastosłup $n$-kątny ma $3n$ krawędzi. Zatem $3n = 18 \\implies n = 6$ (jest to graniastosłup sześciokątny). Liczba wierzchołków wynosi $2n = 2 \\cdot 6 = 12$. Odpowiedź A.",
+              "hint_1": "Liczba krawędzi graniastosłupa o podstawie n-kąta to 3n.",
+              "hint_2": "Podziel 18 przez 3, a następnie pomnóż przez 2, aby obliczyć liczbę wierzchołków (2n)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "slug": "statystyka-i-prawdopodobienstwo",
+      "title": "Dział 7: Statystyka i Prawdopodobieństwo",
+      "short_title": "Statystyka i Szansa",
+      "icon": "BarChart3",
+      "color": "#F97316",
+      "matura_points_range": "2–4 pkt",
+      "importance": "Wysoka powtarzalność w zadaniach zamkniętych i P/F",
+      "description": "Odczytywanie danych z diagramów słupkowych i kołowych, średnia arytmetyczna, prawdopodobieństwo klasyczne zdarzeń losowych.",
+      "lessons": [
+        {
+          "id": "7.1",
+          "slug": "diagramy-i-srednia",
+          "title": "Odczytywanie diagramów i średnia arytmetyczna",
+          "order": 1,
+          "theory_pill": {
+            "title": "Średnia arytmetyczna",
+            "core_formula": "$$\\bar{x} = \\frac{x_1 + x_2 + \\dots + x_n}{n}$$",
+            "key_takeaway": "Średnia to suma wszystkich wartości podzielona przez ich liczbę. Jeśli średnia 4 ocen to 4,5, to ich suma wynosi $4 \\cdot 4{,}5 = 18$.",
+            "trap_alert": "W diagramach kołowych pełne koło to $100\\%$ oraz $360^\\circ$. 25% odpowiada kątowi $90^\\circ$!",
+            "cke_trap": "Uważaj na zera w danych: liczba zerowych wyników powiększa mianownik $n$!"
+          },
+          "tasks": [
+            {
+              "id": "e8-7.1-1",
+              "type": "SINGLE_CHOICE",
+              "points": 1,
+              "source": "CKE Egzamin Ósmoklasisty • Średnia",
+              "difficulty": "EASY",
+              "question": "Marek otrzymał z czterech sprawdzianów oceny: 3, 4, 4, 5. Jaką ocenę musi otrzymać z piątego sprawdzianu, aby średnia jego ocen wynosiła dokładnie 4,2?",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "$5$"
+                },
+                {
+                  "id": "B",
+                  "text": "$6$"
+                },
+                {
+                  "id": "C",
+                  "text": "$4$"
+                },
+                {
+                  "id": "D",
+                  "text": "$4{,}5$"
+                }
+              ],
+              "correct_answer": "A",
+              "explanation": "Aby średnia z 5 ocen wynosiła 4,2, suma wszystkich pięciu ocen musi wynosić $5 \\cdot 4{,}2 = 21$. Suma czterech otrzymanych ocen to $3 + 4 + 4 + 5 = 16$. Piąta ocena to $21 - 16 = 5$. Odpowiedź A.",
+              "hint_1": "Pomnóż pożądaną średnią 4,2 przez 5 sprawdzianów.",
+              "hint_2": "Odejmij sumę pierwszych czterech ocen (16) od 21."
+            }
+          ]
+        },
+        {
+          "id": "7.2",
+          "slug": "prawdopodobienstwo-klasyczne",
+          "title": "Prawdopodobieństwo klasyczne (kule, kostki, monety)",
+          "order": 2,
+          "theory_pill": {
+            "title": "Prawdopodobieństwo klasyczne",
+            "core_formula": "$$P(A) = \\frac{|A|}{|\\Omega|} = \\frac{\\text{liczba zdarzeń sprzyjających}}{\\text{liczba wszystkich możliwych zdarzeń}}$$",
+            "key_takeaway": "Prawdopodobieństwo ZAWSZE mieści się w przedziale od 0 do 1 ($0 \\le P(A) \\le 1$).",
+            "trap_alert": "Jeśli z pudełka wyjmiemy jedną kulę bez zwracania, to w kolejnym losowaniu zmniejsza się zarówno liczba kul danego koloru, jak i WSZYSTKICH kul w pudełku!",
+            "cke_trap": "Nigdy nie pisz prawdopodobieństwa większego niż 1 ani ujemnego!"
+          },
+          "tasks": [
+            {
+              "id": "e8-7.2-1",
+              "type": "SINGLE_CHOICE",
+              "points": 1,
+              "source": "CKE Egzamin Ósmoklasisty • Prawdopodobieństwo",
+              "difficulty": "EASY",
+              "question": "W nieprzezroczystym worku znajduje się 6 kul białych, 4 kule czarne i 5 kul zielonych. Losujemy jedną kulę. Jakie jest prawdopodobieństwo, że wylosowana kula będzie czarna?",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "$\\frac{4}{15}$"
+                },
+                {
+                  "id": "B",
+                  "text": "$\\frac{1}{4}$"
+                },
+                {
+                  "id": "C",
+                  "text": "$\\frac{4}{11}$"
+                },
+                {
+                  "id": "D",
+                  "text": "$\\frac{1}{3}$"
+                }
+              ],
+              "correct_answer": "A",
+              "explanation": "Łączna liczba kul w worku wynosi $6 + 4 + 5 = 15$. Kul czarnych jest 4. Prawdopodobieństwo wylosowania kuli czarnej wynosi $P = \\frac{4}{15}$. Odpowiedź A.",
+              "hint_1": "Policz wszystkie kule w worku: 6 + 4 + 5 = 15.",
+              "hint_2": "Podziel liczbę kul czarnych (4) przez liczbę wszystkich kul (15)."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
