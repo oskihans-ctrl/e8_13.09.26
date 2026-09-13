@@ -596,8 +596,8 @@ export function TaskView({ taskData, userState, onCompleteTask, onCancelTask }: 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          question: activeTask.math_statement || activeTask.question,
-          instruction: activeTask.instruction,
+          question: activeTask.math_statement || activeTask.question || '',
+          instruction: activeTask.instruction || '',
           studentAnswer: openProofText || 'Uczeń prosi o pierwszą ukierunkowaną wskazówkę',
           staticHint: activeTask.hints?.level_1
         })
@@ -605,11 +605,12 @@ export function TaskView({ taskData, userState, onCompleteTask, onCancelTask }: 
 
       if (res.ok) {
         const data = await res.json();
-        setAiTutorResponse(data.reply || activeTask.hints?.level_1 || 'Zwróć uwagę na rozkład na czynniki i własności liczb naturalnych.');
+        setAiTutorResponse(data?.reply || activeTask.hints?.level_1 || 'Zwróć uwagę na rozkład na czynniki i własności liczb naturalnych.');
       } else {
         setAiTutorResponse(activeTask.hints?.level_1 || 'Spróbuj wyłączyć wspólny czynnik przed nawias.');
       }
-    } catch {
+    } catch (err) {
+      console.warn("AI Tutor request error:", err);
       setAiTutorResponse(activeTask.hints?.level_1 || 'Zastosuj wzory skróconego mnożenia lub rozkład na czynniki liniowe.');
     } finally {
       setIsAiLoading(false);
