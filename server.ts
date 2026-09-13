@@ -69,18 +69,18 @@ BEZWZGLĘDNE REGUŁY:
       let response;
       try {
         response = await ai.models.generateContent({
-          model: 'gemini-3.1-flash-lite',
+          model: 'gemini-2.5-flash',
           contents: contents,
         });
       } catch (err: any) {
         try {
           response = await ai.models.generateContent({
-            model: 'gemini-flash-latest',
+            model: 'gemini-2.0-flash',
             contents: contents,
           });
         } catch (err2: any) {
           response = await ai.models.generateContent({
-            model: 'gemini-3.8-flash',
+            model: 'gemini-1.5-flash',
             contents: contents,
           });
         }
@@ -308,21 +308,21 @@ ZASADY OCENIANIA MATURALNEGO:
       let response;
       try {
         response = await ai.models.generateContent({
-          model: 'gemini-3.1-flash-lite',
+          model: 'gemini-2.5-flash',
           contents,
           config: evaluationConfig
         });
       } catch (err: any) {
         try {
           response = await ai.models.generateContent({
-            model: 'gemini-flash-latest',
+            model: 'gemini-2.0-flash',
             contents,
             config: evaluationConfig
           });
         } catch (err2: any) {
           try {
             response = await ai.models.generateContent({
-              model: 'gemini-3.8-flash',
+              model: 'gemini-1.5-flash',
               contents,
               config: evaluationConfig
             });
@@ -338,7 +338,19 @@ ZASADY OCENIANIA MATURALNEGO:
         }
       }
 
-      const parsed = JSON.parse(response.text || '{}');
+      let parsed;
+      try {
+        parsed = JSON.parse(response.text || '{}');
+      } catch (jsonErr) {
+        return res.json(evaluateFallback({
+          cleanAnswer,
+          officialKey,
+          maxPts,
+          isFirstAttempt,
+          ai_tutor_rubric
+        }));
+      }
+
       res.json(parsed);
     } catch (error: any) {
       const cleanAnswer = typeof req.body?.studentAnswer === 'string' ? req.body.studentAnswer.trim() : '';
