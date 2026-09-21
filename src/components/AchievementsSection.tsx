@@ -1,61 +1,38 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import { 
   Trophy, 
+  Coins, 
+  Crown, 
+  Gift, 
+  Lock, 
+  ChevronDown, 
+  ChevronUp, 
   CheckCircle2, 
+  Sparkles, 
   Swords, 
   GraduationCap, 
   Flame, 
-  Sparkles, 
-  Crown, 
-  Coins, 
-  Zap, 
-  Shield, 
-  ShieldCheck, 
-  Star, 
-  Gift,
-  Lock,
-  ChevronDown,
-  ChevronUp
+  Star 
 } from 'lucide-react';
-import { 
-  ACHIEVEMENTS, 
-  Achievement, 
-  AchievementCategory, 
-  getAchievementProgress, 
-  AchievementContext 
-} from '../data/achievements';
-import { UserState } from '../types';
+import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
+import { ACHIEVEMENTS, getAchievementProgress, AchievementContext } from '../data/achievements';
 import { triggerHaptic } from '../utils';
 
 interface AchievementsSectionProps {
-  userState: UserState;
-  completedTasks: string[];
-  onClaimTier: (achievementId: string, tierNumber: number) => void;
+  context: AchievementContext;
+  claimedAchievements?: Record<string, number>;
+  onClaimTier: (achievementId: string, tier: number) => void;
 }
 
 export function AchievementsSection({
-  userState,
-  completedTasks,
+  context,
+  claimedAchievements = {},
   onClaimTier
 }: AchievementsSectionProps) {
-  const [selectedCategory, setSelectedCategory] = useState<AchievementCategory | 'all' | 'claimable'>('all');
+  const [selectedCategory, setSelectedCategory] = useState<'all' | 'claimable' | 'tasks' | 'arena' | 'streak' | 'matura'>('all');
   const [expandedAchievementId, setExpandedAchievementId] = useState<string | null>(null);
 
-  const context: AchievementContext = {
-    completedTasksCount: completedTasks.length,
-    arenaWins: userState.arenaWins || 0,
-    arenaRating: userState.arenaRating || 1000,
-    streakDays: userState.streakDays || 0,
-    maturaAttempts: userState.maturaAttempts || 0,
-    maturaBestScore: userState.maturaBestScore || 0,
-    level: userState.level || 1
-  };
-
-  const claimedAchievements = userState.claimedAchievements || {};
-
-  // Compute stats
   let totalClaimableCount = 0;
   let totalTiersUnlocked = 0;
   let totalTiersCount = 0;
@@ -78,85 +55,82 @@ export function AchievementsSection({
 
   const getCategoryIcon = (iconName: string) => {
     switch (iconName) {
-      case 'CheckCircle2': return <CheckCircle2 size={20} />;
-      case 'Swords': return <Swords size={20} />;
-      case 'Trophy': return <Trophy size={20} />;
-      case 'GraduationCap': return <GraduationCap size={20} />;
-      case 'Flame': return <Flame size={20} />;
-      case 'Sparkles': return <Sparkles size={20} />;
-      default: return <Star size={20} />;
+      case 'CheckCircle2': return <CheckCircle2 size={18} />;
+      case 'Swords': return <Swords size={18} />;
+      case 'Trophy': return <Trophy size={18} />;
+      case 'GraduationCap': return <GraduationCap size={18} />;
+      case 'Flame': return <Flame size={18} />;
+      case 'Sparkles': return <Sparkles size={18} />;
+      default: return <Star size={18} />;
     }
   };
 
   const handleClaim = (achId: string, tierNum: number) => {
     triggerHaptic('heavy');
     confetti({
-      particleCount: 80,
-      spread: 60,
+      particleCount: 60,
+      spread: 50,
       origin: { y: 0.7 }
     });
     onClaimTier(achId, tierNum);
   };
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-4">
       {/* Overview Banner */}
-      <div className="bg-[#141A23] border border-white/5 rounded-[24px] p-5 relative shadow-lg">
+      <div className="bg-white dark:bg-[#131B29] border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-xs">
         <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-[#0B0E14] border border-[#F59E0B]/30 flex items-center justify-center shadow-[0_0_15px_rgba(245,158,11,0.2)]">
-              <Trophy size={24} className="text-[#F59E0B]" />
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
+              <Trophy size={20} className="text-amber-500" />
             </div>
             <div>
-              <h2 className="text-base font-display font-black text-white leading-tight">Centrum Gracza & Odznaki</h2>
-              <span className="text-xs text-[#9CA3AF]">
-                {totalTiersUnlocked} z {totalTiersCount} rang odblokowanych
+              <h2 className="text-base font-display font-bold text-slate-900 dark:text-white leading-tight">Osiągnięcia i Rangi</h2>
+              <span className="text-xs text-slate-500 dark:text-slate-400">
+                {totalTiersUnlocked} z {totalTiersCount} poziomów odblokowanych
               </span>
             </div>
           </div>
           {totalClaimableCount > 0 && (
-            <motion.button
-              animate={{ 
-                scale: [1, 1.05, 1],
-                boxShadow: ['0px 0px 0px rgba(16, 185, 129, 0)', '0px 0px 15px rgba(16, 185, 129, 0.5)', '0px 0px 0px rgba(16, 185, 129, 0)']
-              }}
-              transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+            <button
+              type="button"
               onClick={() => setSelectedCategory('claimable')}
-              className="bg-gradient-to-r from-emerald-500 to-emerald-400 text-black font-black text-[11px] px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-lg"
+              className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer"
             >
-              <Gift size={14} />
-              {totalClaimableCount} do odebrania!
-            </motion.button>
+              <Gift size={13} />
+              {totalClaimableCount} do odebrania
+            </button>
           )}
         </div>
         
         {/* Global Progress Bar */}
-        <div className="mb-2">
-          <div className="flex justify-between text-[10px] font-bold mb-1.5">
-            <span className="text-[#9CA3AF] uppercase tracking-wider">Postęp Kolekcji</span>
-            <span className="text-[#00D2FF] font-mono">
+        <div>
+          <div className="flex justify-between text-[11px] font-bold mb-1.5">
+            <span className="text-slate-400 uppercase tracking-wider text-[10px]">Postęp kolekcji</span>
+            <span className="text-slate-900 dark:text-white font-mono">
               {Math.round((totalTiersUnlocked / Math.max(1, totalTiersCount)) * 100)}%
             </span>
           </div>
-          <div className="w-full h-2 bg-white/5 rounded-full shadow-inner">
+          <div className="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
             <motion.div
-              className="h-full rounded-full bg-gradient-to-r from-[#3B82F6] to-[#00D2FF] shadow-[0_0_10px_rgba(0,210,255,0.5)]"
+              className="h-full rounded-full bg-amber-500"
               initial={{ width: 0 }}
               animate={{ width: `${(totalTiersUnlocked / Math.max(1, totalTiersCount)) * 100}%` }}
-              transition={{ duration: 1, ease: 'easeOut' }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
             />
           </div>
         </div>
       </div>
 
       {/* Categories Filter Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+      <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
         <button
+          type="button"
           onClick={() => setSelectedCategory('all')}
-          className={`shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all border ${
+          className={`shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition-all border cursor-pointer ${
             selectedCategory === 'all'
-              ? 'bg-[#D1D5DB] text-black border-[#D1D5DB] shadow-md'
-              : 'bg-[#141A23] text-[#9CA3AF] border-white/5 hover:text-white hover:bg-white/5'
+              ? 'bg-amber-500 text-slate-950 border-amber-600 shadow-xs'
+              : 'bg-white dark:bg-[#131B29] text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:text-slate-900 dark:hover:text-white'
           }`}
         >
           Wszystkie ({achievementsWithProgress.length})
@@ -164,143 +138,145 @@ export function AchievementsSection({
 
         {totalClaimableCount > 0 && (
           <button
+            type="button"
             onClick={() => setSelectedCategory('claimable')}
-            className={`shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all border flex items-center gap-1.5 ${
+            className={`shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition-all border flex items-center gap-1.5 cursor-pointer ${
               selectedCategory === 'claimable'
-                ? 'bg-sky-500 text-black border-sky-400 shadow-md'
-                : 'bg-sky-500/10 text-sky-400 border-sky-500/30 hover:bg-sky-500/20'
+                ? 'bg-amber-500 text-slate-950 border-amber-600 shadow-xs'
+                : 'bg-amber-50 dark:bg-amber-950/20 text-amber-800 dark:text-amber-400 border-amber-300 dark:border-amber-800'
             }`}
           >
-            <Sparkles size={13} />
+            <Sparkles size={12} />
             <span>Do odebrania ({totalClaimableCount})</span>
           </button>
         )}
 
         <button
+          type="button"
           onClick={() => setSelectedCategory('tasks')}
-          className={`shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all border ${
+          className={`shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition-all border cursor-pointer ${
             selectedCategory === 'tasks'
-              ? 'bg-blue-600 text-white border-blue-500 shadow-md'
-              : 'bg-[#141A23] text-[#9CA3AF] border-white/5 hover:text-white hover:bg-white/5'
+              ? 'bg-amber-500 text-slate-950 border-amber-600 shadow-xs'
+              : 'bg-white dark:bg-[#131B29] text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:text-slate-900 dark:hover:text-white'
           }`}
         >
-          Zadania Egzaminacyjne
+          Zadania
         </button>
 
         <button
+          type="button"
           onClick={() => setSelectedCategory('arena')}
-          className={`shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all border ${
+          className={`shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition-all border cursor-pointer ${
             selectedCategory === 'arena'
-              ? 'bg-red-600 text-white border-red-500 shadow-md'
-              : 'bg-[#141A23] text-[#9CA3AF] border-white/5 hover:text-white hover:bg-white/5'
+              ? 'bg-amber-500 text-slate-950 border-amber-600 shadow-xs'
+              : 'bg-white dark:bg-[#131B29] text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:text-slate-900 dark:hover:text-white'
           }`}
         >
           Arena 1v1
         </button>
 
         <button
+          type="button"
           onClick={() => setSelectedCategory('streak')}
-          className={`shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all border ${
+          className={`shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition-all border cursor-pointer ${
             selectedCategory === 'streak'
-              ? 'bg-orange-600 text-white border-orange-500 shadow-md'
-              : 'bg-[#141A23] text-[#9CA3AF] border-white/5 hover:text-white hover:bg-white/5'
+              ? 'bg-amber-500 text-slate-950 border-amber-600 shadow-xs'
+              : 'bg-white dark:bg-[#131B29] text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:text-slate-900 dark:hover:text-white'
           }`}
         >
-          Wytrwałość
+          Dni z rzędu
         </button>
 
         <button
+          type="button"
           onClick={() => setSelectedCategory('matura')}
-          className={`shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all border ${
+          className={`shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition-all border cursor-pointer ${
             selectedCategory === 'matura'
-              ? 'bg-purple-600 text-white border-purple-500 shadow-md'
-              : 'bg-[#141A23] text-[#9CA3AF] border-white/5 hover:text-white hover:bg-white/5'
+              ? 'bg-amber-500 text-slate-950 border-amber-600 shadow-xs'
+              : 'bg-white dark:bg-[#131B29] text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:text-slate-900 dark:hover:text-white'
           }`}
         >
-          Symulator
+          Egzamin CKE
         </button>
       </div>
 
       {/* Achievements Cards List */}
-      <div className="space-y-4">
+      <div className="space-y-3">
         {filtered.map(item => {
           const ach = item.achievement;
           const isExpanded = expandedAchievementId === ach.id;
           const nextTier = item.activeTier;
-          const prevTier = item.claimedTier > 0 
-            ? ach.tiers.find(t => t.tier === item.claimedTier) 
-            : null;
             
           const isEarned = item.claimedTier > 0;
           const isLocked = !isEarned && !item.canClaim;
 
           return (
-            <motion.div
+            <div
               key={ach.id}
-              layout
-              className={`rounded-[20px] transition-all shadow-md border ${
+              className={`rounded-2xl transition-all border shadow-xs ${
                 item.canClaim 
-                  ? 'border-[#10B981]/60 shadow-[0_0_20px_rgba(16,185,129,0.15)] bg-[#10B981]/[0.03]' 
+                  ? 'border-amber-400 dark:border-amber-600 bg-amber-50/40 dark:bg-amber-950/10' 
                   : isEarned
-                  ? 'border-sky-500/30 bg-[#141A23] shadow-[0_4px_20px_rgba(14,165,233,0.08)]'
-                  : 'border-white/5 bg-[#0D121B] opacity-65 grayscale'
+                  ? 'border-slate-200 dark:border-slate-800 bg-white dark:bg-[#131B29]'
+                  : 'border-slate-200/60 dark:border-slate-800/60 bg-slate-50/50 dark:bg-slate-900/30 opacity-75'
               }`}
             >
-              <div className="p-5">
-                <div className="flex items-start gap-4 mb-3">
+              <div className="p-4 sm:p-5">
+                <div className="flex items-start gap-3.5">
                   {/* Icon */}
-                  <div className={`w-14 h-14 rounded-xl flex items-center justify-center shrink-0 border shadow-inner ${
+                  <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 border ${
                     item.isFullyCompleted 
-                      ? 'bg-gradient-to-br from-sky-400/20 to-blue-500/30 text-sky-400 border-sky-400/40 shadow-[0_0_15px_rgba(14,165,233,0.3)]'
+                      ? 'bg-amber-500/15 text-amber-700 dark:text-amber-400 border-amber-500/30'
                       : item.canClaim
-                      ? 'bg-gradient-to-br from-[#10B981]/20 to-emerald-600/20 text-[#10B981] border-[#10B981]/40 animate-pulse'
+                      ? 'bg-amber-500/20 text-amber-900 dark:text-amber-200 border-amber-500/40'
                       : isEarned
-                      ? 'bg-gradient-to-br from-sky-500/20 to-blue-600/20 text-sky-400 border-sky-500/30'
-                      : 'bg-[#0B0E14] text-[#6B7280] border-white/5 relative'
+                      ? 'bg-slate-100 dark:bg-slate-800 text-amber-600 dark:text-amber-400 border-slate-200 dark:border-slate-700'
+                      : 'bg-slate-100 dark:bg-slate-800 text-slate-400 border-slate-200 dark:border-slate-700'
                   }`}>
-                    {isLocked ? <Lock size={22} /> : (isEarned ? <Trophy size={24} className="text-sky-400" /> : getCategoryIcon(ach.iconName))}
+                    {isLocked ? <Lock size={18} /> : (isEarned ? <Trophy size={18} /> : getCategoryIcon(ach.iconName))}
                   </div>
                   
                   {/* Title & Desc */}
                   <div className="flex-1 min-w-0 pt-0.5">
-                    <div className="flex items-center gap-2 flex-wrap mb-1">
-                      <h3 className="font-black text-white text-[15px]">{ach.name}</h3>
-                      <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded-md flex items-center gap-1 border ${
+                    <div className="flex items-center gap-2 flex-wrap mb-0.5">
+                      <h3 className="font-bold text-slate-900 dark:text-white text-sm">{ach.name}</h3>
+                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md border ${
                         item.isFullyCompleted 
-                          ? 'bg-sky-400/15 text-sky-300 border-sky-400/30' 
+                          ? 'bg-amber-500/15 text-amber-800 dark:text-amber-300 border-amber-500/30' 
                           : isEarned
-                          ? 'bg-sky-500/15 text-sky-400 border-sky-500/30' 
+                          ? 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700' 
                           : item.canClaim
-                          ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
-                          : 'bg-white/5 text-[#8B8D98] border-white/5'
+                          ? 'bg-amber-500/20 text-amber-900 dark:text-amber-200 border-amber-500/40'
+                          : 'bg-slate-100 dark:bg-slate-800 text-slate-400 border-slate-200 dark:border-slate-700'
                       }`}>
                         {item.isFullyCompleted 
-                           ? 'Mistrz ★ (Zdobyta ✓)' 
+                           ? 'Ukończone ★' 
                            : isEarned 
-                           ? `Ranga ${item.claimedTier} (Zdobyta ✓)` 
+                           ? `Poziom ${item.claimedTier}` 
                            : 'Do odblokowania'}
                       </span>
                     </div>
-                    <p className="text-[12px] text-[#9CA3AF] leading-snug">{ach.description}</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{ach.description}</p>
                   </div>
 
                   {/* Expand Toggle */}
                   <button 
+                    type="button"
                     onClick={() => setExpandedAchievementId(isExpanded ? null : ach.id)}
-                    className="p-1.5 rounded-lg text-[#9CA3AF] hover:text-white hover:bg-white/5 transition-colors shrink-0"
+                    className="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0 cursor-pointer"
                   >
-                    {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                    {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                   </button>
                 </div>
 
                 {/* Condition row for unearned achievements */}
                 {isLocked && nextTier && (
-                  <div className="mt-2.5 py-2 px-3 bg-white/[0.03] rounded-xl border border-white/5 flex items-center justify-between text-[11px]">
-                    <div className="flex items-center gap-1.5 text-white/80">
-                      <Lock size={12} className="text-sky-400/70" />
-                      <span>Warunek: <strong className="text-white font-bold">{nextTier.target} {ach.unit}</strong></span>
+                  <div className="mt-3 py-1.5 px-3 bg-white dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center justify-between text-xs">
+                    <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-300">
+                      <Lock size={12} className="text-amber-500" />
+                      <span>Wymóg: <strong className="text-slate-900 dark:text-white font-bold">{nextTier.target} {ach.unit}</strong></span>
                     </div>
-                    <span className="text-[10px] font-bold text-[#8B8D98]">
+                    <span className="text-[11px] font-bold text-slate-400">
                       Postęp: {item.currentValue} / {nextTier.target}
                     </span>
                   </div>
@@ -308,49 +284,41 @@ export function AchievementsSection({
 
                 {/* Progress bar & Claim button */}
                 {!item.isFullyCompleted && nextTier && (
-                  <div className="mt-4">
-                    <div className="flex justify-between items-center text-[11px] mb-2">
-                      <span className="text-[#9CA3AF]">
-                        Ranga {nextTier.tier}: <strong className="text-white font-bold">{nextTier.tierName}</strong>
+                  <div className="mt-3">
+                    <div className="flex justify-between items-center text-xs mb-1.5">
+                      <span className="text-slate-500 dark:text-slate-400">
+                        Poziom {nextTier.tier}: <strong className="text-slate-900 dark:text-white font-bold">{nextTier.tierName}</strong>
                       </span>
-                      <span className="font-mono font-bold text-[#D1D5DB]">
+                      <span className="font-mono font-bold text-slate-700 dark:text-slate-300 text-[11px]">
                         {item.currentValue} / {nextTier.target} {ach.unit}
                       </span>
                     </div>
                     
-                    <div className="w-full h-2 bg-[#0B0E14] rounded-full mb-3 border border-white/5">
+                    <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden mb-2.5">
                       <div 
-                        className={`h-full rounded-full transition-all duration-500 ${
-                          item.canClaim 
-                            ? 'bg-gradient-to-r from-[#10B981] to-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.5)]' 
-                            : 'bg-gradient-to-r from-[#3B82F6] to-[#00D2FF]'
-                        }`}
+                        className="h-full rounded-full transition-all duration-300 bg-amber-500"
                         style={{ width: `${item.progressPercent}%` }}
                       />
                     </div>
                     
                     {/* Rewards Preview */}
-                    <div className="flex items-center justify-between mt-3">
-                      <div className="flex flex-wrap items-center gap-2 text-[10px] font-black">
-                        <span className="flex items-center gap-1.5 text-[#F59E0B] bg-[#F59E0B]/10 px-2.5 py-1 rounded-md border border-[#F59E0B]/20">
-                          <Coins size={12} /> +{nextTier.rewardCoins}
+                    <div className="flex items-center justify-between">
+                      <div className="flex flex-wrap items-center gap-1.5 text-xs font-bold">
+                        <span className="flex items-center gap-1 text-amber-800 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-md border border-amber-500/20 text-[11px]">
+                          <Coins size={11} /> +{nextTier.rewardCoins}
                         </span>
-                        <span className="flex items-center gap-1.5 text-[#A855F7] bg-[#A855F7]/10 px-2.5 py-1 rounded-md border border-[#A855F7]/20">
-                          <Crown size={12} /> +{nextTier.rewardTokens}
+                        <span className="flex items-center gap-1 text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md border border-slate-200 dark:border-slate-700 text-[11px]">
+                          <Crown size={11} /> +{nextTier.rewardTokens}
                         </span>
-                        {nextTier.rewardPerkDesc && (
-                          <span className="flex items-center gap-1 text-[#10B981] bg-[#10B981]/10 px-2.5 py-1 rounded-md border border-[#10B981]/20">
-                            {nextTier.rewardPerkDesc}
-                          </span>
-                        )}
                       </div>
                       
                       {item.canClaim && (
                         <button 
+                          type="button"
                           onClick={() => handleClaim(ach.id, nextTier.tier)}
-                          className="px-4 py-1.5 bg-gradient-to-r from-[#10B981] to-emerald-500 text-black font-black text-[11px] uppercase tracking-wider rounded-lg flex items-center gap-1.5 hover:scale-105 active:scale-95 transition-transform shadow-[0_0_15px_rgba(16,185,129,0.4)]"
+                          className="px-3.5 py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-xl flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer"
                         >
-                          <Gift size={14} />
+                          <Gift size={13} />
                           Odbierz
                         </button>
                       )}
@@ -359,12 +327,12 @@ export function AchievementsSection({
                 )}
                 
                 {item.isFullyCompleted && (
-                  <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/5">
-                    <div className="flex items-center gap-2 text-[12px] text-[#10B981] font-black">
-                      <CheckCircle2 size={16} />
-                      Wszystkie rangi zdobyte
+                  <div className="flex items-center justify-between mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 text-xs">
+                    <div className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-bold">
+                      <CheckCircle2 size={14} />
+                      Wszystkie poziomy zdobyte
                     </div>
-                    <span className="text-[12px] font-mono font-black text-[#9CA3AF]">
+                    <span className="font-mono font-bold text-slate-400 text-[11px]">
                       {item.currentValue} {ach.unit}
                     </span>
                   </div>
@@ -378,10 +346,10 @@ export function AchievementsSection({
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    className="border-t border-white/5 bg-[#0B0E14] p-5 space-y-3"
+                    className="border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40 p-4 space-y-2"
                   >
-                    <span className="text-[10px] uppercase font-black text-[#9CA3AF] tracking-wider block mb-2">
-                      Historia rang:
+                    <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block mb-1">
+                      Poziomy osiągnięcia:
                     </span>
                     {ach.tiers.map(t => {
                       const isClaimed = t.tier <= item.claimedTier;
@@ -389,45 +357,45 @@ export function AchievementsSection({
                       return (
                         <div 
                           key={t.tier}
-                          className={`p-3.5 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs transition-all ${
+                          className={`p-2.5 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs transition-all ${
                             isClaimed 
-                              ? 'bg-[#10B981]/[0.05] border-[#10B981]/20 text-white' 
+                              ? 'bg-emerald-50/50 dark:bg-emerald-950/10 border-emerald-200 dark:border-emerald-800/40 text-emerald-900 dark:text-emerald-300' 
                               : isNext
-                              ? 'bg-[#3B82F6]/[0.05] border-[#3B82F6]/30 text-white'
-                              : 'bg-white/[0.02] border-white/5 text-[#9CA3AF] opacity-60'
+                              ? 'bg-amber-50/50 dark:bg-amber-950/10 border-amber-300 dark:border-amber-800/40 text-amber-900 dark:text-amber-200 font-medium'
+                              : 'bg-white dark:bg-[#131B29] border-slate-200 dark:border-slate-800 text-slate-400'
                           }`}
                         >
-                          <div className="flex items-center gap-3">
-                            <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-black text-xs ${
+                          <div className="flex items-center gap-2.5">
+                            <div className={`w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs ${
                               isClaimed 
-                                ? 'bg-[#10B981]/20 text-[#10B981]' 
+                                ? 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-400' 
                                 : isNext
-                                ? 'bg-[#3B82F6]/20 text-[#00D2FF]'
-                                : 'bg-white/5 text-white/40'
+                                ? 'bg-amber-500/20 text-amber-800 dark:text-amber-300'
+                                : 'bg-slate-100 dark:bg-slate-800 text-slate-400'
                             }`}>
                               {isClaimed ? '✓' : t.tier}
                             </div>
                             <div>
-                              <div className="font-bold flex items-center gap-1.5 text-[13px]">
+                              <div className="font-bold flex items-center gap-1.5 text-xs">
                                 <span>{t.tierName}</span>
-                                <span className="text-[10px] text-[#9CA3AF]">({t.target} {ach.unit})</span>
+                                <span className="text-[10px] text-slate-400">({t.target} {ach.unit})</span>
                               </div>
-                              {t.rewardPerkDesc && (
-                                <div className="text-[11px] text-[#10B981] font-bold mt-0.5">
-                                  Nagroda: {t.rewardPerkDesc}
-                                </div>
-                              )}
                             </div>
                           </div>
                           
                           <div className="flex items-center gap-2 shrink-0">
-                            <span className="text-[#F59E0B] font-black bg-[#F59E0B]/10 px-2 py-1 rounded-md text-[10px] flex items-center gap-1">+{t.rewardCoins} <Coins size={10}/></span>
-                            <span className="text-[#A855F7] font-black bg-[#A855F7]/10 px-2 py-1 rounded-md text-[10px] flex items-center gap-1">+{t.rewardTokens} <Crown size={10}/></span>
+                            <span className="text-amber-800 dark:text-amber-400 font-bold bg-amber-500/10 px-2 py-0.5 rounded-md text-[10px] flex items-center gap-1">
+                              +{t.rewardCoins} <Coins size={10}/>
+                            </span>
+                            <span className="text-slate-600 dark:text-slate-300 font-bold bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md text-[10px] flex items-center gap-1">
+                              +{t.rewardTokens} <Crown size={10}/>
+                            </span>
                             
                             {isNext && item.canClaim && (
                               <button 
+                                type="button"
                                 onClick={() => handleClaim(ach.id, t.tier)}
-                                className="px-3 py-1.5 bg-[#10B981] text-black font-black text-[10px] rounded-lg shadow-sm uppercase ml-1 hover:scale-105 active:scale-95 transition-transform"
+                                className="px-2.5 py-1 bg-amber-500 text-slate-950 font-bold text-[10px] rounded-lg shadow-xs cursor-pointer hover:bg-amber-400 transition-colors"
                               >
                                 Odbierz
                               </button>
@@ -439,10 +407,12 @@ export function AchievementsSection({
                   </motion.div>
                 )}
               </AnimatePresence>
-            </motion.div>
+            </div>
           );
         })}
       </div>
     </div>
   );
 }
+
+export default AchievementsSection;

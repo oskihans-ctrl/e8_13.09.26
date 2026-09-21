@@ -7,124 +7,172 @@ interface JasneLogoProps {
   showBadge?: boolean;
 }
 
+/**
+ * JasneLogo:
+ * Oficjalny znak marki "Jasne." zgodny w 100% z wzorcem graficznym (logo.jasne.png):
+ * - Zaokrąglona bańka żarówki z subtelną talią i łukiem
+ * - Wewnętrzny łuk kopuły (górna aureola)
+ * - Centralny żarnik kielichowy (sercowate rozchylenie V)
+ * - 3 paski gwintu żarówki (lekko skośne)
+ * - Ciepły, słoneczny złocisty żółty (#FFC700 / #FFB800) z subtelnym reliefem 3D
+ * - Autorska typografia "Jasne." z kropką
+ */
 export function JasneLogo({
   variant = 'horizontal',
   size = 'md',
   className = '',
   showBadge = false
 }: JasneLogoProps) {
-  // Dimension mapping
   const iconSizes = {
-    xs: 20,
-    sm: 26,
-    md: 34,
-    lg: 48,
-    xl: 68
+    xs: 24,
+    sm: 30,
+    md: 38,
+    lg: 52,
+    xl: 72
   };
 
   const textSizes = {
-    xs: 'text-sm',
-    sm: 'text-base',
-    md: 'text-xl',
-    lg: 'text-2xl sm:text-3xl',
-    xl: 'text-4xl sm:text-5xl'
+    xs: 'text-base sm:text-lg',
+    sm: 'text-lg sm:text-xl',
+    md: 'text-2xl sm:text-3xl',
+    lg: 'text-3xl sm:text-4xl',
+    xl: 'text-5xl sm:text-6xl'
   };
 
   const currentIconSize = iconSizes[size];
 
-  // SVG of the official Jasne lightbulb with Brain inside
-  const LightbulbIcon = (
+  // Oficjalny wektorowy sygnet żarówki marki Jasne. (1:1 z logo.jasne.png)
+  const OfficialLightbulbBulb = (
     <svg 
       width={currentIconSize} 
-      height={currentIconSize} 
-      viewBox="0 0 100 100" 
+      height={Math.round(currentIconSize * 1.12)} 
+      viewBox="0 0 100 112" 
       fill="none" 
       xmlns="http://www.w3.org/2000/svg"
-      className="shrink-0 transition-transform duration-200 group-hover:scale-105 drop-shadow-[0_0_12px_rgba(0,102,255,0.45)]"
+      className="shrink-0 transition-transform duration-200 group-hover:scale-105 select-none"
+      style={{ filter: 'drop-shadow(0px 2px 3px rgba(217, 119, 6, 0.32))' }}
     >
       <defs>
-        {/* Royal Blue Linear Gradient matching brand identity */}
-        <linearGradient id="jasneRoyalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#38BDF8" />
-          <stop offset="30%" stopColor="#0066FF" />
-          <stop offset="70%" stopColor="#0052CC" />
-          <stop offset="100%" stopColor="#003D99" />
+        <linearGradient id="jasneSunGradSolid" x1="20%" y1="0%" x2="80%" y2="100%">
+          <stop offset="0%" stopColor="#FFE033" />
+          <stop offset="45%" stopColor="#FFC700" />
+          <stop offset="100%" stopColor="#EAA000" />
         </linearGradient>
       </defs>
 
-      {/* Outer Lightbulb Contour */}
-      <path 
-        d="M 37 66 C 35 60 29 52 25 44 C 20 34 24 19 36 12 C 44 8 56 8 64 12 C 76 19 80 34 75 44 C 71 52 65 60 63 66" 
-        stroke="url(#jasneRoyalGrad)" 
-        strokeWidth="4.8" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"
-      />
+      <g stroke="#FFC700" fill="none">
+        {/* 1. Zewnętrzny gładki kontur bańki żarówki */}
+        <path 
+          d="M 39 74 C 36 67 29 57 24 47 C 19 36 21 21 35 13 C 44 8 56 8 65 13 C 79 21 81 36 76 47 C 71 57 64 67 61 74 L 61 75 C 61 78 58 80 55 80 L 45 80 C 42 80 39 78 39 75 Z" 
+          stroke="url(#jasneSunGradSolid)" 
+          strokeWidth="6" 
+          strokeLinecap="round" 
+          strokeLinejoin="round"
+          style={{ stroke: '#FFC700' }}
+        />
 
-      {/* Screw Base Threads (3 bars) */}
-      <path d="M 38 73 L 62 73" stroke="url(#jasneRoyalGrad)" strokeWidth="4.8" strokeLinecap="round" />
-      <path d="M 40 79 L 60 79" stroke="url(#jasneRoyalGrad)" strokeWidth="4.8" strokeLinecap="round" />
-      <path d="M 43 85 L 57 85" stroke="url(#jasneRoyalGrad)" strokeWidth="4.8" strokeLinecap="round" />
+        {/* 2. Wewnętrzny łuk kopuły (górna aureola wewnątrz bańki) */}
+        <path 
+          d="M 37 38 C 39 27 47 21 50 21 C 53 21 61 27 63 38" 
+          stroke="url(#jasneSunGradSolid)" 
+          strokeWidth="5.2" 
+          strokeLinecap="round" 
+          style={{ stroke: '#FFC700' }}
+        />
 
-      {/* Left Brain Hemisphere */}
-      <g id="jasneBrainHalf" stroke="url(#jasneRoyalGrad)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-        {/* Midline Fissure */}
-        <path d="M 47.5 20 L 47.5 49" />
-        {/* Top Frontal Lobe */}
-        <path d="M 47.5 20 C 42 19 36 22 33 27 C 30 31 31 35 34 38" />
-        {/* Upper Sulcus Convolution */}
-        <path d="M 34 38 C 37 40 41 39 44 36" />
-        {/* Middle Temporal Lobe */}
-        <path d="M 34 38 C 30 41 30 46 33 50" />
-        {/* Lower Sulcus Convolution */}
-        <path d="M 33 50 C 37 52 41 50 44 47" />
-        {/* Bottom Occipital Lobe */}
-        <path d="M 33 50 C 35 54 40 56 44 54 C 46.5 52.5 47.5 51 47.5 49" />
+        {/* 3. Żarnik w centrum (charakterystyczny kielich / sercowate rozchylenie V) */}
+        <path 
+          d="M 46 76 L 46 64 C 46 61 43 57 40 54 C 36 51 36 45 41 43 C 44 41 48 42 50 48 C 52 42 56 41 59 43 C 64 45 64 51 60 54 C 57 57 54 61 54 64 L 54 76" 
+          stroke="url(#jasneSunGradSolid)" 
+          strokeWidth="5.2" 
+          strokeLinecap="round" 
+          strokeLinejoin="round" 
+          style={{ stroke: '#FFC700' }}
+        />
+
+        {/* 4. Gwint żarówki (3 zaokrąglone paski ze skrętem gwintu) */}
+        <path 
+          d="M 40 86 L 60 84.5" 
+          stroke="url(#jasneSunGradSolid)" 
+          strokeWidth="5.5" 
+          strokeLinecap="round" 
+          style={{ stroke: '#FFC700' }}
+        />
+        <path 
+          d="M 42 93.5 L 58 92" 
+          stroke="url(#jasneSunGradSolid)" 
+          strokeWidth="5.5" 
+          strokeLinecap="round" 
+          style={{ stroke: '#FFC700' }}
+        />
+        <path 
+          d="M 45 100 C 47 101.5 53 101.5 55 100" 
+          stroke="url(#jasneSunGradSolid)" 
+          strokeWidth="5" 
+          strokeLinecap="round" 
+          style={{ stroke: '#FFC700' }}
+        />
       </g>
-
-      {/* Right Brain Hemisphere (Mirrored) */}
-      <use href="#jasneBrainHalf" transform="translate(100, 0) scale(-1, 1)" />
     </svg>
   );
 
+  // Wariant: Sama ikona / sygnet (czysta, bez żadnych zewnętrznych ramek)
   if (variant === 'icon') {
     return (
-      <div className={`inline-flex items-center justify-center ${className}`}>
-        {LightbulbIcon}
+      <div className={`inline-flex items-center justify-center shrink-0 ${className}`}>
+        {OfficialLightbulbBulb}
       </div>
     );
   }
 
+  // Wariant: Układ pionowy (1:1 jak na przesłanym obrazku logo.jasne.png)
   if (variant === 'vertical') {
     return (
-      <div className={`flex flex-col items-center gap-2 text-center select-none ${className}`}>
-        <div className="p-3 rounded-2xl bg-gradient-to-br from-blue-500/15 via-sky-500/10 to-transparent border border-blue-500/30 shadow-[0_0_25px_rgba(0,102,255,0.25)]">
-          {LightbulbIcon}
+      <div className={`flex flex-col items-center justify-center text-center gap-3 select-none ${className}`}>
+        {/* Sygnet żarówki */}
+        <div className="flex items-center justify-center">
+          {OfficialLightbulbBulb}
         </div>
-        <div className="flex items-center">
-          <span className={`font-display font-black tracking-tight text-[#0066FF] drop-shadow-sm ${textSizes[size]}`}>
-            Jasne<span className="text-[#0052CC]">.</span>
+        
+        {/* Logotyp Jasne. */}
+        <div className="flex flex-col items-center justify-center text-center">
+          <span 
+            className={`font-display font-extrabold tracking-tight text-[#FFC700] leading-none drop-shadow-[0_2px_4px_rgba(217,119,6,0.25)] ${textSizes[size]}`}
+            style={{ letterSpacing: '-0.02em' }}
+          >
+            Jasne.
           </span>
+          {showBadge && (
+            <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 mt-1.5 leading-none tracking-wide">
+              Platforma Egzaminacyjna
+            </span>
+          )}
         </div>
       </div>
     );
   }
 
-  // Horizontal variant (default)
+  // Wariant domyślny: Układ poziomy (czysty sygnet obok logotypu, bez żadnej ramki)
   return (
-    <div className={`flex items-center gap-2.5 select-none ${className}`}>
-      <div className="p-1.5 sm:p-2 rounded-2xl bg-gradient-to-br from-[#0066FF]/20 via-[#0052CC]/15 to-transparent border border-[#0066FF]/35 shadow-[0_0_20px_rgba(0,102,255,0.25)] shrink-0">
-        {LightbulbIcon}
+    <div className={`inline-flex items-center gap-2.5 select-none ${className}`}>
+      {/* Sygnet żarówki - czysty bez obramowania */}
+      <div className="shrink-0 flex items-center justify-center">
+        {OfficialLightbulbBulb}
       </div>
-      <div className="flex flex-col leading-none">
-        <div className="flex items-center gap-1">
-          <span className={`font-display font-black tracking-tight text-white drop-shadow-sm ${textSizes[size]}`}>
-            Jasne<span className="text-[#0084FF] font-extrabold">.</span>
+      
+      {/* Typografia z oficjalnego logo */}
+      <div className="flex flex-col justify-center">
+        <div className="flex items-center">
+          <span 
+            className={`font-display font-black tracking-tight text-[#FFC700] dark:text-[#FFD000] leading-none drop-shadow-[0_1px_2px_rgba(217,119,6,0.2)] ${textSizes[size]}`}
+            style={{ letterSpacing: '-0.02em' }}
+          >
+            Jasne<span className="text-[#FFC700] dark:text-[#FFD000]">.</span>
           </span>
         </div>
         {showBadge && (
-          <span className="inline-flex items-center gap-1 text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-[#38BDF8] mt-1">
-            Egzamin Ósmoklasisty
+          <span className="text-[9px] font-semibold text-slate-500 dark:text-slate-400 mt-1 leading-none tracking-wide whitespace-nowrap">
+            Platforma Egzaminacyjna
           </span>
         )}
       </div>

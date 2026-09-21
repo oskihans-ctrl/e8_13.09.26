@@ -1,65 +1,82 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 280" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 340" fill="none">
   <defs>
-    <!-- Royal Blue Linear Gradient matching image.png -->
-    <linearGradient id="royalBlueGrad" x1="20%" y1="0%" x2="80%" y2="100%">
-      <stop offset="0%" stop-color="#0066FF" />
-      <stop offset="45%" stop-color="#0052CC" />
-      <stop offset="100%" stop-color="#003D99" />
+    <!-- Jasne. Official Yellow/Amber Gradient with 3D Depth -->
+    <linearGradient id="jasneSunGradient" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#FFE033" />
+      <stop offset="40%" stop-color="#FFC700" />
+      <stop offset="100%" stop-color="#EAA000" />
     </linearGradient>
 
-    <!-- Subtle embossed depth filter -->
-    <filter id="soft3DShadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="4" stdDeviation="3" flood-color="#002966" flood-opacity="0.35" />
+    <!-- Warm 3D Depth Shadow matching logo.jasne.png -->
+    <filter id="jasneSoft3D" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#D97706" flood-opacity="0.32" />
+      <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#B45309" flood-opacity="0.25" />
     </filter>
   </defs>
 
-  <g filter="url(#soft3DShadow)">
-    <!-- Lightbulb Dome & Neck -->
+  <!-- 1. OFFICIAL LIGHTBULB SIGNET (żarówka z logo.jasne.png) -->
+  <g filter="url(#jasneSoft3D)">
+    <!-- A. Zewnętrzny kontur bańki żarówki -->
     <path 
-      d="M 86 150 C 83 138 71 122 62 104 C 50 80 56 46 86 30 C 104 20 136 20 154 30 C 184 46 190 80 178 104 C 169 122 157 138 154 150" 
-      stroke="url(#royalBlueGrad)" 
+      d="M 122 154 C 117 142 103 124 93 104 C 82 82 86 50 114 34 C 132 24 168 24 186 34 C 214 50 218 82 207 104 C 197 124 183 142 178 154 L 178 157 C 178 162 173 166 168 166 L 132 166 C 127 166 122 162 122 157 Z" 
+      stroke="url(#jasneSunGradient)" 
+      stroke-width="12" 
+      stroke-linecap="round" 
+      stroke-linejoin="round"
+    />
+
+    <!-- B. Wewnętrzny łuk kopuły (górna aureola wewnątrz bańki) -->
+    <path 
+      d="M 118 78 C 122 56 140 44 150 44 C 160 44 178 56 182 78" 
+      stroke="url(#jasneSunGradient)" 
+      stroke-width="10.5" 
+      stroke-linecap="round" 
+    />
+
+    <!-- C. Żarnik w centrum (charakterystyczny kielich / sercowate rozchylenie V) -->
+    <path 
+      d="M 140 160 L 140 134 C 140 128 135 120 128 114 C 121 107 122 96 130 92 C 136 89 144 91 150 102 C 156 91 164 89 170 92 C 178 96 179 107 172 114 C 165 120 160 128 160 134 L 160 160" 
+      stroke="url(#jasneSunGradient)" 
       stroke-width="10.5" 
       stroke-linecap="round" 
       stroke-linejoin="round"
     />
 
-    <!-- Screw Base Threads (3 rounded horizontal bars) -->
-    <path d="M 91 166 L 149 166" stroke="url(#royalBlueGrad)" stroke-width="10.5" stroke-linecap="round" />
-    <path d="M 95 180 L 145 180" stroke="url(#royalBlueGrad)" stroke-width="10.5" stroke-linecap="round" />
-    <path d="M 102 194 L 138 194" stroke="url(#royalBlueGrad)" stroke-width="10.5" stroke-linecap="round" />
+    <!-- D. Gwint żarówki (3 zaokrąglone paski z lekkim skrętem gwintu) -->
+    <!-- Górny pasek -->
+    <path 
+      d="M 124 178 L 176 175" 
+      stroke="url(#jasneSunGradient)" 
+      stroke-width="11" 
+      stroke-linecap="round" 
+    />
+    <!-- Środkowy pasek -->
+    <path 
+      d="M 128 194 L 172 191" 
+      stroke="url(#jasneSunGradient)" 
+      stroke-width="11" 
+      stroke-linecap="round" 
+    />
+    <!-- Dolna stopka -->
+    <path 
+      d="M 136 208 C 142 211 158 211 164 207" 
+      stroke="url(#jasneSunGradient)" 
+      stroke-width="10" 
+      stroke-linecap="round" 
+    />
+  </g>
 
-    <!-- Brain Left Hemisphere -->
-    <!-- Center fissure is at X = 114 (12px gap between X = 114 and X = 126, center at 120) -->
-    <g id="brainHemisphere" stroke="url(#royalBlueGrad)" stroke-width="9.5" stroke-linecap="round" stroke-linejoin="round">
-      <!-- Vertical midline border -->
-      <path d="M 114 46 L 114 118" />
-
-      <!-- Outer Top Lobe (Frontal lobe) -->
-      <path d="M 114 46 C 100 45 84 52 78 64 C 73 74 74 82 80 87" />
-
-      <!-- Upper Sulcus fold curving in toward midline -->
-      <path d="M 80 87 C 88 91 97 89 104 84" />
-
-      <!-- Middle-to-Bottom Outer Lobe (Temporal/Occipital lobes) -->
-      <path d="M 80 87 C 72 93 71 104 77 114 C 84 125 99 126 109 122 C 113 120 114 116 114 112" />
-
-      <!-- Lower Sulcus fold -->
-      <path d="M 114 96 C 106 96 99 102 99 110" />
-    </g>
-
-    <!-- Brain Right Hemisphere (Mirror of left across X = 120) -->
-    <use href="#brainHemisphere" transform="translate(240, 0) scale(-1, 1)" />
-
-    <!-- "Jasne." Wordmark Typography -->
+  <!-- 2. OFFICIAL WORDMARK "Jasne." (zgodny z typografią z logo.jasne.png) -->
+  <g filter="url(#jasneSoft3D)">
     <text 
-      x="120" 
-      y="254" 
+      x="150" 
+      y="278" 
       text-anchor="middle" 
-      font-family="'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif" 
-      font-weight="900" 
-      font-size="52" 
-      letter-spacing="-1.5px" 
-      fill="url(#royalBlueGrad)"
-    >Jasne<tspan fill="url(#royalBlueGrad)">.</tspan></text>
+      font-family="'Plus Jakarta Sans', 'DM Sans', system-ui, -apple-system, sans-serif" 
+      font-weight="800" 
+      font-size="62" 
+      letter-spacing="-1px" 
+      fill="url(#jasneSunGradient)"
+    >Jasne<tspan fill="url(#jasneSunGradient)">.</tspan></text>
   </g>
 </svg>

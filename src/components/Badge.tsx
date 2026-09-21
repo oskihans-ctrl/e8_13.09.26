@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type BadgeVariant = 'cyan' | 'amber' | 'emerald';
+export type BadgeVariant = 'amber' | 'cyan' | 'emerald' | 'rose' | 'indigo' | 'slate';
 export type BadgeSize = 'sm' | 'md';
 
 interface BadgeProps {
@@ -13,18 +13,14 @@ interface BadgeProps {
 }
 
 /**
- * Standardowy system odznak Jasne. (Egzamin Ósmoklasisty E8):
- * - Półprzezroczyste ciemne tło
- * - Subtelna ramka 1px
+ * System odznak Jasne. (Standard EdTech: Notion / Linear / Brilliant):
+ * - Subtelne pastelowe tło z delikatną ramką 1px
  * - Pełna pastylka (rounded-full)
- * - Mikro-typografia (11-12px, pogrubiona, wielkie litery, brak łamania wierszy)
- * - 3 warianty:
- *    - cyan: Poziom egzaminu (np. EGZAMIN ÓSMOKLASISTY, CKE)
- *    - amber: Waga zadania i seria (np. PEWNIAK E8, SERIA DNI)
- *    - emerald: Statusy zaliczenia (np. ZALICZONE 100%)
+ * - Mikro-typografia (10-12px, pogrubiona, wielkie litery, brak łamania wierszy)
+ * - Zgodność z WCAG AA dla trybu jasnego i ciemnego
  */
 export const Badge: React.FC<BadgeProps> = ({
-  variant = 'cyan',
+  variant = 'amber',
   size = 'md',
   children,
   icon,
@@ -32,23 +28,26 @@ export const Badge: React.FC<BadgeProps> = ({
   id
 }) => {
   const variantStyles: Record<BadgeVariant, string> = {
-    cyan: 'bg-[#00E5FF]/10 text-[#00E5FF] border-[#00E5FF]/30 shadow-[0_0_12px_rgba(0,229,255,0.12)]',
-    amber: 'bg-sky-400/10 text-sky-300 border-sky-400/30 shadow-[0_0_12px_rgba(56,189,248,0.15)]',
-    emerald: 'bg-emerald-400/10 text-emerald-300 border-emerald-400/30 shadow-[0_0_12px_rgba(52,211,153,0.12)]'
+    amber: 'bg-amber-500/10 text-amber-800 dark:text-amber-400 border-amber-500/30',
+    cyan: 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700',
+    slate: 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700',
+    emerald: 'bg-emerald-500/10 text-emerald-800 dark:text-emerald-400 border-emerald-500/30',
+    rose: 'bg-rose-500/10 text-rose-800 dark:text-rose-400 border-rose-500/30',
+    indigo: 'bg-indigo-500/10 text-indigo-800 dark:text-indigo-400 border-indigo-500/30'
   };
 
   const sizeStyles: Record<BadgeSize, string> = {
-    sm: 'px-2 py-0.5 text-[10px]',
-    md: 'px-2.5 py-0.5 sm:px-3 sm:py-1 text-[11px] sm:text-[12px]'
+    sm: 'px-2 py-0.5 text-[10px] leading-none',
+    md: 'px-2.5 py-1 sm:px-3 sm:py-1 text-[11px] sm:text-[12px] leading-none'
   };
 
   return (
     <span
       id={id}
-      className={`inline-flex items-center gap-1.5 rounded-full border font-bold uppercase tracking-wider whitespace-nowrap select-none backdrop-blur-sm ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
+      className={`inline-flex items-center justify-center text-center leading-none gap-1.5 rounded-full border font-bold uppercase tracking-wider whitespace-nowrap select-none shadow-2xs ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
     >
-      {icon && <span className="shrink-0 flex items-center">{icon}</span>}
-      <span>{children}</span>
+      {icon && <span className="shrink-0 flex items-center justify-center">{icon}</span>}
+      <span className="inline-block text-center">{children}</span>
     </span>
   );
 };

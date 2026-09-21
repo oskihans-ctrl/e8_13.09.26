@@ -3,15 +3,33 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-    <title>Jasne. – Egzamin Ósmoklasisty z matematyki</title>
-    <meta name="description" content="Jasne. – Interaktywna platforma i symulator przygotowujący do Egzaminu Ósmoklasisty z matematyki: arkusze CKE, zadania Prawda/Fałsz, tutor AI, brudnopis i niezbędnik ósmoklasisty." />
-    <meta property="og:title" content="Jasne. – Egzamin Ósmoklasisty" />
-    <meta property="og:description" content="Jasne. – Interaktywna platforma i symulator przygotowujący do Egzaminu Ósmoklasisty z matematyki: arkusze CKE, zadania Prawda/Fałsz, tutor AI, brudnopis i niezbędnik ósmoklasisty." />
+    <title>Jasne. – Nowoczesna Platforma Edukacyjna CKE</title>
+    <meta name="description" content="Jasne. – Nowoczesna platforma edukacyjna i symulator egzaminu CKE: arkusze, inteligentny tutor AI, pigułki wiedzy, brudnopis i predyktor wyniku." />
+    <meta property="og:title" content="Jasne. – Nowoczesna Platforma Edukacyjna CKE" />
+    <meta property="og:description" content="Jasne. – Nowoczesna platforma edukacyjna i symulator egzaminu CKE: arkusze, inteligentny tutor AI, pigułki wiedzy, brudnopis i predyktor wyniku." />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" rel="stylesheet">
+    <script>
+      (function() {
+        try {
+          var stored = localStorage.getItem('jasne_theme');
+          var theme = (stored === 'dark' || stored === 'light') ? stored : 'light';
+          var root = document.documentElement;
+          if (theme === 'dark') {
+            root.classList.add('dark');
+            root.classList.remove('light');
+            document.body && (document.body.style.backgroundColor = '#0B0F17');
+          } else {
+            root.classList.remove('dark');
+            root.classList.add('light');
+            document.body && (document.body.style.backgroundColor = '#F8FAFC');
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -163,7 +163,7 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
 
         {/* Modal Header */}
         <div className="flex flex-col items-center text-center mb-5">
-          <div className="p-3 rounded-2xl bg-cyan-400/10 border border-cyan-400/25 mb-3 shadow-[0_0_20px_rgba(0,229,255,0.2)]">
+          <div className="p-3 rounded-2xl bg-amber-400/15 border border-amber-400/35 mb-3 shadow-[0_0_24px_rgba(245,158,11,0.25)] flex items-center justify-center">
             <JasneLogo variant="icon" size="md" />
           </div>
           <h2 className="font-display font-black text-xl text-white">

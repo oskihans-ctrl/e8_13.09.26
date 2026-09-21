@@ -13,6 +13,7 @@ import {
   Maximize2
 } from 'lucide-react';
 import { triggerHaptic } from '../utils';
+import { useTheme } from '../context/ThemeContext';
 
 interface OpenTaskWorkspaceProps {
   task: any;
@@ -42,22 +43,18 @@ export function formatMathDisplay(raw: string): string {
   s = s.replace(/\*/g, ' \\cdot ');
 
   // Powers:
-  // If ends with ^, show placeholder square: e.g. 3^ -> 3^{\square}
   if (s.endsWith('^')) {
     const base = s.slice(0, -1);
     s = `${base || 'x'}^{\\square}`;
   } else {
-    // Handle base^exp (e.g. 3^42, x^n, (x+1)^2)
     s = s.replace(/([0-9a-zA-Z\)\}]+)\^\{?([0-9a-zA-Z\+\-]+)\}?/g, (_m, b, e) => `{${b}}^{${e}}`);
   }
 
   // Fractions:
-  // If ends with /, show placeholder denominator: 3/ -> \frac{3}{\square}
   if (s.endsWith('/')) {
     const num = s.slice(0, -1);
     s = `\\frac{${num || '1'}}{\\square}`;
   } else {
-    // e.g. 3/4 or (x+1)/(x-2)
     s = s.replace(/(\([^\)]+\)|[0-9a-zA-Z\^_{}]+)\/(\([^\)]+\)|[0-9a-zA-Z\^_{}]+)/g, (_m, n, d) => `\\frac{${n}}{${d}}`);
   }
 
@@ -92,7 +89,10 @@ export function OpenTaskWorkspace({
   onSaveCanvasData,
   onOpenScratchpad,
 }: OpenTaskWorkspaceProps) {
-  // Tryb wzajemnie wykluczający: 'keyboard' ALBO 'whiteboard'
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+
+  // Tryb: 'keyboard' ALBO 'whiteboard'
   const [activeTab, setActiveTab] = useState<'keyboard' | 'whiteboard'>('keyboard');
 
   // --------------------------------------------------------------------------
@@ -105,7 +105,6 @@ export function OpenTaskWorkspace({
   const historyRef = useRef<ImageData[]>([]);
   const historyIndexRef = useRef<number>(-1);
 
-  // Zapis stanu do historii i powiadomienie rodzica
   const saveCanvasState = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -118,19 +117,18 @@ export function OpenTaskWorkspace({
       historyRef.current.push(imgData);
       if (historyRef.current.length > 20) {
         historyRef.current.shift();
-      } else {
-        historyIndexRef.current++;
       }
+      historyIndexRef.current = historyRef.current.length - 1;
 
       if (onSaveCanvasData) {
-        onSaveCanvasData(canvas.toDataURL('image/png'));
+        onSaveCanvasData(canvas.toDataURL());
       }
     } catch {
-      // ignore
+      // Ignoruj błędy bufora canvas
     }
   };
 
-  // Inicjalizacja canvasu po przełączeniu na 'whiteboard'
+  // Inicjalizacja canvas przy zmianie zakładki lub rozmiaru kontenera
   useEffect(() => {
     if (activeTab !== 'whiteboard') return;
 
@@ -141,8 +139,9 @@ export function OpenTaskWorkspace({
 
       const rect = container.getBoundingClientRect();
       const dpr = window.devicePixelRatio || 1;
-      const width = rect.width || 360;
-      const height = rect.height || 260;
+      
+      const width = Math.max(300, Math.floor(rect.width));
+      const height = Math.max(260, Math.floor(rect.height));
 
       canvas.width = width * dpr;
       canvas.height = height * dpr;
@@ -150,28 +149,38 @@ export function OpenTaskWorkspace({
       canvas.style.height = `${height}px`;
 
       const ctx = canvas.getContext('2d');
-      if (!ctx) return;
-      ctx.scale(dpr, dpr);
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
+      if (ctx) {
+        ctx.scale(dpr, dpr);
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
 
-      // Przywróć poprzednie rysunki, jeśli istnieją
-      if (savedCanvasDataUrl && savedCanvasDataUrl.length > 50) {
-        const img = new Image();
-        img.onload = () => {
-          ctx.drawImage(img, 0, 0, width, height);
+        if (savedCanvasDataUrl && savedCanvasDataUrl.length > 50) {
+          const img = new Image();
+          img.onload = () => {
+            ctx.drawImage(img, 0, 0, width, height);
+            saveCanvasState();
+          };
+          img.src = savedCanvasDataUrl;
+        } else {
+          ctx.clearRect(0, 0, width, height);
           saveCanvasState();
-        };
-        img.src = savedCanvasDataUrl;
-      } else {
-        saveCanvasState();
+        }
       }
-    }, 50);
+    }, 60);
 
     return () => clearTimeout(timer);
   }, [activeTab]);
 
-  // Rysowanie: pointer events
+  const getCoordinates = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return { x: 0, y: 0 };
+    const rect = canvas.getBoundingClientRect();
+    return {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    };
+  };
+
   const startDrawing = (e: React.PointerEvent<HTMLCanvasElement>) => {
     if (isEvaluated) return;
     const canvas = canvasRef.current;
@@ -179,22 +188,19 @@ export function OpenTaskWorkspace({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    canvas.setPointerCapture(e.pointerId);
     setIsDrawing(true);
-
-    const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    const { x, y } = getCoordinates(e);
 
     ctx.beginPath();
     ctx.moveTo(x, y);
 
     if (wbTool === 'pen') {
-      ctx.strokeStyle = '#00C2FF';
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.strokeStyle = isDark ? '#F8FAFC' : '#0F172A';
       ctx.lineWidth = 2.5;
     } else {
-      ctx.strokeStyle = '#070B12';
-      ctx.lineWidth = 18;
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.lineWidth = 22;
     }
   };
 
@@ -205,50 +211,36 @@ export function OpenTaskWorkspace({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
+    const { x, y } = getCoordinates(e);
     ctx.lineTo(x, y);
     ctx.stroke();
   };
 
-  const stopDrawing = (e: React.PointerEvent<HTMLCanvasElement>) => {
+  const stopDrawing = () => {
     if (!isDrawing) return;
-    const canvas = canvasRef.current;
-    if (canvas) {
-      try {
-        canvas.releasePointerCapture(e.pointerId);
-      } catch {
-        // ignore
-      }
-    }
     setIsDrawing(false);
     saveCanvasState();
   };
 
-  // Cofnij (Undo)
   const handleUndo = () => {
-    if (isEvaluated) return;
+    if (historyIndexRef.current <= 0) return;
     triggerHaptic('light');
     const canvas = canvasRef.current;
-    if (!canvas || historyIndexRef.current <= 0) return;
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    historyIndexRef.current--;
-    const prevData = historyRef.current[historyIndexRef.current];
-    if (prevData) {
-      ctx.putImageData(prevData, 0, 0);
+    historyIndexRef.current -= 1;
+    const targetState = historyRef.current[historyIndexRef.current];
+    if (targetState) {
+      ctx.putImageData(targetState, 0, 0);
       if (onSaveCanvasData) {
-        onSaveCanvasData(canvas.toDataURL('image/png'));
+        onSaveCanvasData(canvas.toDataURL());
       }
     }
   };
 
-  // Wyczyść tablicę (Clear)
   const handleClearWhiteboard = () => {
-    if (isEvaluated) return;
     triggerHaptic('medium');
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -257,10 +249,13 @@ export function OpenTaskWorkspace({
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     saveCanvasState();
+    if (onSaveCanvasData) {
+      onSaveCanvasData('');
+    }
   };
 
   // --------------------------------------------------------------------------
-  // Keyboard Calculator Logic
+  // Virtual Math Keyboard logic
   // --------------------------------------------------------------------------
   const handleKeyClick = (keyToken: string) => {
     if (isEvaluated) return;
@@ -268,28 +263,8 @@ export function OpenTaskWorkspace({
 
     if (keyToken === 'BACKSPACE') {
       if (!value) return;
-      if (value.endsWith(' \\cdot ')) {
+      if (value.endsWith('\\sqrt{}')) {
         onChangeValue(value.slice(0, -7));
-      } else if (value.endsWith('\\sqrt{}')) {
-        onChangeValue(value.slice(0, -8));
-      } else if (value.endsWith('\\sqrt{')) {
-        onChangeValue(value.slice(0, -6));
-      } else if (value.endsWith('x^')) {
-        onChangeValue(value.slice(0, -2));
-      } else if (value.endsWith('^')) {
-        onChangeValue(value.slice(0, -1));
-      } else if (value.endsWith('}')) {
-        const sqrtMatch = value.match(/\\sqrt\{([^}]+)\}$/);
-        if (sqrtMatch) {
-          const inner = sqrtMatch[1];
-          if (inner.length > 1) {
-            onChangeValue(value.slice(0, -2) + '}');
-          } else {
-            onChangeValue(value.slice(0, -inner.length - 1) + '}');
-          }
-          return;
-        }
-        onChangeValue(value.slice(0, -1));
       } else {
         onChangeValue(value.slice(0, -1));
       }
@@ -302,7 +277,6 @@ export function OpenTaskWorkspace({
       return;
     }
 
-    // Mathematical symbols
     if (keyToken === 'FRAC' || keyToken === '÷') {
       onChangeValue(value + '/');
       return;
@@ -327,7 +301,6 @@ export function OpenTaskWorkspace({
       return;
     }
 
-    // Smart root insertion
     if (value.endsWith('\\sqrt{}') && /^[0-9x]$/.test(keyToken)) {
       onChangeValue(value.slice(0, -1) + keyToken + '}');
       return;
@@ -344,21 +317,21 @@ export function OpenTaskWorkspace({
       {/* ------------------------------------------------------------------ */}
       {/* 1. DUAL MODE SWITCHER: [ Klawiatura ] | [ Pisz na tablicy ]          */}
       {/* ------------------------------------------------------------------ */}
-      <div className="flex items-center justify-between bg-[#0B0E14] p-1 rounded-xl border border-white/10 w-full shrink-0 shadow-sm">
+      <div className="flex items-center justify-between bg-slate-100 dark:bg-slate-800/80 p-1 rounded-xl border border-slate-200 dark:border-slate-700 w-full shrink-0 shadow-xs">
         <button
           type="button"
           onClick={() => {
             triggerHaptic('light');
             setActiveTab('keyboard');
           }}
-          className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
+          className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
             activeTab === 'keyboard'
-              ? 'bg-[#00C2FF] text-[#0B131E] font-black shadow-[0_0_12px_rgba(0,194,255,0.25)]'
-              : 'text-white/60 hover:text-white'
+              ? 'bg-amber-500 text-slate-950 font-bold shadow-xs'
+              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
           }`}
         >
           <Keyboard size={14} />
-          <span>Klawiatura</span>
+          <span>Klawiatura matematyczna</span>
         </button>
 
         <button
@@ -367,39 +340,39 @@ export function OpenTaskWorkspace({
             triggerHaptic('light');
             setActiveTab('whiteboard');
           }}
-          className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
+          className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
             activeTab === 'whiteboard'
-              ? 'bg-[#00C2FF] text-[#0B131E] font-black shadow-[0_0_12px_rgba(0,194,255,0.25)]'
-              : 'text-white/60 hover:text-white'
+              ? 'bg-amber-500 text-slate-950 font-bold shadow-xs'
+              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
           }`}
         >
           <PenTool size={14} />
           <span>Pisz na tablicy</span>
           {hasSavedCanvas && (
-            <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" title="Zawiera zapisane obliczenia" />
+            <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" title="Zawiera zapisane obliczenia" />
           )}
         </button>
       </div>
 
       {/* ================================================================== */}
-      {/* TRYB 1: KLAWIATURA (TABLICA W 100% ZDEMONTOWANA I UKRYTA)           */}
+      {/* TRYB 1: KLAWIATURA MATEMATYCZNA                                    */}
       {/* ================================================================== */}
       {activeTab === 'keyboard' && (
         <div className="w-full flex flex-col gap-2 shrink-0 animate-in fade-in duration-150">
           {/* DUŻE OKNO: "Twoja odpowiedź:" (KaTeX Live Preview) */}
-          <div className="w-full bg-[#141C28] border border-white/10 rounded-2xl p-3 sm:p-3.5 shadow-md flex items-center justify-between gap-2 shrink-0">
+          <div className="w-full bg-white dark:bg-[#131B29] border border-slate-200 dark:border-slate-800 rounded-2xl p-3 sm:p-3.5 shadow-xs flex items-center justify-between gap-2 shrink-0">
             <div className="flex-1 min-w-0 flex items-center gap-2">
-              <span className="text-xs font-bold text-[#8B8D98] shrink-0">
+              <span className="text-xs font-bold text-slate-500 dark:text-slate-400 shrink-0">
                 Twoja odpowiedź:
               </span>
               <div className="flex-1 overflow-x-auto no-scrollbar py-0.5 min-h-[32px] flex items-center text-left">
                 {formattedMath ? (
-                  <span className="text-white font-black text-lg sm:text-xl tracking-wide">
+                  <span className="text-slate-900 dark:text-white font-bold text-lg sm:text-xl tracking-wide">
                     <InlineMath math={formattedMath} />
                   </span>
                 ) : (
-                  <span className="text-white/30 text-xs sm:text-sm italic font-normal">
-                    Wpisz wynik za pomocą kalkulatora...
+                  <span className="text-slate-400 dark:text-slate-500 text-xs sm:text-sm italic font-normal">
+                    Wprowadź wynik za pomocą kalkulatora...
                   </span>
                 )}
               </div>
@@ -410,7 +383,7 @@ export function OpenTaskWorkspace({
                 <button
                   type="button"
                   onClick={() => handleKeyClick('BACKSPACE')}
-                  className="p-1.5 rounded-lg text-[#8B8D98] hover:text-white bg-white/5 hover:bg-white/10 transition-colors"
+                  className="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 transition-colors cursor-pointer"
                   title="Usuń ostatni znak"
                 >
                   <Delete size={16} />
@@ -418,7 +391,7 @@ export function OpenTaskWorkspace({
                 <button
                   type="button"
                   onClick={() => handleKeyClick('CLEAR')}
-                  className="p-1.5 rounded-lg text-rose-400 hover:text-rose-300 bg-rose-500/10 hover:bg-rose-500/20 transition-colors"
+                  className="p-1.5 rounded-lg text-rose-500 hover:text-rose-600 bg-rose-50 dark:bg-rose-950/20 hover:bg-rose-100 transition-colors cursor-pointer"
                   title="Wyczyść wpis"
                 >
                   <RotateCcw size={15} />
@@ -429,22 +402,22 @@ export function OpenTaskWorkspace({
             {isEvaluated && (
               <div className="shrink-0 flex items-center">
                 {isCorrect ? (
-                  <CheckCircle2 size={20} className="text-emerald-400" />
+                  <CheckCircle2 size={20} className="text-emerald-500" />
                 ) : (
-                  <AlertTriangle size={20} className="text-rose-400" />
+                  <AlertTriangle size={20} className="text-rose-500" />
                 )}
               </div>
             )}
           </div>
 
-          {/* PEŁNA KLAWIATURA KALKULATORA (Zero Scrolla) */}
+          {/* PEŁNA KLAWIATURA KALKULATORA */}
           <div className={`w-full flex flex-col gap-1.5 shrink-0 ${isEvaluated ? 'opacity-50 pointer-events-none' : ''}`}>
             {/* GÓRNY PASEK SYMBOLI: a/b, xⁿ, √, (, ), ·, x, ⌫ */}
             <div className="grid grid-cols-8 gap-1 w-full">
               <button
                 type="button"
                 onClick={() => handleKeyClick('FRAC')}
-                className="h-9 rounded-xl bg-[#1A2332] hover:bg-[#223044] border border-white/10 text-[#00C2FF] font-black text-xs flex items-center justify-center active:scale-95 transition-all shadow-sm"
+                className="h-9 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-800 dark:text-amber-400 font-bold text-xs flex items-center justify-center active:scale-95 transition-all shadow-xs cursor-pointer"
                 title="Ułamek zwykły (a/b)"
               >
                 <span>a/b</span>
@@ -453,7 +426,7 @@ export function OpenTaskWorkspace({
               <button
                 type="button"
                 onClick={() => handleKeyClick('POW')}
-                className="h-9 rounded-xl bg-[#1A2332] hover:bg-[#223044] border border-white/10 text-[#00C2FF] font-black text-xs flex items-center justify-center active:scale-95 transition-all shadow-sm"
+                className="h-9 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-800 dark:text-amber-400 font-bold text-xs flex items-center justify-center active:scale-95 transition-all shadow-xs cursor-pointer"
                 title="Dowolna potęga (xⁿ)"
               >
                 <span>xⁿ</span>
@@ -462,7 +435,7 @@ export function OpenTaskWorkspace({
               <button
                 type="button"
                 onClick={() => handleKeyClick('SQRT')}
-                className="h-9 rounded-xl bg-[#1A2332] hover:bg-[#223044] border border-white/10 text-[#00C2FF] font-black text-xs sm:text-sm flex items-center justify-center active:scale-95 transition-all shadow-sm"
+                className="h-9 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-800 dark:text-amber-400 font-bold text-xs sm:text-sm flex items-center justify-center active:scale-95 transition-all shadow-xs cursor-pointer"
                 title="Pierwiastek kwadratowy (√)"
               >
                 <span>√</span>
@@ -471,7 +444,7 @@ export function OpenTaskWorkspace({
               <button
                 type="button"
                 onClick={() => handleKeyClick('(')}
-                className="h-9 rounded-xl bg-[#1A2332] hover:bg-[#223044] border border-white/10 text-white font-bold text-xs sm:text-sm flex items-center justify-center active:scale-95 transition-all shadow-sm"
+                className="h-9 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs sm:text-sm flex items-center justify-center active:scale-95 transition-all shadow-xs cursor-pointer"
                 title="Nawias ("
               >
                 <span>(</span>
@@ -480,7 +453,7 @@ export function OpenTaskWorkspace({
               <button
                 type="button"
                 onClick={() => handleKeyClick(')')}
-                className="h-9 rounded-xl bg-[#1A2332] hover:bg-[#223044] border border-white/10 text-white font-bold text-xs sm:text-sm flex items-center justify-center active:scale-95 transition-all shadow-sm"
+                className="h-9 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs sm:text-sm flex items-center justify-center active:scale-95 transition-all shadow-xs cursor-pointer"
                 title="Nawias )"
               >
                 <span>)</span>
@@ -489,7 +462,7 @@ export function OpenTaskWorkspace({
               <button
                 type="button"
                 onClick={() => handleKeyClick('·')}
-                className="h-9 rounded-xl bg-[#1A2332] hover:bg-[#223044] border border-white/10 text-[#00C2FF] font-black text-sm flex items-center justify-center active:scale-95 transition-all shadow-sm"
+                className="h-9 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-800 dark:text-amber-400 font-bold text-sm flex items-center justify-center active:scale-95 transition-all shadow-xs cursor-pointer"
                 title="Kropka mnożenia (·)"
               >
                 <span>·</span>
@@ -498,7 +471,7 @@ export function OpenTaskWorkspace({
               <button
                 type="button"
                 onClick={() => handleKeyClick('x')}
-                className="h-9 rounded-xl bg-[#1A2332] hover:bg-[#223044] border border-white/10 text-sky-300 italic font-black text-xs flex items-center justify-center active:scale-95 transition-all shadow-sm"
+                className="h-9 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-amber-700 dark:text-amber-400 italic font-bold text-xs flex items-center justify-center active:scale-95 transition-all shadow-xs cursor-pointer"
                 title="Zmienna x"
               >
                 <span>x</span>
@@ -507,7 +480,7 @@ export function OpenTaskWorkspace({
               <button
                 type="button"
                 onClick={() => handleKeyClick('BACKSPACE')}
-                className="h-9 rounded-xl bg-[#1E293B] hover:bg-[#27354D] border border-white/10 text-[#8B8D98] hover:text-white font-bold flex items-center justify-center active:scale-95 transition-all shadow-sm"
+                className="h-9 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white font-bold flex items-center justify-center active:scale-95 transition-all shadow-xs cursor-pointer"
                 title="Backspace"
               >
                 <Delete size={15} />
@@ -520,28 +493,28 @@ export function OpenTaskWorkspace({
               <button
                 type="button"
                 onClick={() => handleKeyClick('7')}
-                className="h-10 sm:h-11 rounded-xl bg-[#141C28] hover:bg-[#1E293B] border border-white/10 text-white font-bold text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-sm"
+                className="h-10 sm:h-11 rounded-xl bg-white hover:bg-slate-50 dark:bg-[#131B29] dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white font-bold text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-xs cursor-pointer"
               >
                 7
               </button>
               <button
                 type="button"
                 onClick={() => handleKeyClick('8')}
-                className="h-10 sm:h-11 rounded-xl bg-[#141C28] hover:bg-[#1E293B] border border-white/10 text-white font-bold text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-sm"
+                className="h-10 sm:h-11 rounded-xl bg-white hover:bg-slate-50 dark:bg-[#131B29] dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white font-bold text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-xs cursor-pointer"
               >
                 8
               </button>
               <button
                 type="button"
                 onClick={() => handleKeyClick('9')}
-                className="h-10 sm:h-11 rounded-xl bg-[#141C28] hover:bg-[#1E293B] border border-white/10 text-white font-bold text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-sm"
+                className="h-10 sm:h-11 rounded-xl bg-white hover:bg-slate-50 dark:bg-[#131B29] dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white font-bold text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-xs cursor-pointer"
               >
                 9
               </button>
               <button
                 type="button"
                 onClick={() => handleKeyClick('÷')}
-                className="h-10 sm:h-11 rounded-xl bg-[#1E293B] hover:bg-[#27354D] border border-white/10 text-[#00C2FF] font-black text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-sm"
+                className="h-10 sm:h-11 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-800 dark:text-amber-400 font-bold text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-xs cursor-pointer"
                 title="Dzielenie (÷)"
               >
                 ÷
@@ -551,28 +524,28 @@ export function OpenTaskWorkspace({
               <button
                 type="button"
                 onClick={() => handleKeyClick('4')}
-                className="h-10 sm:h-11 rounded-xl bg-[#141C28] hover:bg-[#1E293B] border border-white/10 text-white font-bold text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-sm"
+                className="h-10 sm:h-11 rounded-xl bg-white hover:bg-slate-50 dark:bg-[#131B29] dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white font-bold text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-xs cursor-pointer"
               >
                 4
               </button>
               <button
                 type="button"
                 onClick={() => handleKeyClick('5')}
-                className="h-10 sm:h-11 rounded-xl bg-[#141C28] hover:bg-[#1E293B] border border-white/10 text-white font-bold text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-sm"
+                className="h-10 sm:h-11 rounded-xl bg-white hover:bg-slate-50 dark:bg-[#131B29] dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white font-bold text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-xs cursor-pointer"
               >
                 5
               </button>
               <button
                 type="button"
                 onClick={() => handleKeyClick('6')}
-                className="h-10 sm:h-11 rounded-xl bg-[#141C28] hover:bg-[#1E293B] border border-white/10 text-white font-bold text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-sm"
+                className="h-10 sm:h-11 rounded-xl bg-white hover:bg-slate-50 dark:bg-[#131B29] dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white font-bold text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-xs cursor-pointer"
               >
                 6
               </button>
               <button
                 type="button"
                 onClick={() => handleKeyClick('·')}
-                className="h-10 sm:h-11 rounded-xl bg-[#1E293B] hover:bg-[#27354D] border border-white/10 text-[#00C2FF] font-black text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-sm"
+                className="h-10 sm:h-11 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-800 dark:text-amber-400 font-bold text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-xs cursor-pointer"
                 title="Mnożenie (·)"
               >
                 ·
@@ -582,28 +555,28 @@ export function OpenTaskWorkspace({
               <button
                 type="button"
                 onClick={() => handleKeyClick('1')}
-                className="h-10 sm:h-11 rounded-xl bg-[#141C28] hover:bg-[#1E293B] border border-white/10 text-white font-bold text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-sm"
+                className="h-10 sm:h-11 rounded-xl bg-white hover:bg-slate-50 dark:bg-[#131B29] dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white font-bold text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-xs cursor-pointer"
               >
                 1
               </button>
               <button
                 type="button"
                 onClick={() => handleKeyClick('2')}
-                className="h-10 sm:h-11 rounded-xl bg-[#141C28] hover:bg-[#1E293B] border border-white/10 text-white font-bold text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-sm"
+                className="h-10 sm:h-11 rounded-xl bg-white hover:bg-slate-50 dark:bg-[#131B29] dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white font-bold text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-xs cursor-pointer"
               >
                 2
               </button>
               <button
                 type="button"
                 onClick={() => handleKeyClick('3')}
-                className="h-10 sm:h-11 rounded-xl bg-[#141C28] hover:bg-[#1E293B] border border-white/10 text-white font-bold text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-sm"
+                className="h-10 sm:h-11 rounded-xl bg-white hover:bg-slate-50 dark:bg-[#131B29] dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white font-bold text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-xs cursor-pointer"
               >
                 3
               </button>
               <button
                 type="button"
                 onClick={() => handleKeyClick('-')}
-                className="h-10 sm:h-11 rounded-xl bg-[#1E293B] hover:bg-[#27354D] border border-white/10 text-[#00C2FF] font-black text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-sm"
+                className="h-10 sm:h-11 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-800 dark:text-amber-400 font-bold text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-xs cursor-pointer"
                 title="Minus (-)"
               >
                 −
@@ -613,7 +586,7 @@ export function OpenTaskWorkspace({
               <button
                 type="button"
                 onClick={() => handleKeyClick('CLEAR')}
-                className="h-10 sm:h-11 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-400 font-black text-sm flex items-center justify-center active:scale-95 transition-all shadow-sm"
+                className="h-10 sm:h-11 rounded-xl bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/40 text-rose-600 dark:text-rose-400 font-bold text-sm flex items-center justify-center active:scale-95 transition-all shadow-xs cursor-pointer"
                 title="Wyczyść (C)"
               >
                 C
@@ -621,14 +594,14 @@ export function OpenTaskWorkspace({
               <button
                 type="button"
                 onClick={() => handleKeyClick('0')}
-                className="h-10 sm:h-11 rounded-xl bg-[#141C28] hover:bg-[#1E293B] border border-white/10 text-white font-bold text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-sm"
+                className="h-10 sm:h-11 rounded-xl bg-white hover:bg-slate-50 dark:bg-[#131B29] dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white font-bold text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-xs cursor-pointer"
               >
                 0
               </button>
               <button
                 type="button"
                 onClick={() => handleKeyClick(',')}
-                className="h-10 sm:h-11 rounded-xl bg-[#141C28] hover:bg-[#1E293B] border border-white/10 text-white font-black text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-sm"
+                className="h-10 sm:h-11 rounded-xl bg-white hover:bg-slate-50 dark:bg-[#131B29] dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white font-bold text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-xs cursor-pointer"
                 title="Przecinek (,)"
               >
                 ,
@@ -636,7 +609,7 @@ export function OpenTaskWorkspace({
               <button
                 type="button"
                 onClick={() => handleKeyClick('+')}
-                className="h-10 sm:h-11 rounded-xl bg-[#1E293B] hover:bg-[#27354D] border border-white/10 text-[#00C2FF] font-black text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-sm"
+                className="h-10 sm:h-11 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-800 dark:text-amber-400 font-bold text-base sm:text-lg flex items-center justify-center active:scale-95 transition-all shadow-xs cursor-pointer"
                 title="Plus (+)"
               >
                 +
@@ -647,30 +620,28 @@ export function OpenTaskWorkspace({
       )}
 
       {/* ================================================================== */}
-      {/* TRYB 2: PISZ NA TABLICY (KLAWIATURA W 100% ZDEMONTOWANA I UKRYTA)   */}
+      {/* TRYB 2: PISZ NA TABLICY                                            */}
       {/* ================================================================== */}
       {activeTab === 'whiteboard' && (
         <div className="w-full flex flex-col gap-2 shrink-0 animate-in fade-in duration-150">
-          {/* KARTA TABLICY: Pasek narzędzi w narożnikach + Tablica w kratkę */}
-          <div className="w-full bg-[#0B101B] border border-white/15 rounded-2xl p-2.5 sm:p-3 flex flex-col gap-2 shadow-xl">
+          <div className="w-full bg-white dark:bg-[#131B29] border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 sm:p-3 flex flex-col gap-2 shadow-xs">
             {/* Pasek narzędzi tablicy */}
             <div className="flex items-center justify-between gap-2 shrink-0">
-              {/* Narzędzia: Ołówek / Gumka */}
-              <div className="flex items-center gap-1.5 bg-[#141C28] p-1 rounded-xl border border-white/10">
+              <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700">
                 <button
                   type="button"
                   onClick={() => {
                     triggerHaptic('light');
                     setWbTool('pen');
                   }}
-                  className={`px-3 py-1 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all ${
+                  className={`px-3 py-1 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
                     wbTool === 'pen'
-                      ? 'bg-[#00C2FF] text-[#0B131E] font-black shadow-[0_0_10px_rgba(0,194,255,0.3)]'
-                      : 'text-white/60 hover:text-white'
+                      ? 'bg-amber-500 text-slate-950 font-bold shadow-xs'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
                   <PenTool size={13} />
-                  <span>Ołówek</span>
+                  <span>Rysik</span>
                 </button>
 
                 <button
@@ -679,10 +650,10 @@ export function OpenTaskWorkspace({
                     triggerHaptic('light');
                     setWbTool('eraser');
                   }}
-                  className={`px-3 py-1 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all ${
+                  className={`px-3 py-1 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
                     wbTool === 'eraser'
-                      ? 'bg-rose-500 text-white font-black shadow-[0_0_10px_rgba(244,63,94,0.3)]'
-                      : 'text-white/60 hover:text-white'
+                      ? 'bg-rose-500 text-white font-bold shadow-xs'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
                   <Eraser size={13} />
@@ -690,12 +661,11 @@ export function OpenTaskWorkspace({
                 </button>
               </div>
 
-              {/* Akcje: Cofnij, Wyczyść, ewentualnie Pełny ekran */}
               <div className="flex items-center gap-1">
                 <button
                   type="button"
                   onClick={handleUndo}
-                  className="p-1.5 rounded-lg text-[#8B8D98] hover:text-white bg-[#141C28] hover:bg-[#1E293B] border border-white/10 transition-colors"
+                  className="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 transition-colors cursor-pointer"
                   title="Cofnij ostatnie pociągnięcie (Undo)"
                 >
                   <Undo2 size={15} />
@@ -704,7 +674,7 @@ export function OpenTaskWorkspace({
                 <button
                   type="button"
                   onClick={handleClearWhiteboard}
-                  className="p-1.5 rounded-lg text-rose-400 hover:text-rose-300 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 transition-colors"
+                  className="p-1.5 rounded-lg text-rose-500 hover:text-rose-600 bg-rose-50 dark:bg-rose-950/20 hover:bg-rose-100 transition-colors cursor-pointer"
                   title="Wyczyść całą tablicę"
                 >
                   <Trash2 size={15} />
@@ -717,7 +687,7 @@ export function OpenTaskWorkspace({
                       triggerHaptic('light');
                       onOpenScratchpad();
                     }}
-                    className="p-1.5 rounded-lg text-[#00C2FF] hover:text-white bg-[#00C2FF]/10 hover:bg-[#00C2FF]/20 border border-[#00C2FF]/20 transition-colors"
+                    className="p-1.5 rounded-lg text-amber-700 dark:text-amber-400 hover:bg-amber-500/10 transition-colors cursor-pointer"
                     title="Powiększ na pełny ekran"
                   >
                     <Maximize2 size={15} />
@@ -726,16 +696,15 @@ export function OpenTaskWorkspace({
               </div>
             </div>
 
-            {/* INTERAKTYWNA TABLICA W KRATKĘ (Wypełnia środek ekranu) */}
+            {/* INTERAKTYWNA TABLICA W KRATKĘ */}
             <div 
               ref={canvasContainerRef}
-              className="w-full h-[270px] sm:h-[300px] rounded-xl border border-white/10 relative overflow-hidden touch-none"
+              className="w-full h-[270px] sm:h-[300px] rounded-xl border border-slate-200 dark:border-slate-800 relative overflow-hidden touch-none"
               style={{
-                backgroundColor: '#070B12',
-                backgroundImage: `
-                  linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-                  linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px)
-                `,
+                backgroundColor: isDark ? '#0B0F17' : '#FFFFFF',
+                backgroundImage: isDark 
+                  ? `linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px)`
+                  : `linear-gradient(to right, rgba(15, 23, 42, 0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(15, 23, 42, 0.06) 1px, transparent 1px)`,
                 backgroundSize: '22px 22px',
               }}
             >
@@ -748,9 +717,8 @@ export function OpenTaskWorkspace({
                 className="w-full h-full cursor-crosshair block"
               />
 
-              {/* Subtelny znak wodny z instrukcją, jeśli tablica jest czysta */}
               {!hasSavedCanvas && !isDrawing && (
-                <div className="absolute inset-0 pointer-events-none flex items-center justify-center text-[#8B8D98]/30 font-medium text-xs">
+                <div className="absolute inset-0 pointer-events-none flex items-center justify-center text-slate-400 dark:text-slate-600 font-medium text-xs">
                   Pisz palcem lub rysikiem po kratkach...
                 </div>
               )}

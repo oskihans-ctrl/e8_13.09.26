@@ -1,12 +1,22 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-sans: 'DM Sans', sans-serif;
   --font-display: 'Plus Jakarta Sans', sans-serif;
+  --font-serif: 'Lora', Georgia, serif;
 }
 
+/* Baza neutralna: Light Mode (Domyślny) i Dark Mode (Opcjonalny tryb nocny) */
 html, body {
-  background-color: #070A0F;
+  background-color: #E2E8F0;
+  background-image: 
+    radial-gradient(at 12% 12%, rgba(245, 158, 11, 0.08) 0px, transparent 40%),
+    radial-gradient(at 88% 88%, rgba(99, 102, 241, 0.06) 0px, transparent 45%),
+    radial-gradient(at 50% 30%, rgba(255, 255, 255, 0.4) 0px, transparent 70%);
+  background-attachment: fixed;
+  color: #0F172A;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -14,6 +24,17 @@ html, body {
   overscroll-behavior-x: none;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+html.dark, html.dark body {
+  background-color: #080C14;
+  background-image: 
+    radial-gradient(at 15% 15%, rgba(245, 158, 11, 0.04) 0px, transparent 40%),
+    radial-gradient(at 85% 85%, rgba(30, 58, 138, 0.08) 0px, transparent 50%),
+    radial-gradient(at 50% 0%, rgba(15, 23, 42, 0.7) 0px, transparent 65%);
+  background-attachment: fixed;
+  color: #F8FAFC;
 }
 
 :root {
@@ -35,14 +56,14 @@ button, a, input, [role="button"] {
   min-height: 100dvh;
 }
 
-/* Bezwzględne ukrycie pasków przewijania we wszystkich przeglądarkach (Chrome, Safari, Firefox, Edge) */
+/* Bezwzględne ukrycie pasków przewijania */
 * {
-  -ms-overflow-style: none !important; /* IE i Edge */
-  scrollbar-width: none !important;    /* Firefox */
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
 }
 
 *::-webkit-scrollbar {
-  display: none !important;            /* Chrome, Safari, Opera, Edge Chromium */
+  display: none !important;
   width: 0 !important;
   height: 0 !important;
 }
@@ -103,11 +124,15 @@ button, a, input, [role="button"] {
   height: 0 !important;
 }
 
-/* KaTeX clarity, line clearance & contrast */
+/* KaTeX clarity, line clearance & contrast (dostosowane do Light i Dark) */
 .katex {
-  color: #F8FAFC !important;
+  color: #0F172A !important;
   font-size: 1.05em;
   text-rendering: geometricPrecision;
+}
+
+html.dark .katex {
+  color: #F8FAFC !important;
 }
 
 .katex .mfrac {
@@ -122,7 +147,6 @@ button, a, input, [role="button"] {
   margin-top: 0.15em !important;
 }
 
-
 .custom-scrollbar::-webkit-scrollbar {
   width: 5px;
   height: 5px;
@@ -131,11 +155,11 @@ button, a, input, [role="button"] {
   background: transparent;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(148, 163, 184, 0.3);
   border-radius: 4px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(148, 163, 184, 0.5);
 }
 
 /* Stylizacja list numerowanych z eleganckimi wskaźnikami kroków */
@@ -163,9 +187,9 @@ button, a, input, [role="button"] {
   width: 1.625rem;
   height: 1.625rem;
   border-radius: 9999px;
-  background-color: #1E293B;
-  border: 1px solid #334155;
-  color: #F8FAFC;
+  background-color: #E2E8F0;
+  border: 1px solid #CBD5E1;
+  color: #0F172A;
   font-weight: 700;
   font-size: 0.75rem;
   margin-right: 0.75rem;
@@ -173,14 +197,26 @@ button, a, input, [role="button"] {
   flex-shrink: 0;
 }
 
-/* Wyróżnione ramki wzorów i definicji - pełne eleganckie obramowanie bez pseudo-zakładek */
+html.dark .math-text-wrapper ol > li::before {
+  background-color: #1E293B;
+  border: 1px solid #334155;
+  color: #F8FAFC;
+}
+
+/* Wyróżnione ramki wzorów i definicji */
 .math-text-wrapper .formula-callout,
 .math-text-wrapper blockquote {
-  border: 1px solid #334155;
-  background: #0F172A;
+  border: 1px solid #E2E8F0;
+  background: #F1F5F9;
   border-radius: 0.75rem;
   padding: 0.875rem 1.125rem;
   margin: 0.875rem 0;
+}
+
+html.dark .math-text-wrapper .formula-callout,
+html.dark .math-text-wrapper blockquote {
+  border: 1px solid #334155;
+  background: #131B29;
 }
 
 /* Animacja shake dla błędnej odpowiedzi */
@@ -194,7 +230,7 @@ button, a, input, [role="button"] {
   animation: quiz-shake 0.3s ease-in-out;
 }
 
-/* Stylizacja dla Display Math w KaTeX – czytelne, wycentrowane wzory bez rozmyć i poświaty */
+/* Stylizacja dla Display Math w KaTeX – czytelne, wycentrowane wzory */
 .math-text-wrapper .katex-display,
 .katex-display {
   display: flex !important;
@@ -204,14 +240,20 @@ button, a, input, [role="button"] {
   text-align: center !important;
   margin: 0.85rem auto !important;
   padding: 0.85rem 1rem !important;
-  background: #0F172A !important;
-  border: 1px solid #1E293B !important;
+  background: #F1F5F9 !important;
+  border: 1px solid #E2E8F0 !important;
   border-radius: 0.75rem !important;
   overflow-x: auto !important;
   overflow-y: hidden !important;
   max-width: 100% !important;
   box-sizing: border-box !important;
   -webkit-overflow-scrolling: touch;
+}
+
+html.dark .math-text-wrapper .katex-display,
+html.dark .katex-display {
+  background: #131B29 !important;
+  border: 1px solid #1E293B !important;
 }
 
 .math-text-wrapper .katex-display > .katex,
@@ -221,8 +263,13 @@ button, a, input, [role="button"] {
   text-align: center !important;
   padding: 0 !important;
   font-size: 1.15em !important;
-  color: #F8FAFC !important;
+  color: #0F172A !important;
   white-space: nowrap !important;
+}
+
+html.dark .math-text-wrapper .katex-display > .katex,
+html.dark .katex-display > .katex {
+  color: #F8FAFC !important;
 }
 
 .math-text-wrapper .katex-display .mtable,
@@ -236,7 +283,20 @@ button, a, input, [role="button"] {
   text-align: center !important;
 }
 
-/* Responsywne skalowanie typografii i wzorów KaTeX na desktopie (+10-15%) */
+/* Formatowanie fragmentów lektur i esejów CKE (wymóg 3.B) */
+.reading-prose {
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  max-width: 68ch;
+  color: #1E293B;
+}
+
+html.dark .reading-prose {
+  color: #E2E8F0;
+}
+
+/* Responsywne skalowanie typografii i wzorów KaTeX na desktopie */
 @media (min-width: 1024px) {
   .katex {
     font-size: 1.12em !important;
@@ -259,4 +319,120 @@ button, a, input, [role="button"] {
 .pt-safe-top {
   padding-top: max(12px, env(safe-area-inset-top));
 }
+
+/* ==========================================================================
+   SYSTEM GŁĘBI WIZUALNEJ (ELEVATION & TACTILE DEPTH)
+   ========================================================================== */
+
+/* 1. Karty i kontenery z głębią */
+.depth-card {
+  background-color: #FFFFFF;
+  border: 1.5px solid #CBD5E1;
+  box-shadow: 
+    0 10px 25px -4px rgba(15, 23, 42, 0.12),
+    0 4px 10px -2px rgba(15, 23, 42, 0.08),
+    0 1px 2px 0 rgba(15, 23, 42, 0.08);
+}
+
+html.dark .depth-card {
+  background-color: #131B29;
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 36px -4px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.depth-card-interactive {
+  background-color: #FFFFFF;
+  border: 1.5px solid #CBD5E1;
+  box-shadow: 
+    0 8px 20px -3px rgba(15, 23, 42, 0.10),
+    0 3px 6px -2px rgba(15, 23, 42, 0.06),
+    0 1px 2px 0 rgba(15, 23, 42, 0.06);
+  transition: transform 0.18s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.18s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.18s ease;
+}
+
+.depth-card-interactive:hover {
+  transform: translateY(-2.5px);
+  border-color: #94A3B8;
+  box-shadow: 
+    0 18px 36px -4px rgba(15, 23, 42, 0.16),
+    0 8px 16px -2px rgba(15, 23, 42, 0.10),
+    0 1px 3px 0 rgba(15, 23, 42, 0.08);
+}
+
+html.dark .depth-card-interactive {
+  background-color: #131B29;
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 28px -4px rgba(0, 0, 0, 0.45);
+}
+
+html.dark .depth-card-interactive:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 18px 40px -4px rgba(0, 0, 0, 0.65);
+}
+
+/* 2. Przyciski z fizyczną głębią 3D (Tactile Depth Buttons) */
+.btn-depth-primary {
+  background: linear-gradient(180deg, #FBBF24 0%, #F59E0B 40%, #D97706 100%);
+  color: #020617;
+  font-weight: 800;
+  border-bottom: 3.5px solid #B45309;
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  transition: all 0.12s ease;
+  user-select: none;
+}
+
+.btn-depth-primary:hover {
+  background: linear-gradient(180deg, #FCD34D 0%, #FBBF24 40%, #D97706 100%);
+  box-shadow: 0 6px 18px rgba(217, 119, 6, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  transform: translateY(-1px);
+}
+
+.btn-depth-primary:active {
+  transform: translateY(2.5px);
+  border-bottom-width: 0.5px;
+  box-shadow: 0 2px 6px rgba(217, 119, 6, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn-depth-secondary {
+  background: #FFFFFF;
+  color: #0F172A;
+  font-weight: 700;
+  border: 1px solid #CBD5E1;
+  border-bottom: 3px solid #94A3B8;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+  transition: all 0.12s ease;
+  user-select: none;
+}
+
+.btn-depth-secondary:hover {
+  background: #F8FAFC;
+  border-color: #94A3B8;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+  transform: translateY(-1px);
+}
+
+.btn-depth-secondary:active {
+  transform: translateY(2px);
+  border-bottom-width: 1px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+html.dark .btn-depth-secondary {
+  background: #1E293B;
+  color: #F8FAFC;
+  border: 1px solid #334155;
+  border-bottom: 3px solid #0F172A;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+html.dark .btn-depth-secondary:hover {
+  background: #283548;
+  border-color: #475569;
+}
+
+html.dark .btn-depth-secondary:active {
+  transform: translateY(2px);
+  border-bottom-width: 1px;
+}
+
 

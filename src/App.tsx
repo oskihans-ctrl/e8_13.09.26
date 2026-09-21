@@ -30,6 +30,7 @@ import { checkSystemMetaVersion } from './lib/curriculumSync';
 import { handleFirestoreError, OperationType } from './lib/firestoreErrors';
 
 import { LoadingScreen } from './components/Loading';
+import { BrandBackgroundPattern } from './components/BrandBackgroundPattern';
 
 function getCurrentIsoWeekKey(): string {
   const d = new Date();
@@ -714,30 +715,33 @@ export default function App() {
   const guestHasProgress = isGuest && userState.xp > 0;
 
   return (
-    <div className="min-h-screen w-full bg-[#0B0E14] text-slate-100 font-sans flex flex-col md:flex-row overflow-x-hidden selection:bg-blue-500/30">
+    <div className="min-h-screen w-full bg-[#E2E8F0] dark:bg-[#080C14] text-slate-900 dark:text-slate-100 font-sans flex flex-col md:flex-row overflow-x-hidden selection:bg-amber-500/20 selection:text-amber-900 dark:selection:text-amber-200 transition-colors duration-200 relative">
+      {/* 0. SUBTELNY PATTERN MONOGRAMÓW LOGO W TLE */}
+      <BrandBackgroundPattern />
+
       {/* 1. NAWIGACJA (DLA DESKTOPU I TABLETU: LEWY PANEL BOCZNY; DLA MOBILNYCH: DOLNY DOCK) */}
       {!activeTask && (
         <Navigation currentTab={currentTab} setTab={setCurrentTab} />
       )}
 
       {/* 2. GŁÓWNY OBSZAR APLIKACJI (PRZESTRONNY DLA PC/DESKTOPU) */}
-      <div className="flex-1 flex flex-col min-h-screen md:h-screen overflow-hidden relative w-full min-w-0">
+      <div className="flex-1 flex flex-col min-h-screen md:h-screen overflow-hidden relative w-full min-w-0 z-10">
         {!activeTask && (
           <Header state={userState} onProfileClick={() => setCurrentTab('profile')} currentTab={currentTab} />
         )}
         
         {isGuest && !activeTask && !showGuestPrompt && (
-          <div className="bg-gradient-to-r from-blue-900/40 via-indigo-900/40 to-blue-900/40 border-b border-blue-500/20 px-4 sm:px-6 py-2.5 flex items-center justify-between shrink-0 z-30 relative shadow-lg">
+          <div className="bg-amber-500/10 dark:bg-amber-950/25 border-b border-amber-300/80 dark:border-amber-800/50 px-4 sm:px-6 py-2.5 flex items-center justify-between shrink-0 z-30 relative shadow-xs">
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse shadow-[0_0_8px_rgba(96,165,250,0.8)]" />
-                <span className="text-white text-xs font-bold uppercase tracking-wider">Tryb Demo</span>
+                <div className="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.6)] animate-pulse" />
+                <span className="text-slate-900 dark:text-slate-100 text-xs font-bold uppercase tracking-wider">Tryb Demo</span>
               </div>
-              <span className="text-blue-200/70 text-[10px] sm:text-xs mt-0.5 ml-4">Zaloguj się, aby zapisać postępy w chmurze</span>
+              <span className="text-slate-600 dark:text-slate-400 text-[10px] sm:text-xs mt-0.5 ml-4.5">Zaloguj się, aby zapisać postępy w chmurze</span>
             </div>
             <button 
               onClick={handleLoginClick} 
-              className="flex items-center gap-1.5 text-xs bg-blue-500 hover:bg-blue-400 text-white px-3.5 py-1.5 rounded-lg font-bold transition-all shadow-[0_0_15px_rgba(59,130,246,0.4)] hover:scale-105 active:scale-95 cursor-pointer"
+              className="btn-depth-primary flex items-center gap-1.5 text-xs px-4 py-2 rounded-xl cursor-pointer"
             >
               <LogIn size={14} /> Zaloguj
             </button>
@@ -746,13 +750,12 @@ export default function App() {
         
         <main 
           id="main-scroll-container"
-          className={`flex-1 ${
+          className={`flex-1 min-h-0 ${
             activeTask 
               ? 'overflow-hidden flex flex-col justify-start items-stretch' 
               : 'overflow-y-auto overflow-x-hidden overscroll-y-contain touch-pan-y no-scrollbar pb-24 md:pb-6'
           } relative z-10 w-full`} 
           style={{ 
-            height: '100vh',
             overflowY: 'auto',
             WebkitOverflowScrolling: 'touch',
             touchAction: 'pan-y'

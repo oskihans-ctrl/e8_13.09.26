@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { motion } from 'motion/react';
 import { 
   Shield, 
   ShieldCheck, 
@@ -10,7 +9,6 @@ import {
   ShoppingBag, 
   Check, 
   AlertCircle,
-  Flame,
   ArrowRight
 } from 'lucide-react';
 import { UserState } from '../types';
@@ -72,103 +70,99 @@ export function PerksVaultSection({
   };
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-5">
       {/* Wallet / Arena Currency Card */}
-      <div className="bg-[#141A23] border border-white/5 shadow-md rounded-[24px] p-5 relative overflow-hidden">
+      <div className="bg-white dark:bg-[#131B29] border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-xs">
         <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-sky-500/10 flex items-center justify-center text-sky-400 shadow-inner">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500">
               <Crown size={20} />
             </div>
             <div>
-              <h3 className="font-display font-black text-white text-base">Portfel Mistrzostwa</h3>
-              <p className="text-[11px] text-[#8B8D98]">Zasoby turniejowe i naukowe</p>
+              <h3 className="font-display font-bold text-slate-900 dark:text-white text-base">Portfel Zasobów</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Waluty turniejowe i edukacyjne</p>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 mb-3">
-          <div className="bg-white/5 rounded-2xl p-3.5 flex flex-col border border-white/5">
-            <span className="text-[10px] uppercase font-black text-[#8B8D98] mb-1 flex items-center gap-1.5">
-              <Crown size={12} className="text-sky-400" /> Żetony Areny
+        <div className="grid grid-cols-2 gap-3">
+          <div className="bg-slate-50 dark:bg-slate-800/40 rounded-xl p-3.5 flex flex-col border border-slate-200 dark:border-slate-700/60">
+            <span className="text-[10px] uppercase font-bold text-slate-400 mb-1 flex items-center gap-1.5">
+              <Crown size={12} className="text-amber-500" /> Żetony Areny
             </span>
-            <span className="text-2xl font-display font-black text-sky-400 leading-tight">
+            <span className="text-2xl font-display font-bold text-slate-900 dark:text-white leading-tight">
               {masteryTokens}
             </span>
-            <span className="text-[10px] text-sky-200/60 mt-1">Z walk 1v1 i odznak</span>
+            <span className="text-[11px] text-slate-400 mt-1">Z walk 1v1 i odznak</span>
           </div>
 
-          <div className="bg-white/5 rounded-2xl p-3.5 flex flex-col border border-white/5">
-            <span className="text-[10px] uppercase font-black text-[#8B8D98] mb-1 flex items-center gap-1.5">
-              <Coins size={12} className="text-sky-300" /> Monety Kampusu
+          <div className="bg-slate-50 dark:bg-slate-800/40 rounded-xl p-3.5 flex flex-col border border-slate-200 dark:border-slate-700/60">
+            <span className="text-[10px] uppercase font-bold text-slate-400 mb-1 flex items-center gap-1.5">
+              <Coins size={12} className="text-amber-500" /> Monety
             </span>
-            <span className="text-2xl font-display font-black text-white leading-tight">
+            <span className="text-2xl font-display font-bold text-slate-900 dark:text-white leading-tight">
               {coins.toLocaleString('pl-PL')}
             </span>
-            <span className="text-[10px] text-[#8B8D98] mt-1">Z zadań i matury</span>
+            <span className="text-[11px] text-slate-400 mt-1">Z zadań i egzaminu</span>
           </div>
         </div>
       </div>
 
-      {/* SYSTEM SLOTÓW EKWIPUNKU (RPG ARTIFACT SLOTS) */}
+      {/* SYSTEM SLOTÓW EKWIPUNKU */}
       <div>
         <div className="flex items-center justify-between mb-3 px-0.5">
-          <h3 className="text-sm font-display font-black text-white flex items-center gap-2">
-            <Sparkles size={16} className="text-[#00E5FF]" /> Sloty Ekwipunku & Wzmocnienia
+          <h3 className="text-sm font-display font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <Sparkles size={16} className="text-amber-500" /> Aktywne Wzmocnienia
           </h3>
-          <span className="text-[10px] uppercase tracking-wider font-bold text-[#8B8D98]">3 Gniazda RPG</span>
+          <span className="text-[10px] uppercase tracking-wider font-bold text-slate-400">Ekwipunek</span>
         </div>
 
-        <div className="flex flex-col gap-3.5">
+        <div className="flex flex-col gap-3">
           {/* SLOT 1: TARCZA PASSY */}
-          <div className="relative group bg-[#141A23] border border-blue-500/20 rounded-[22px] p-4 sm:p-5 overflow-hidden shadow-[0_4px_20px_rgba(59,130,246,0.08)] transition-all duration-150 active:scale-[0.98]">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-[35px] -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
-            
-            <div className="flex items-start gap-4 relative z-10">
-              {/* Świecący slot artefaktu */}
-              <div className="relative shrink-0">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-700/30 border border-blue-400/30 flex items-center justify-center text-blue-400 shadow-[0_0_20px_rgba(59,130,246,0.3)]">
-                  <Shield size={26} className="drop-shadow-[0_0_8px_rgba(96,165,250,0.8)]" />
-                </div>
-                <div className="absolute -bottom-1 -right-1 bg-blue-600 text-white text-[9px] font-black px-1.5 py-0.5 rounded-full border-2 border-[#141A23]">
-                  S1
-                </div>
+          <div className="bg-white dark:bg-[#131B29] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xs">
+            <div className="flex items-start gap-3.5">
+              <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500 shrink-0">
+                <Shield size={22} />
               </div>
 
-              {/* Opis i status slotu */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between flex-wrap gap-1 mb-1">
-                  <h4 className="font-display font-black text-white text-base">Tarcza Passy</h4>
-                  <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-blue-500/15 text-blue-300 border border-blue-500/30 shadow-sm">
-                    Aktywna: {perks.streakFreezes || 0} szt.
+                  <h4 className="font-bold text-slate-900 dark:text-white text-sm">Tarcza Passy (Zamrożenie)</h4>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
+                    (perks.streakFreezes || 0) > 0 
+                      ? 'bg-amber-50 dark:bg-amber-950/20 text-amber-800 dark:text-amber-400 border-amber-300 dark:border-amber-800' 
+                      : 'bg-slate-100 dark:bg-slate-800 text-slate-400 border-slate-200 dark:border-slate-700'
+                  }`}>
+                    {(perks.streakFreezes || 0) > 0 ? `Dostępne: ${perks.streakFreezes} szt.` : 'Brak'}
                   </span>
                 </div>
-                <p className="text-xs text-[#9CA3AF] leading-relaxed mb-3">
-                  Chroni Twój płomień serii przed zerwaniem i natychmiast neutralizuje rdzę po opuszczonym dniu nauki.
+                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-3">
+                  Chroni Twój płomień serii przed zerwaniem w przypadku opuszczenia dnia nauki.
                 </p>
 
-                {/* Szybka interakcja */}
                 <div className="flex items-center gap-2">
                   {userState.campusRust > 0 && (perks.streakFreezes || 0) > 0 && onUseStreakFreeze ? (
                     <button
+                      type="button"
                       onClick={() => {
                         triggerHaptic('success');
                         onUseStreakFreeze();
                       }}
-                      className="px-3 py-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-xl text-xs font-black shadow-[0_0_15px_rgba(59,130,246,0.4)] transition-all duration-150 active:scale-[0.96]"
+                      className="px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer"
                     >
                       Użyj i usuń rdzę ({userState.campusRust})
                     </button>
                   ) : (perks.streakFreezes || 0) === 0 ? (
                     <button
+                      type="button"
                       onClick={scrollToMarket}
-                      className="text-[11px] font-bold text-blue-400 hover:text-blue-300 flex items-center gap-1 transition-colors"
+                      className="text-xs font-bold text-amber-700 dark:text-amber-400 hover:underline flex items-center gap-1 transition-colors cursor-pointer"
                     >
-                      Kup w Rynku poniżej <ArrowRight size={12} />
+                      Kup w sklepie poniżej <ArrowRight size={12} />
                     </button>
                   ) : (
-                    <span className="text-[11px] font-bold text-blue-300/70 flex items-center gap-1">
-                      <Check size={13} className="text-blue-400" /> Gotowa do automatycznej ochrony
+                    <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                      <Check size={13} /> Aktywna automatyczna ochrona
                     </span>
                   )}
                 </div>
@@ -177,48 +171,40 @@ export function PerksVaultSection({
           </div>
 
           {/* SLOT 2: TARCZA ELO ARENY */}
-          <div className="relative group bg-[#141A23] border border-emerald-500/20 rounded-[22px] p-4 sm:p-5 overflow-hidden shadow-[0_4px_20px_rgba(16,185,129,0.08)] transition-all duration-150 active:scale-[0.98]">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-[35px] -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
-
-            <div className="flex items-start gap-4 relative z-10">
-              {/* Świecący slot artefaktu */}
-              <div className="relative shrink-0">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-emerald-700/30 border border-emerald-400/30 flex items-center justify-center text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.3)]">
-                  <ShieldCheck size={26} className="drop-shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
-                </div>
-                <div className="absolute -bottom-1 -right-1 bg-emerald-600 text-white text-[9px] font-black px-1.5 py-0.5 rounded-full border-2 border-[#141A23]">
-                  S2
-                </div>
+          <div className="bg-white dark:bg-[#131B29] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xs">
+            <div className="flex items-start gap-3.5">
+              <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500 shrink-0">
+                <ShieldCheck size={22} />
               </div>
 
-              {/* Opis i status slotu */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between flex-wrap gap-1 mb-1">
-                  <h4 className="font-display font-black text-white text-base">Egida Areny 1v1</h4>
-                  <span className={`text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full border shadow-sm ${
+                  <h4 className="font-bold text-slate-900 dark:text-white text-sm">Egida Areny 1v1</h4>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
                     (perks.arenaShields || 0) > 0 
-                      ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' 
-                      : 'bg-white/5 text-[#8B8D98] border-white/5'
+                      ? 'bg-amber-50 dark:bg-amber-950/20 text-amber-800 dark:text-amber-400 border-amber-300 dark:border-amber-800' 
+                      : 'bg-slate-100 dark:bg-slate-800 text-slate-400 border-slate-200 dark:border-slate-700'
                   }`}>
-                    {(perks.arenaShields || 0) > 0 ? `Aktywna: ${perks.arenaShields} pojedynków` : 'Brak w ekwipunku'}
+                    {(perks.arenaShields || 0) > 0 ? `Dostępne: ${perks.arenaShields} pojedynków` : 'Brak'}
                   </span>
                 </div>
-                <p className="text-xs text-[#9CA3AF] leading-relaxed mb-3">
-                  Runiczna osłona turniejowa. Zapobiega utracie punktów rankingu ELO w razie przegranej w pojedynku na żywo.
+                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-3">
+                  Chroni Twój ranking ELO przed spadkiem w razie przegranego pojedynku na żywo.
                 </p>
 
                 <div className="flex items-center gap-2">
                   {(perks.arenaShields || 0) > 0 ? (
-                    <span className="text-[11px] font-bold text-emerald-300/80 flex items-center gap-1.5">
-                      <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
-                      Chroni ranking w następnej walce
+                    <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+                      <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+                      Zabezpieczenie aktywne w kolejnym meczu
                     </span>
                   ) : (
                     <button
+                      type="button"
                       onClick={scrollToMarket}
-                      className="text-[11px] font-bold text-emerald-400 hover:text-emerald-300 flex items-center gap-1 transition-colors"
+                      className="text-xs font-bold text-amber-700 dark:text-amber-400 hover:underline flex items-center gap-1 transition-colors cursor-pointer"
                     >
-                      Zdobądź Egidę w Rynku <ArrowRight size={12} />
+                      Kup Egidę w sklepie <ArrowRight size={12} />
                     </button>
                   )}
                 </div>
@@ -226,54 +212,43 @@ export function PerksVaultSection({
             </div>
           </div>
 
-          {/* SLOT 3: DOŁADOWANIE XP (PULSUJĄCE LAZUROWE ŚWIATŁO) */}
-          <div className="relative group bg-[#141A23] border border-sky-500/25 rounded-[22px] p-4 sm:p-5 overflow-hidden shadow-[0_4px_25px_rgba(14,165,233,0.15)] transition-all duration-150 active:scale-[0.98]">
-            {/* Lazurowa poświata */}
-            <div className="absolute top-0 right-0 w-36 h-36 bg-sky-500/15 rounded-full blur-[40px] -translate-y-1/2 translate-x-1/4 pointer-events-none animate-pulse"></div>
-
-            <div className="flex items-start gap-4 relative z-10">
-              {/* Pulsujący artefakt z dynamicznym blaskiem */}
-              <div className="relative shrink-0">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-500/25 to-blue-600/30 border border-sky-400/40 flex items-center justify-center text-sky-400 shadow-[0_0_25px_rgba(14,165,233,0.4)] animate-pulse">
-                  <Zap size={26} className="drop-shadow-[0_0_10px_rgba(56,189,248,0.9)]" />
-                </div>
-                <div className="absolute -bottom-1 -right-1 bg-sky-500 text-black text-[9px] font-black px-1.5 py-0.5 rounded-full border-2 border-[#141A23]">
-                  S3
-                </div>
+          {/* SLOT 3: DOŁADOWANIE XP */}
+          <div className="bg-white dark:bg-[#131B29] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xs">
+            <div className="flex items-start gap-3.5">
+              <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500 shrink-0">
+                <Zap size={22} />
               </div>
 
-              {/* Opis i status slotu */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between flex-wrap gap-1 mb-1">
-                  <h4 className="font-display font-black text-white text-base flex items-center gap-1.5">
-                    <span>Doładowanie 2x XP</span>
-                  </h4>
-                  <span className={`text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full border shadow-sm ${
+                  <h4 className="font-bold text-slate-900 dark:text-white text-sm">Doładowanie 2x XP</h4>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
                     (perks.temporaryXpBoostCharges || 0) > 0 
-                      ? 'bg-sky-500/20 text-sky-300 border-sky-500/40 animate-pulse' 
-                      : 'bg-white/5 text-[#8B8D98] border-white/5'
+                      ? 'bg-amber-50 dark:bg-amber-950/20 text-amber-800 dark:text-amber-400 border-amber-300 dark:border-amber-800' 
+                      : 'bg-slate-100 dark:bg-slate-800 text-slate-400 border-slate-200 dark:border-slate-700'
                   }`}>
                     {(perks.temporaryXpBoostCharges || 0) > 0 
-                      ? `2x XP przez ${perks.temporaryXpBoostCharges} zadania` 
-                      : 'Gotowe do zasilenia'}
+                      ? `2x XP przez ${perks.temporaryXpBoostCharges} zad.` 
+                      : 'Nieaktywne'}
                   </span>
                 </div>
-                <p className="text-xs text-[#9CA3AF] leading-relaxed mb-3">
-                  Potężny eliksir mądrości. Podwaja wszystkie zdobywane punkty XP z lekcji, modułów i próbnych egzaminów E8.
+                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-3">
+                  Podwaja wszystkie zdobywane punkty doświadczenia ze standardowych zadań i arkuszy.
                 </p>
 
                 <div className="flex items-center gap-2">
                   {(perks.temporaryXpBoostCharges || 0) > 0 ? (
-                    <span className="text-[11px] font-black text-sky-300 flex items-center gap-1.5">
-                      <Sparkles size={13} className="text-sky-400 animate-spin" />
+                    <span className="text-xs font-bold text-amber-700 dark:text-amber-400 flex items-center gap-1.5">
+                      <Sparkles size={13} />
                       Mnożnik aktywny w bieżących zadaniach!
                     </span>
                   ) : (
                     <button
+                      type="button"
                       onClick={scrollToMarket}
-                      className="text-[11px] font-bold text-sky-400 hover:text-sky-300 flex items-center gap-1 transition-colors"
+                      className="text-xs font-bold text-amber-700 dark:text-amber-400 hover:underline flex items-center gap-1 transition-colors cursor-pointer"
                     >
-                      Kup Doładowanie w Rynku <ArrowRight size={12} />
+                      Kup Doładowanie w sklepie <ArrowRight size={12} />
                     </button>
                   )}
                 </div>
@@ -282,51 +257,43 @@ export function PerksVaultSection({
           </div>
         </div>
 
-        {/* Pasek pasywnych relikwii z odznak */}
-        <div className="mt-3.5 bg-white/[0.03] border border-white/5 rounded-2xl p-3 flex items-center justify-between gap-2 text-[11px] text-[#9CA3AF]">
-          <span className="font-bold flex items-center gap-1.5 text-white">
-            <Sparkles size={13} className="text-purple-400" /> Pasywne premie z odznak:
+        {/* Pasek pasywnych premii */}
+        <div className="mt-3 bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/60 rounded-xl p-3 flex items-center justify-between gap-2 text-xs text-slate-500 dark:text-slate-400">
+          <span className="font-bold flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
+            <Sparkles size={13} className="text-amber-500" /> Premie stałe z odznak:
           </span>
-          <div className="flex items-center gap-2.5 font-mono font-bold text-[10px]">
-            <span className="text-purple-300">+{perks.xpBoostPercent || 0}% XP</span>
+          <div className="flex items-center gap-2.5 font-mono font-bold text-[11px] text-slate-800 dark:text-slate-200">
+            <span>+{perks.xpBoostPercent || 0}% XP</span>
             <span>•</span>
-            <span className="text-sky-300">+{perks.coinBoostPercent || 0}% Monet</span>
+            <span>+{perks.coinBoostPercent || 0}% Monet</span>
             <span>•</span>
-            <span className="text-cyan-300">+{perks.arenaTokenBonusPercent || 0}% Żetonów</span>
+            <span>+{perks.arenaTokenBonusPercent || 0}% Żetonów</span>
           </div>
         </div>
       </div>
 
-      {/* Notification Toast */}
+      {/* Powiadomienia */}
       {purchaseSuccess && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-emerald-500/20 border border-emerald-500/40 text-emerald-200 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 shadow-lg"
-        >
-          <Check size={16} className="text-emerald-400" />
+        <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-300 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 shadow-xs">
+          <Check size={15} className="text-emerald-500" />
           <span>{purchaseSuccess}</span>
-        </motion.div>
+        </div>
       )}
 
       {purchaseError && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-red-500/20 border border-red-500/40 text-red-200 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 shadow-lg"
-        >
-          <AlertCircle size={16} className="text-red-400" />
+        <div className="bg-rose-50 dark:bg-rose-950/20 border border-rose-300 dark:border-rose-900 text-rose-800 dark:text-rose-300 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 shadow-xs">
+          <AlertCircle size={15} className="text-rose-500" />
           <span>{purchaseError}</span>
-        </motion.div>
+        </div>
       )}
 
-      {/* Perks Market / Shop */}
+      {/* Sklep / Rynek Perków */}
       <div id="perks-market-section">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm font-display font-black text-white flex items-center gap-2">
-            <ShoppingBag size={16} className="text-sky-400" /> Rynek Perków i Tarcz
+          <h3 className="text-sm font-display font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <ShoppingBag size={16} className="text-amber-500" /> Sklepik Narzędzi
           </h3>
-          <span className="text-[11px] text-[#8B8D98]">Wymień żetony lub monety</span>
+          <span className="text-xs text-slate-400">Wymiana zasobów</span>
         </div>
 
         <div className="space-y-3">
@@ -337,55 +304,57 @@ export function PerksVaultSection({
             return (
               <div
                 key={item.id}
-                className="bg-[#141A23] border border-white/5 rounded-2xl p-5 flex flex-col gap-4 shadow-lg hover:border-white/10 transition-colors"
+                className="bg-white dark:bg-[#131B29] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 flex flex-col gap-3 shadow-xs"
               >
                 {/* Header Karty */}
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-[#0B0E14] border border-sky-500/30 flex items-center justify-center shrink-0 text-sky-400 shadow-[0_0_15px_rgba(14,165,233,0.2)]">
-                    {item.icon === 'Shield' && <Shield size={24} />}
-                    {item.icon === 'ShieldCheck' && <ShieldCheck size={24} />}
-                    {item.icon === 'Zap' && <Zap size={24} />}
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center shrink-0 text-amber-500">
+                    {item.icon === 'Shield' && <Shield size={20} />}
+                    {item.icon === 'ShieldCheck' && <ShieldCheck size={20} />}
+                    {item.icon === 'Zap' && <Zap size={20} />}
                   </div>
                   <div>
-                    <h4 className="font-black text-white text-base">{item.name}</h4>
-                    <span className="text-[10px] uppercase font-bold text-[#A855F7] bg-[#A855F7]/10 px-2 py-0.5 rounded-full mt-1 inline-block">Wzmocnienie</span>
+                    <h4 className="font-bold text-slate-900 dark:text-white text-sm">{item.name}</h4>
+                    <span className="text-[10px] font-bold text-slate-400">Przedmiot ochronny</span>
                   </div>
                 </div>
 
                 {/* Body Karty */}
                 <div>
-                  <p className="text-sm text-[#9CA3AF] leading-relaxed">{item.description}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{item.description}</p>
                 </div>
 
                 {/* Footer / Action Row */}
-                <div className="flex flex-row items-center gap-2 mt-1">
-                  {/* Buy with Mastery Tokens */}
+                <div className="flex flex-row items-center gap-2 pt-1">
+                  {/* Kup za Żetony */}
                   <button
+                    type="button"
                     onClick={() => handlePurchase(item, 'tokens')}
                     disabled={!canAffordTokens}
                     title={!canAffordTokens ? "Za mało żetonów" : ""}
-                    className={`flex-1 py-2.5 rounded-xl text-xs font-black flex items-center justify-center gap-2 border transition-all duration-150 ${
+                    className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 border transition-all cursor-pointer ${
                       canAffordTokens
-                        ? 'bg-[#D97706]/10 hover:bg-[#D97706]/20 text-[#F59E0B] border-[#D97706]/30 active:scale-[0.96]'
-                        : 'bg-white/5 text-[#6B7280] border-white/5 opacity-40 cursor-not-allowed'
+                        ? 'bg-amber-50 dark:bg-amber-950/20 text-amber-800 dark:text-amber-400 border-amber-300 dark:border-amber-800 hover:bg-amber-100 dark:hover:bg-amber-900/30'
+                        : 'bg-slate-50 dark:bg-slate-800/40 text-slate-400 border-slate-200 dark:border-slate-800 opacity-50 cursor-not-allowed'
                     }`}
                   >
-                    <Crown size={14} />
+                    <Crown size={13} />
                     <span>{item.tokenPrice} Żetonów</span>
                   </button>
 
-                  {/* Buy with Coins */}
+                  {/* Kup za Monety */}
                   <button
+                    type="button"
                     onClick={() => handlePurchase(item, 'coins')}
                     disabled={!canAffordCoins}
                     title={!canAffordCoins ? "Za mało monet" : ""}
-                    className={`flex-1 py-2.5 rounded-xl text-xs font-black flex items-center justify-center gap-2 border transition-all duration-150 ${
+                    className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 border transition-all cursor-pointer ${
                       canAffordCoins
-                        ? 'bg-[#3B82F6]/10 hover:bg-[#3B82F6]/20 text-[#00D2FF] border-[#3B82F6]/30 active:scale-[0.96]'
-                        : 'bg-white/5 text-[#6B7280] border-white/5 opacity-40 cursor-not-allowed'
+                        ? 'bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-900 dark:text-white border-slate-200 dark:border-slate-700'
+                        : 'bg-slate-50 dark:bg-slate-800/40 text-slate-400 border-slate-200 dark:border-slate-800 opacity-50 cursor-not-allowed'
                     }`}
                   >
-                    <Coins size={14} />
+                    <Coins size={13} />
                     <span>{item.coinPrice.toLocaleString('pl-PL')} Monet</span>
                   </button>
                 </div>
@@ -397,3 +366,5 @@ export function PerksVaultSection({
     </div>
   );
 }
+
+export default PerksVaultSection;
